@@ -1,0 +1,41 @@
+﻿@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Authentication
+@model LoginViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<section class="login">
+    <div class="login-form">
+        <div class="login-header">
+            <h2>Login</h2>
+            <p><span>Cooking</span> with account better!</p>
+            <i class="fas fa-utensils"></i>
+        </div>
+        <div class="login-content">
+            <form action="#">
+                <label>
+                    <input type="text" name="name" placeholder="Name">
+                    <i class="fas fa-user"></i>
+                </label>
+                <label>
+                    <input type="password" name="password" placeholder="Password">
+                    <i class="fas fa-lock"></i>
+                </label>
+                <label>
+                    <input type="checkbox">
+                    <span>Remember me</span>
+                </label>
+                <input type="submit" value="Login">
+            </form>
+            <div class="media">
+                <div class="fb-icon"><i class="fab fa-facebook-f"></i> Facebook</div>
+                <div class="google-icon"><i class="fab fa-google-plus-g"></i> Google+</div>
+            </div>
+        </div>
+    </div>
+</section>

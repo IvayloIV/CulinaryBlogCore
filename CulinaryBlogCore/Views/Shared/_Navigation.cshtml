@@ -1,0 +1,17 @@
+﻿<nav>
+    <ul class="header-nav">
+        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li id="receipt-menu">
+            <a href="#">Receipts</a>
+            <ul class="header-inner-nav">
+                <li><a href="/Recipe/Details/Salad">Salads</a></li>
+                <li><a href="/Recipe/Details/Salad">Pizza</a></li>
+                <li><a href="/Recipe/Details/Salad">Desserts</a></li>
+            </ul>
+        </li>
+        <li><a asp-controller="Trick" asp-action="Index">Tricks</a></li>
+        <li><a asp-controller="Gallery" asp-action="Index">Gallery</a></li>
+        <li><a asp-controller="Account" asp-action="Login">Login</a></li>
+        <li><a asp-controller="Account" asp-action="Register">Register</a></li>
+    </ul>
+</nav>

@@ -1,0 +1,66 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<section class="register">
+    <div class="register-form">
+        <div class="register-header">
+            <div><img src="/images/register-logo.png" alt="logo"></div>
+            <h2>Register</h2>
+        </div>
+        <form action="#">
+            <div class="names">
+                <label>
+                    <span>First name</span>
+                    <input type="text" name="first-name">
+                </label>
+                <label>
+                    <span>Last name</span>
+                    <input type="text" name="last-name">
+                </label>
+            </div>
+            <label>
+                <span>Email</span>
+                <input type="email" name="email">
+            </label>
+            <label>
+                <span>Phone</span>
+                <input type="number" name="phone">
+            </label>
+            <label>
+                <span>Password</span>
+                <input type="password" name="password">
+            </label>
+            <label>
+                <span>Repeat password</span>
+                <input type="password" name="rep-password">
+            </label>
+            <div class="gender">
+                <span>Gender</span>
+                <div>
+                    <div>
+                        <label class="container">
+                            <input type="radio" name="gender">
+                            <span class="checkmark"></span>
+                            <span class="type-gender">Man</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="container">
+                            <input type="radio" name="gender">
+                            <span class="checkmark"></span>
+                            <span class="type-gender">Woman</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="Register">
+        </form>
+        <p><a href="/Cooking/login/">Already have registration? <i class="fas fa-arrow-right"></i></a></p>
+        <div class="register-footer">
+            <div class="fb-button"><i class="fab fa-facebook-f"></i> Log in with Facebook</div>
+            <div class="google-button"><i class="fab fa-google-plus-g"></i> Log in with Google+</div>
+        </div>
+    </div>
+</section>

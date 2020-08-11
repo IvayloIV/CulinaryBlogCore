@@ -1,0 +1,14 @@
+﻿<header class="header">
+    <div class="header-logo">
+        <a asp-area="" asp-controller="Home" asp-action="Index"><img src="/images/Chef-Logo.png" alt="chef-logo"></a>
+        <h1><a asp-area="" asp-controller="Home" asp-action="Index"><span>Cook</span>ing</a></h1>
+    </div>
+
+    <label for="nav" class="header-menu">
+        <i class="fas fa-bars"></i>
+        <i class="fas fa-times"></i>
+        <span>Menu</span>
+    </label>
+
+    @{ Html.RenderPartial("_Navigation"); }
+</header>
