@@ -1,0 +1,48 @@
+﻿@using CulinaryBlogCore.Data.Models.Entities;
+
+@{
+    ViewBag.Title = "Create recipe";
+    List<CategoryViewModel> categories = (List<CategoryViewModel>)ViewData["Categories"];
+}
+
+<section class="register">
+    <div class="register-form">
+        <div class="register-header">
+            <div><img src="/images/register-logo.png" alt="logo"></div>
+            <h2>Create Recipe</h2>
+        </div>
+        <form action="/Recipe/Create" method="POST">
+            <div class="names">
+                <label>
+                    <span>Name</span>
+                    <input type="text" name="Name" />
+                </label>
+            </div>
+            <label>
+                <span>Description</span>
+                <textarea type="text" name="Description"></textarea>
+            </label>
+            <label>
+                <span>Preparation time</span>
+                <input type="time" name="PreparationTime">
+            </label>
+            <label>
+                <span>Cooking time</span>
+                <input type="time" name="CookingTime">
+            </label>
+            <label>
+                <span>Image</span>
+                <input type="image" name="Image">
+            </label>
+            <label>
+                <span>Category</span>
+                <select name="category">
+                    @foreach (var category in categories) { 
+                        <option value="@category.Id">@category.Name</option>
+                     }
+                </select>
+            </label>
+            <input type="submit" value="Create">
+        </form>
+    </div>
+</section>

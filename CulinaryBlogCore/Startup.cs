@@ -8,9 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using CulinaryBlogCore.Data;
-using CulinaryBlogCore.Models;
+using CulinaryBlogCore.DataAccess;
+using CulinaryBlogCore.Data.Models.Identity;
+using CulinaryBlogCore.Services.Contracts;
 using CulinaryBlogCore.Services;
+using CulinaryBlogCore.Services.Repository.Contracts;
+using CulinaryBlogCore.Services.Repository;
 
 namespace CulinaryBlogCore
 {
@@ -26,17 +29,20 @@ namespace CulinaryBlogCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddMvc();
+
+            services.AddDbContext<CulinaryBlogDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IRecipeService, RecipeService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<CulinaryBlogDbContext>()
                 .AddDefaultTokenProviders();
 
             // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
-
-            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +58,8 @@ namespace CulinaryBlogCore
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            //db.Database.Migrate();
 
             app.UseStaticFiles();
 

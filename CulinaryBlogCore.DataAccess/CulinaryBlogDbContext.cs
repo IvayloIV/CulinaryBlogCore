@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CulinaryBlogCore.Data.Models.Entities;
+using CulinaryBlogCore.Data.Models.Identity;
+
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using CulinaryBlogCore.Models;
 
-namespace CulinaryBlogCore.Data
+namespace CulinaryBlogCore.DataAccess
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class CulinaryBlogDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+        public CulinaryBlogDbContext(DbContextOptions<CulinaryBlogDbContext> options) : base(options)
         {
         }
 
@@ -22,5 +19,9 @@ namespace CulinaryBlogCore.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<Recipe> Recipes { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
     }
 }
