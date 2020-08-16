@@ -18,7 +18,7 @@ namespace CulinaryBlogCore.Services
         }
 
 
-        public List<Category> getAll()
+        public List<Category> GetAll()
         {
             return this._repository.Set<Category>().ToList();
         }

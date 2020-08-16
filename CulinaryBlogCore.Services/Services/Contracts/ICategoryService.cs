@@ -8,6 +8,6 @@ namespace CulinaryBlogCore.Services.Contracts
 {
     public interface ICategoryService
     {
-        List<Category> getAll();
+        List<Category> GetAll();
     }
 }

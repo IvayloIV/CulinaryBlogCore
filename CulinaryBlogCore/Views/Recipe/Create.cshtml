@@ -1,48 +1,61 @@
-﻿@using CulinaryBlogCore.Data.Models.Entities;
+﻿@using CulinaryBlogCore.Models.CategoryViewModels;
+@model CulinaryBlogCore.Models.RecipeViewModels.CreateViewModel
 
 @{
     ViewBag.Title = "Create recipe";
     List<CategoryViewModel> categories = (List<CategoryViewModel>)ViewData["Categories"];
 }
 
-<section class="register">
+<section class="create-recipe register">
     <div class="register-form">
         <div class="register-header">
             <div><img src="/images/register-logo.png" alt="logo"></div>
             <h2>Create Recipe</h2>
         </div>
-        <form action="/Recipe/Create" method="POST">
+        @using (Html.BeginForm("Create", "Recipe", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
             <div class="names">
                 <label>
                     <span>Name</span>
-                    <input type="text" name="Name" />
+                    <input asp-for="Name" type="text" name="@Html.NameFor(r => r.Name)" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </label>
             </div>
             <label>
                 <span>Description</span>
-                <textarea type="text" name="Description"></textarea>
+                <textarea asp-for="Description" type="text" name="@Html.NameFor(r => r.Description)"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
             </label>
             <label>
                 <span>Preparation time</span>
-                <input type="time" name="PreparationTime">
+                <input asp-for="PreparationTime" type="time" name="@Html.NameFor(r => r.PreparationTime)">
+                <span asp-validation-for="PreparationTime" class="text-danger"></span>
             </label>
             <label>
                 <span>Cooking time</span>
-                <input type="time" name="CookingTime">
+                <input asp-for="CookingTime" type="time" name="@Html.NameFor(r => r.CookingTime)">
+                <span asp-validation-for="CookingTime" class="text-danger"></span>
             </label>
             <label>
-                <span>Image</span>
-                <input type="image" name="Image">
+                <span>Portions</span>
+                <input asp-for="Portions" type="number" name="@Html.NameFor(r => r.Portions)">
+                <span asp-validation-for="Portions" class="text-danger"></span>
             </label>
             <label>
                 <span>Category</span>
-                <select name="category">
-                    @foreach (var category in categories) { 
-                        <option value="@category.Id">@category.Name</option>
-                     }
-                </select>
+                @Html.DropDownListFor(
+                    x => x.CategoryId,
+                    new SelectList(categories, "Id", "Name"),
+                    "Select one"
+                )
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </label>
+            <label>
+                <span>Image</span>
+                <input asp-for="ImagePath" type="file" name="image">
+                <span asp-validation-for="ImagePath" class="text-danger"></span>
             </label>
             <input type="submit" value="Create">
-        </form>
+        }
     </div>
 </section>

@@ -14,6 +14,8 @@ using CulinaryBlogCore.Services.Contracts;
 using CulinaryBlogCore.Services;
 using CulinaryBlogCore.Services.Repository.Contracts;
 using CulinaryBlogCore.Services.Repository;
+using AutoMapper;
+using CulinaryBlogCore.Utils;
 
 namespace CulinaryBlogCore
 {
@@ -37,6 +39,14 @@ namespace CulinaryBlogCore
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<ICategoryService, CategoryService>();
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutoMapperConfig());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<CulinaryBlogDbContext>()

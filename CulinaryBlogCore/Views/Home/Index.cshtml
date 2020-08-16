@@ -1,5 +1,9 @@
-﻿@{
+﻿@using CulinaryBlogCore.Models.RecipeViewModels;
+
+@{
     ViewData["Title"] = "Cooking";
+    List<RecipeViewModel> recipesByRating = (List<RecipeViewModel>)ViewData["RecipesByRating"];
+    List<RecipeViewModel> lastAddedRecipes = (List<RecipeViewModel>)ViewData["LastAddedRecipes"];
 }
 
 <section class="site-logo">
@@ -24,171 +28,42 @@
         <h2>Best recipes of the week</h2>
         <hr>
     </div>
-    <a href="/Recipe/Create">Create</a>
+    <div class="create-recipe-button">
+        <a href="/Recipe/Create">Create</a>
+    </div>
     <div class="best-receipts-posts">
+        @foreach (var recipe in recipesByRating)
+        {
+            <article>
+                <div>
+                    <img src="@recipe.ImagePath" alt="pasta">
+                </div>
+                <div>
+                    <h4>@recipe.Name</h4>
+                    <p class="rating">
 
-        <article>
-            <div>
-                <img src="/images/pasta.jpg" alt="pasta">
-            </div>
-            <div>
-                <h4>Vegetarian pasta</h4>
-                <p class="rating">
+                        @for (int i = 0; i < Math.Round(recipe.Rating); i++)
+                        {
+                            <i class="fas fa-star"></i>
+                        }
 
-                    <i class="fas fa-star"></i>
+                        @for (int i = (int)Math.Round(recipe.Rating); i < 5; i++)
+                        {
+                            <i class="far fa-star"></i>
+                        }
 
-                    <i class="fas fa-star"></i>
-
-                    <i class="fas fa-star"></i>
-
-                    <i class="fas fa-star"></i>
-
-
-
-                    <i class="far fa-star"></i>
-
-                    <span>4.21 (5)</span>
-                </p>
-                <p>Italian cuisine is always very romantic. You will surprise your mate with this unique and easy recipe. Suitable for vegetarians and spaghetti lovers. This...</p>
-                <a href="/Cooking/2018/11/29/vegetarian-pasta.html">Read More</a>
-            </div>
-        </article>
-
-        <article>
-            <div>
-                <img src="/images/tomato-soup.jpg" alt="tomato-soup">
-            </div>
-            <div>
-                <h4>Tomato soup</h4>
-                <p class="rating">
-
-                    <i class="fas fa-star"></i>
-
-                    <i class="fas fa-star"></i>
-
-
-                    <i class="fas fa-star-half-alt"></i>
-
-
-                    <i class="far fa-star"></i>
-
-                    <i class="far fa-star"></i>
-
-                    <span>3.76 (26)</span>
-                </p>
-                <p>This soup is suitable for hot summer days, so it can be consumed cold. The variety of tomatoes in the recipe can be replaced...</p>
-                <a href="/Cooking/2018/11/29/tomato-soup.html">Read More</a>
-            </div>
-        </article>
-
-        <article>
-            <div>
-                <img src="/images/soup.jpg" alt="soup">
-            </div>
-            <div>
-                <h4>Skebe corba</h4>
-                <p class="rating">
-
-                    <i class="fas fa-star"></i>
-
-                    <i class="fas fa-star"></i>
-
-                    <i class="fas fa-star"></i>
-
-                    <i class="fas fa-star"></i>
-
-                    <i class="fas fa-star"></i>
-
-
-
-                    <span>5.89 (23)</span>
-                </p>
-                <p>The dish is asian and combines the tastes of Mediterranean food and the most used Eastern spices. Prepare for 20 minutes and will fascinate...</p>
-                <a href="/Cooking/2018/11/29/skebe-corba.html">Read More</a>
-            </div>
-        </article>
-
-        <article>
-            <div>
-                <img src="/images/roasted-vegetable-food-mushrooms.jpg" alt="roasted-mushrooms">
-            </div>
-            <div>
-                <h4>Roasted mushrooms</h4>
-                <p class="rating">
-
-                    <i class="fas fa-star"></i>
-
-                    <i class="fas fa-star"></i>
-
-                    <i class="fas fa-star"></i>
-
-                    <i class="fas fa-star"></i>
-
-
-                    <i class="fas fa-star-half-alt"></i>
-
-
-                    <span>5.12 (76)</span>
-                </p>
-                <p>In the recipe are used mushrooms in the forest. Their aroma will make the entree unique and enrich it with flavonoids. They are very...</p>
-                <a href="/Cooking/2018/11/29/roasted-mushrooms.html">Read More</a>
-            </div>
-        </article>
-
-        <article>
-            <div>
-                <img src="/images/musaka.jpg" alt="musaka">
-            </div>
-            <div>
-                <h4>Musaka</h4>
-                <p class="rating">
-
-                    <i class="fas fa-star"></i>
-
-                    <i class="fas fa-star"></i>
-
-                    <i class="fas fa-star"></i>
-
-                    <i class="fas fa-star"></i>
-
-
-                    <i class="fas fa-star-half-alt"></i>
-
-
-                    <span>5.23 (13)</span>
-                </p>
-                <p>Musaka is a typical bulgarian dish. Here we have tried to keep up with the traditions of our grandmothers. When you consume it you...</p>
-                <a href="/Cooking/2018/11/29/musaka.html">Read More</a>
-            </div>
-        </article>
-
-        <article>
-            <div>
-                <img src="/images/banana-cake.jpg" alt="banana-cake">
-            </div>
-            <div>
-                <h4>Banana cake</h4>
-                <p class="rating">
-
-                    <i class="fas fa-star"></i>
-
-                    <i class="fas fa-star"></i>
-
-                    <i class="fas fa-star"></i>
-
-                    <i class="fas fa-star"></i>
-
-                    <i class="fas fa-star"></i>
-
-
-
-                    <span>5.97 (76)</span>
-                </p>
-                <p>Cake is easy to prepare and always gets good. We have reduced the amount of sugar in it to make it healthier and replace...</p>
-                <a href="/Cooking/2018/11/29/banana-cake.html">Read More</a>
-            </div>
-        </article>
-
+                        <span>@recipe.Rating</span>
+                    </p>
+                    <p>@recipe.Description.Substring(0, Math.Min(recipe.Description.Length, 100))
+                        @if (recipe.Description.Length > 100)
+                         {
+                            @:...
+                        }
+                    </p>
+                    <a href="/Recipe/More/@recipe.Id">Read More</a>
+                </div>
+            </article>
+        }
     </div>
 </section>
 <section class="new-dishes">
@@ -197,9 +72,12 @@
         <hr>
     </div>
     <div class="new-dishes-images">
-        <div><img src="/images/steak.jpg" alt="steak"></div>
-        <div><img src="/images/pizza_fresca.jpg" alt="pizza-fresca"></div>
-        <div><img src="/images/Scalloped-Potatoes.jpg" alt="scalloped-potatoes"></div>
+        @foreach (var recipe in lastAddedRecipes)
+        {
+            <a href="/Recipe/More/@recipe.Id" data-img-name="@recipe.Name">
+                <img src="@recipe.ImagePath" alt="@recipe.Name">
+            </a>
+        }
     </div>
 </section>
 <section class="chefs">
