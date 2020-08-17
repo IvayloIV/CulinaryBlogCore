@@ -9,5 +9,7 @@ namespace CulinaryBlogCore.Services.Contracts
     public interface ICategoryService
     {
         List<Category> GetAll();
+
+        Category GetById(long id);
     }
 }

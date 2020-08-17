@@ -22,5 +22,13 @@ namespace CulinaryBlogCore.Utils
 
             return $"/images/{destination}/{fileName}";
         }
+
+        public static void DeleteImage(string imagePath) {
+            if (imagePath != null && imagePath.Length > 0)
+            {
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot\\{imagePath}");
+                File.Delete(filePath);
+            }
+        }
     }
 }

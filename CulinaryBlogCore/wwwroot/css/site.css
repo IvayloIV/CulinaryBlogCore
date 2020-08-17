@@ -559,13 +559,43 @@ nav .header-inner-nav li:first-of-type a {
         flex-wrap: wrap
     }
 
-        .best-receipts .best-receipts-posts article {
-            width: 26%;
-            background: #fff;
-            border-radius: 10px;
-            margin: 0 1rem 3rem;
-            position: relative
-        }
+.best-receipts-posts .fa-pen {
+    position: absolute;
+    top: 8px;
+    right: 33px;
+    z-index: 1;
+    color: #f4cb36;
+    opacity: 0.7;
+    transition: all .3s ease;
+}
+
+    .best-receipts-posts .fa-pen:hover {
+        color: #fcc600;
+        opacity: 1;
+    }
+
+.best-receipts-posts .fa-times {
+    position: absolute;
+    top: 5px;
+    right: 9px;
+    z-index: 1;
+    color: red;
+    opacity: 0.7;
+    font-size: 1.4em;
+    transition: all .3s ease;
+}
+
+    .best-receipts-posts .fa-times:hover {
+        opacity: 1;
+    }
+
+    .best-receipts .best-receipts-posts article {
+        width: 26%;
+        background: #fff;
+        border-radius: 10px;
+        margin: 0 1rem 3rem;
+        position: relative
+    }
 
 @media all and (max-width:850px) {
     .best-receipts .best-receipts-posts article {
@@ -595,6 +625,10 @@ nav .header-inner-nav li:first-of-type a {
     color: #fff;
     margin-top: .3rem;
     margin-bottom: .7rem;
+}
+
+.update-recipe input[type="file"] {
+    margin-top: 10px;
 }
 
 .best-receipts .best-receipts-posts div:first-of-type {
@@ -1748,6 +1782,11 @@ nav .header-inner-nav li:first-of-type a {
     }
 }
 
+.update-recipe img {
+    width: 47%;
+    border-radius: 19px;
+}
+
 .register .register-form {
     width: 40%;
     margin: 0 auto;
@@ -1862,6 +1901,25 @@ nav .header-inner-nav li:first-of-type a {
         font-weight: 100;
         padding: .3rem
     }
+
+.delete-recipe form {
+    text-align: center;
+}
+
+.delete-recipe form span {
+    text-transform: none;
+}
+
+.delete-recipe div {
+    margin: 7px 0;
+}
+
+.delete-recipe form img {
+    width: 100%;
+    height: auto;
+    border-radius: 19px;
+    margin-bottom: 0.7rem;
+}
 
 .register form .names label:nth-child(2) span {
     margin-left: .8rem
@@ -1988,7 +2046,19 @@ nav .header-inner-nav li:first-of-type a {
     .register form input[type=submit]:hover {
         background: rgba(255,255,255,.4);
         color: #676565;
-        border: 3px solid #676565
+        border: 3px solid #676565;
+    }
+
+.delete-recipe form input[type="submit"] {
+    background: #f44d4d;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+    .delete-recipe form input[type="submit"]:hover {
+        background: white;
+        color: #f44d4d;
+        border: 3px solid #f44d4d;
     }
 
 .register p {

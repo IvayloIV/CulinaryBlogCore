@@ -1,0 +1,39 @@
+﻿@using CulinaryBlogCore.Models.RecipeViewModels;
+@model CulinaryBlogCore.Models.RecipeViewModels.DeleteViewModel;
+
+@{
+    ViewBag.Title = "Delete recipe";
+    DeleteViewModel recipe = (DeleteViewModel)ViewData["RecipeDeleteModel"];
+}
+
+<section class="delete-recipe register">
+    <div class="register-form">
+        <div class="register-header">
+            <div><img src="/images/register-logo.png" alt="logo"></div>
+            <h2>Delete Recipe</h2>
+        </div>
+        @using (Html.BeginForm("Delete/" + recipe.Id, "Recipe", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div>
+                <span><img src="@recipe.ImagePath" alt="@recipe.Name" height="120" /></span>
+            </div>
+            <div>
+                <span>Name:</span> <span>@recipe.Name</span>
+            </div>
+            <div>
+                <span>Preparation time:</span> <span>@recipe.PreparationTime.Value.ToString("hh:mm")</span>
+            </div>
+            <div>
+                <span>Cooking time:</span> <span>@recipe.CookingTime.Value.ToString("hh:mm")</span>
+            </div>
+            <div>
+                <span>Portions:</span> <span>@recipe.Portions</span>
+            </div>
+            <div>
+                <span>Category:</span> <span>@recipe.Category.Name</span>
+            </div>
+            <input type="hidden" name="ImagePath" value="@recipe.ImagePath"/>
+            <input type="submit" value="Delete">
+        }
+    </div>
+</section>

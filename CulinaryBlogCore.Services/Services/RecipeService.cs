@@ -21,6 +21,26 @@ namespace CulinaryBlogCore.Services
             this._repository.Add<Recipe>(recipe);
         }
 
+        public void UpdateById(long id, Recipe recipe)
+        {
+            Recipe oldRecipe = this.GetById(id);
+
+            oldRecipe.Name = recipe.Name;
+            oldRecipe.Description = recipe.Description;
+            oldRecipe.PreparationTime = recipe.PreparationTime;
+            oldRecipe.CookingTime = recipe.CookingTime;
+            oldRecipe.Portions = recipe.Portions;
+            oldRecipe.ImagePath = recipe.ImagePath;
+            oldRecipe.CategoryId = recipe.CategoryId;
+
+            this._repository.Update<Recipe>(oldRecipe);
+        }
+
+        public void DeleteById(long id) {
+            Recipe recipe = this.GetById(id);
+            this._repository.Delete<Recipe>(recipe);
+        }
+
         public List<Recipe> GetByRatingWeek() {
             return this._repository.Set<Recipe>()
                 .Where(r => r.CreationTime >= DateTime.Now.AddDays(-7) && r.CreationTime <= DateTime.Now)

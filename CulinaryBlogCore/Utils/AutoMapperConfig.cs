@@ -20,6 +20,12 @@ namespace CulinaryBlogCore.Utils
 
             CreateMap<Recipe, MoreViewModel>();
             CreateMap<MoreViewModel, Recipe>();
+
+            CreateMap<Recipe, UpdateViewModel>();
+            CreateMap<UpdateViewModel, Recipe>();
+
+            CreateMap<Recipe, DeleteViewModel>();
+            CreateMap<DeleteViewModel, Recipe>();
         }
     }
 }

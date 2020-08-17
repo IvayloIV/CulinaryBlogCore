@@ -20,7 +20,13 @@ namespace CulinaryBlogCore.Services
 
         public List<Category> GetAll()
         {
-            return this._repository.Set<Category>().ToList();
+            return this._repository.Set<Category>()
+                .OrderBy(c => c.Order)
+                .ToList();
+        }
+
+        public Category GetById(long id) {
+            return this._repository.GetById<Category>(id);
         }
     }
 }

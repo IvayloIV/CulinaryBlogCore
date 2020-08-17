@@ -35,6 +35,12 @@
         @foreach (var recipe in recipesByRating)
         {
             <article>
+                <a href="/Recipe/Update/@recipe.Id">
+                    <i class="fas fa-pen"></i>
+                </a>
+                <a href="/Recipe/Delete/@recipe.Id">
+                    <i class="fas fa-times"></i>
+                </a>
                 <div>
                     <img src="@recipe.ImagePath" alt="pasta">
                 </div>

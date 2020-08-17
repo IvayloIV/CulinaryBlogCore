@@ -1,0 +1,70 @@
+﻿@using CulinaryBlogCore.Models.RecipeViewModels;
+@using CulinaryBlogCore.Models.CategoryViewModels;
+@model CulinaryBlogCore.Models.RecipeViewModels.UpdateViewModel;
+
+@{
+    ViewBag.Title = "Update recipe";
+    List<CategoryViewModel> categories = (List<CategoryViewModel>)ViewData["Categories"];
+    UpdateViewModel recipe = (UpdateViewModel)ViewData["RecipeUpdate"];
+}
+
+<section class="update-recipe create-recipe register">
+    <div class="register-form">
+        <div class="register-header">
+            <div><img src="/images/register-logo.png" alt="logo"></div>
+            <h2>Update Recipe</h2>
+        </div>
+        @using (Html.BeginForm("Update/" + recipe.Id, "Recipe", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="names">
+                <label>
+                    <span>Name</span>
+                    <input asp-for="Name" type="text" name="@Html.NameFor(r => r.Name)" value="@recipe.Name"/>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </label>
+            </div>
+            <label>
+                <span>Description</span>
+                <textarea type="text" name="@Html.NameFor(r => r.Description)">@recipe.Description</textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </label>
+            <label>
+                <span>Preparation time</span>
+                <input asp-for="PreparationTime" type="time" name="@Html.NameFor(r => r.PreparationTime)" value="@recipe.PreparationTime.Value.ToString("hh:mm")">
+                <span asp-validation-for="PreparationTime" class="text-danger"></span>
+            </label>
+            <label>
+                <span>Cooking time</span>
+                <input asp-for="CookingTime" type="time" name="@Html.NameFor(r => r.CookingTime)" value="@recipe.CookingTime.Value.ToString("hh:mm")">
+                <span asp-validation-for="CookingTime" class="text-danger"></span>
+            </label>
+            <label>
+                <span>Portions</span>
+                <input asp-for="Portions" type="number" name="@Html.NameFor(r => r.Portions)" value="@recipe.Portions">
+                <span asp-validation-for="Portions" class="text-danger"></span>
+            </label>
+            <label>
+                <span>Category</span>
+                <select name="CategoryId">
+                    @foreach (CategoryViewModel category in categories) {
+                        @if (category.Id == recipe.CategoryId) { 
+                            <option value="@category.Id" selected="selected">@category.Name</option>
+                        } else {
+                            <option value="@category.Id">@category.Name</option>
+                        }
+                        
+                     }
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </label>
+            <label>
+                <span>Current Image</span>
+                <img src="@recipe.ImagePath" alt="@recipe.Name" height="120"/>
+                <input asp-for="ImagePath" type="file" name="image" value="@recipe.ImagePath">
+                <span asp-validation-for="ImagePath" class="text-danger"></span>
+                <input type="hidden" name="oldImagePath" value="@recipe.ImagePath" />
+            </label>
+            <input type="submit" value="Update">
+        }
+    </div>
+</section>
