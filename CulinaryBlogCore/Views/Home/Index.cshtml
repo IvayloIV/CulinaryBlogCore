@@ -1,9 +1,7 @@
-﻿@using CulinaryBlogCore.Models.RecipeViewModels;
+﻿@model CulinaryBlogCore.Models.RecipeViewModels.RecipeHomeViewModel
 
 @{
     ViewData["Title"] = "Cooking";
-    List<RecipeViewModel> recipesByRating = (List<RecipeViewModel>)ViewData["RecipesByRating"];
-    List<RecipeViewModel> lastAddedRecipes = (List<RecipeViewModel>)ViewData["LastAddedRecipes"];
 }
 
 <section class="site-logo">
@@ -32,7 +30,7 @@
         <a href="/Recipe/Create">Create</a>
     </div>
     <div class="best-receipts-posts">
-        @foreach (var recipe in recipesByRating)
+        @foreach (var recipe in Model.recipesByRating)
         {
             <article>
                 <a href="/Recipe/Update/@recipe.Id">
@@ -60,16 +58,17 @@
 
                         <span>@recipe.Rating</span>
                     </p>
-                    <p>@recipe.Description.Substring(0, Math.Min(recipe.Description.Length, 100))
-                        @if (recipe.Description.Length > 100)
-                         {
-                            @:...
-                        }
-                    </p>
-                    <a href="/Recipe/More/@recipe.Id">Read More</a>
-                </div>
-            </article>
-        }
+                    <p>
+                        @recipe.Description.Substring(0, Math.Min(recipe.Description.Length, 100))
+                    @if (recipe.Description.Length > 100)
+                    {
+                        @:...
+                    }
+                </p>
+                <a href="/Recipe/More/@recipe.Id">Read More</a>
+            </div>
+        </article>
+    }
     </div>
 </section>
 <section class="new-dishes">
@@ -78,7 +77,7 @@
         <hr>
     </div>
     <div class="new-dishes-images">
-        @foreach (var recipe in lastAddedRecipes)
+        @foreach (var recipe in Model.lastAddedRecipes)
         {
             <a href="/Recipe/More/@recipe.Id" data-img-name="@recipe.Name">
                 <img src="@recipe.ImagePath" alt="@recipe.Name">

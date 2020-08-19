@@ -1394,11 +1394,8 @@ nav .header-inner-nav li:first-of-type a {
     -webkit-box-direction: normal;
     -ms-flex-direction: row;
     flex-direction: row;
-    -webkit-box-pack: space-evenly;
-    -ms-flex-pack: space-evenly;
-    justify-content: space-evenly;
     padding-bottom: 2rem;
-    width: 80%;
+    width: 90%;
     margin: 0 auto
 }
 
@@ -1419,7 +1416,7 @@ nav .header-inner-nav li:first-of-type a {
 }
 
 .receipt .receipt-main-image {
-    width: 56%;
+    width: 65%;
     margin-top: 1rem;
     overflow: hidden;
     border-radius: 10px;
@@ -1435,20 +1432,23 @@ nav .header-inner-nav li:first-of-type a {
 
 .receipt .receipt-main-products, .receipt article {
     -webkit-box-sizing: border-box;
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 .receipt .receipt-main-products {
     -webkit-box-flex: 0;
     -ms-flex: 0 1 auto;
     flex: 0 1 auto;
-    padding: 1rem
+    padding: 1rem 0 1rem 1rem;
+    width: 35%;
 }
 
 @media all and (max-width:900px) {
     .receipt .receipt-main-products {
         text-align: center;
-        padding: 0
+        padding: 0;
+        margin: 0 auto;
+        width: auto;
     }
 }
 
@@ -1473,7 +1473,6 @@ nav .header-inner-nav li:first-of-type a {
 
 .receipt .receipt-main-products div {
     text-align: right;
-    padding-right: 2rem
 }
 
 .receipt article {
@@ -1531,14 +1530,14 @@ nav .header-inner-nav li:first-of-type a {
 }
 
 .receipt article img {
-    width: auto;
-    height: 100%;
-    position: absolute;
     top: 50%;
     left: 50%;
     -webkit-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);
-    border-radius: 10px
+    border-radius: 10px;
+    position: relative;
+    height: 340px;
+    width: 512px;
 }
 
 @media all and (max-width:900px) {
@@ -2051,15 +2050,61 @@ nav .header-inner-nav li:first-of-type a {
 
 .delete-recipe form input[type="submit"] {
     background: #f44d4d;
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
+    display: inline-block;
+    margin: 0;
+    padding: 8px 12px;
 }
 
-    .delete-recipe form input[type="submit"]:hover {
-        background: white;
-        color: #f44d4d;
-        border: 3px solid #f44d4d;
-    }
+.delete-recipe form input[type="submit"]:hover {
+    background: rgba(255,255,255,.4);
+    color: #f44d4d;
+    border: 3px solid #f44d4d;
+}
+
+.modal-title {
+    display: inline-block;
+}
+
+.delete-recipe div.modal-dialog {
+    margin: 0 auto;
+}
+
+.btn-recipe-delete, .btn-recipe-update {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    padding: 0.7rem 2rem;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color .3s ease;
+    outline: none;
+}
+
+.btn-recipe-update {
+    background: #ffc11c;
+    border: 2px solid #ffc11c;
+}
+
+.btn-recipe-delete {
+    background: #f44d4d;
+    border: 2px solid #f44d4d;
+}
+
+.btn-recipe-delete:hover, .btn-recipe-update:hover {
+    background: white;
+}
+
+.btn-recipe-delete:hover {
+    color: #f44d4d;
+}
+
+.btn-recipe-update:hover {
+    color: #ffc11c;
+}
+
+.button-wrapper {
+    text-align: center;
+}
 
 .register p {
     text-align: center;
@@ -2410,7 +2455,7 @@ nav .header-inner-nav li:first-of-type a {
     background-size: cover;
     position: relative;
     height: 37rem;
-    font-size: 1.05em
+    font-size: 1.05em;
 }
 
     .dish article {
@@ -2710,3 +2755,41 @@ nav .header-inner-nav li:first-of-type a {
     .rights p span {
         color: #f8b400
     }
+
+.add-product-block {
+    display: none;
+}
+
+.receipt-main-products .fa-trash {
+    font-size: 0.8rem;
+    color: #ea7878;
+    cursor: pointer;
+    padding-right: 5px;
+}
+
+.product-input {
+    background: 0 0;
+    border: 0;
+    border-bottom: 2px solid #676565;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: 0;
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 100;
+    padding: .3rem;
+    width: 80%;
+}
+
+.product-add {
+    background: transparent;
+    color: green;
+    border-radius: 50%;
+    border: 2px solid green;
+    outline: none;
+}
+
+.add-product-button {
+    padding-right: 8px;
+}

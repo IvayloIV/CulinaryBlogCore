@@ -1,6 +1,7 @@
 ﻿using CulinaryBlogCore.Data.Models.Entities;
 using CulinaryBlogCore.Services.Contracts;
 using CulinaryBlogCore.Services.Repository.Contracts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +47,7 @@ namespace CulinaryBlogCore.Services
                 .Where(r => r.CreationTime >= DateTime.Now.AddDays(-7) && r.CreationTime <= DateTime.Now)
                 .OrderByDescending(r => r.Rating)
                 .Take(6)
+                .AsNoTracking()
                 .ToList();
         }
 
@@ -58,6 +60,13 @@ namespace CulinaryBlogCore.Services
             return this._repository.Set<Recipe>()
                 .OrderByDescending(r => r.CreationTime)
                 .Take(3)
+                .ToList();
+        }
+
+        public List<Recipe> GetByCategoryId(long categoryId) {
+            return this._repository.Set<Recipe>()
+                .Include("Products")
+                .Where(r => r.CategoryId == categoryId)
                 .ToList();
         }
     }

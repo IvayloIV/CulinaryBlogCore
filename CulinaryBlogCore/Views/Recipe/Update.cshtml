@@ -1,11 +1,8 @@
-﻿@using CulinaryBlogCore.Models.RecipeViewModels;
-@using CulinaryBlogCore.Models.CategoryViewModels;
-@model CulinaryBlogCore.Models.RecipeViewModels.UpdateViewModel;
+﻿@using CulinaryBlogCore.Models.CategoryViewModels;
+@model CulinaryBlogCore.Models.RecipeViewModels.UpdateRecipeViewModel;
 
 @{
     ViewBag.Title = "Update recipe";
-    List<CategoryViewModel> categories = (List<CategoryViewModel>)ViewData["Categories"];
-    UpdateViewModel recipe = (UpdateViewModel)ViewData["RecipeUpdate"];
 }
 
 <section class="update-recipe create-recipe register">
@@ -14,57 +11,84 @@
             <div><img src="/images/register-logo.png" alt="logo"></div>
             <h2>Update Recipe</h2>
         </div>
-        @using (Html.BeginForm("Update/" + recipe.Id, "Recipe", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("Update/" + Model.Id, "Recipe", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             <div class="names">
                 <label>
                     <span>Name</span>
-                    <input asp-for="Name" type="text" name="@Html.NameFor(r => r.Name)" value="@recipe.Name"/>
+                    <input asp-for="Name" type="text" name="@Html.NameFor(r => r.Name)" value="@Model.Name" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </label>
             </div>
             <label>
                 <span>Description</span>
-                <textarea type="text" name="@Html.NameFor(r => r.Description)">@recipe.Description</textarea>
+                <textarea type="text" name="@Html.NameFor(r => r.Description)">@Model.Description</textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </label>
             <label>
                 <span>Preparation time</span>
-                <input asp-for="PreparationTime" type="time" name="@Html.NameFor(r => r.PreparationTime)" value="@recipe.PreparationTime.Value.ToString("hh:mm")">
+                <input asp-for="PreparationTime" type="time" name="@Html.NameFor(r => r.PreparationTime)" value="@Model.PreparationTime.Value.ToString("hh:mm")">
                 <span asp-validation-for="PreparationTime" class="text-danger"></span>
             </label>
             <label>
                 <span>Cooking time</span>
-                <input asp-for="CookingTime" type="time" name="@Html.NameFor(r => r.CookingTime)" value="@recipe.CookingTime.Value.ToString("hh:mm")">
+                <input asp-for="CookingTime" type="time" name="@Html.NameFor(r => r.CookingTime)" value="@Model.CookingTime.Value.ToString("hh:mm")">
                 <span asp-validation-for="CookingTime" class="text-danger"></span>
             </label>
             <label>
                 <span>Portions</span>
-                <input asp-for="Portions" type="number" name="@Html.NameFor(r => r.Portions)" value="@recipe.Portions">
+                <input asp-for="Portions" type="number" name="@Html.NameFor(r => r.Portions)" value="@Model.Portions">
                 <span asp-validation-for="Portions" class="text-danger"></span>
             </label>
             <label>
                 <span>Category</span>
                 <select name="CategoryId">
-                    @foreach (CategoryViewModel category in categories) {
-                        @if (category.Id == recipe.CategoryId) { 
+                    @foreach (CategoryViewModel category in Model.Categories)
+                    {
+                        @if (category.Id == Model.CategoryId)
+                        {
                             <option value="@category.Id" selected="selected">@category.Name</option>
-                        } else {
+                        }
+                        else
+                        {
                             <option value="@category.Id">@category.Name</option>
                         }
-                        
-                     }
+
+                    }
                 </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </label>
             <label>
                 <span>Current Image</span>
-                <img src="@recipe.ImagePath" alt="@recipe.Name" height="120"/>
-                <input asp-for="ImagePath" type="file" name="image" value="@recipe.ImagePath">
+                <img src="@Model.ImagePath" alt="@Model.Name" height="120" />
+                <input asp-for="ImagePath" type="file" name="image" value="@Model.ImagePath">
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
-                <input type="hidden" name="oldImagePath" value="@recipe.ImagePath" />
+                <input type="hidden" name="oldImagePath" value="@Model.ImagePath" />
             </label>
-            <input type="submit" value="Update">
+            <div class="button-wrapper">
+                <button type="button" class="btn-recipe-update" data-toggle="modal" data-target="#updateRecipeModal">
+                    Update
+                </button>
+            </div>
+            <div class="modal fade" id="updateRecipeModal" tabindex="-1" role="dialog" aria-labelledby="recipeUpdateLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="recipeUpdateLabel">Update Recipe</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to update this recipe?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn btn-warning">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
     </div>
 </section>

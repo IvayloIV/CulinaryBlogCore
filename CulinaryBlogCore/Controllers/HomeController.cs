@@ -17,7 +17,9 @@ namespace CulinaryBlogCore.Controllers
         private IRecipeService _recipeService;
         private readonly IMapper _mapper;
 
-        public HomeController(IRecipeService recipeService, IMapper mapper)
+        public HomeController(
+            IRecipeService recipeService, 
+            IMapper mapper)
         {
             this._recipeService = recipeService;
             this._mapper = mapper;
@@ -27,12 +29,15 @@ namespace CulinaryBlogCore.Controllers
         {
             IList<Recipe> recipesByRating = this._recipeService.GetByRatingWeek();
             List<RecipeViewModel> recipesByRatingModel = this._mapper.Map<List<RecipeViewModel>>(recipesByRating);
-            ViewData["RecipesByRating"] = recipesByRatingModel;
 
             IList<Recipe> lastAddedRecipes = this._recipeService.GetLastAdded();
             List<RecipeViewModel> lastAddedRecipesModel = this._mapper.Map<List<RecipeViewModel>>(lastAddedRecipes);
-            ViewData["LastAddedRecipes"] = lastAddedRecipesModel;
-            return View();
+
+            RecipeHomeViewModel recipeHomeViewModel = new RecipeHomeViewModel() { 
+                recipesByRating = recipesByRatingModel,
+                lastAddedRecipes = lastAddedRecipesModel
+            };
+            return View(recipeHomeViewModel);
         }
 
         public IActionResult Error()

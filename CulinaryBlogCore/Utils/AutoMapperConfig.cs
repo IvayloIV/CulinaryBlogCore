@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CulinaryBlogCore.Data.Models.Entities;
 using CulinaryBlogCore.Models.CategoryViewModels;
+using CulinaryBlogCore.Models.ProductViewModels;
 using CulinaryBlogCore.Models.RecipeViewModels;
 
 namespace CulinaryBlogCore.Utils
@@ -12,20 +13,26 @@ namespace CulinaryBlogCore.Utils
             CreateMap<Category, CategoryViewModel>();
             CreateMap<CategoryViewModel, Category>();
 
-            CreateMap<Recipe, CreateViewModel>();
-            CreateMap<CreateViewModel, Recipe>();
+            CreateMap<Recipe, CreateRecipeViewModel>();
+            CreateMap<CreateRecipeViewModel, Recipe>();
 
             CreateMap<Recipe, RecipeViewModel>();
             CreateMap<RecipeViewModel, Recipe>();
 
-            CreateMap<Recipe, MoreViewModel>();
-            CreateMap<MoreViewModel, Recipe>();
+            CreateMap<Recipe, MoreRecipeViewModel>();
+            CreateMap<MoreRecipeViewModel, Recipe>();
 
-            CreateMap<Recipe, UpdateViewModel>();
-            CreateMap<UpdateViewModel, Recipe>();
+            CreateMap<Recipe, UpdateRecipeViewModel>();
+            CreateMap<UpdateRecipeViewModel, Recipe>();
 
-            CreateMap<Recipe, DeleteViewModel>();
-            CreateMap<DeleteViewModel, Recipe>();
+            CreateMap<Recipe, DeleteRecipeViewModel>();
+            CreateMap<DeleteRecipeViewModel, Recipe>();
+
+            CreateMap<Recipe, RecipeDetailsViewModel>();
+            CreateMap<RecipeDetailsViewModel, Recipe>();
+
+            CreateMap<Product, CreateProductViewModel>();
+            CreateMap<CreateProductViewModel, Product>();
         }
     }
 }

@@ -16,6 +16,7 @@ using CulinaryBlogCore.Services.Repository.Contracts;
 using CulinaryBlogCore.Services.Repository;
 using AutoMapper;
 using CulinaryBlogCore.Utils;
+using CulinaryBlogCore.Services.Services;
 
 namespace CulinaryBlogCore
 {
@@ -36,9 +37,15 @@ namespace CulinaryBlogCore
             services.AddDbContext<CulinaryBlogDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<CulinaryBlogDbContext>()
+                .AddDefaultTokenProviders();
+
+            // Add application services.
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductService, ProductService>();
 
             var mapperConfig = new MapperConfiguration(mc =>
             {
@@ -47,12 +54,6 @@ namespace CulinaryBlogCore
 
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
-
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<CulinaryBlogDbContext>()
-                .AddDefaultTokenProviders();
-
-            // Add application services.
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

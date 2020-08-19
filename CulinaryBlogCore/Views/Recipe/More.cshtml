@@ -1,14 +1,12 @@
-﻿@using CulinaryBlogCore.Models.RecipeViewModels;
-@model CulinaryBlogCore.Models.RecipeViewModels.MoreViewModel
+﻿@model CulinaryBlogCore.Models.RecipeViewModels.MoreRecipeViewModel
 
 @{
     ViewBag.Title = "More recipe";
-    MoreViewModel recipe = (MoreViewModel)ViewData["RecipeMore"];
 }
 
-<section class="dish" style="background: linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1)),url(@recipe.ImagePath) no-repeat center;">
+<section class="dish" style="background: linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1)),url(@Model.ImagePath) no-repeat center; background-size: cover;">
     <article>
-        <h2>@recipe.Name</h2>
-        <p>@recipe.Description</p>
+        <h2>@Model.Name</h2>
+        <p>@Model.Description</p>
     </article>
 </section>

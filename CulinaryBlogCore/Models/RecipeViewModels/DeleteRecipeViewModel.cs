@@ -3,7 +3,7 @@ using System;
 
 namespace CulinaryBlogCore.Models.RecipeViewModels
 {
-    public class DeleteViewModel
+    public class DeleteRecipeViewModel
     {
         public long Id;
 

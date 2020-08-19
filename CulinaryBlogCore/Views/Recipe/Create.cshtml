@@ -1,9 +1,7 @@
-﻿@using CulinaryBlogCore.Models.CategoryViewModels;
-@model CulinaryBlogCore.Models.RecipeViewModels.CreateViewModel
+﻿@model CulinaryBlogCore.Models.RecipeViewModels.CreateRecipeViewModel
 
 @{
     ViewBag.Title = "Create recipe";
-    List<CategoryViewModel> categories = (List<CategoryViewModel>)ViewData["Categories"];
 }
 
 <section class="create-recipe register">
@@ -45,7 +43,7 @@
                 <span>Category</span>
                 @Html.DropDownListFor(
                     x => x.CategoryId,
-                    new SelectList(categories, "Id", "Name"),
+                    new SelectList(Model.Categories, "Id", "Name"),
                     "Select one"
                 )
                 <span asp-validation-for="CategoryId" class="text-danger"></span>

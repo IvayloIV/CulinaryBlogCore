@@ -29,13 +29,16 @@ namespace CulinaryBlogCore.Controllers
         // GET: Recipe/Create
         public ActionResult Create()
         {
-            ViewData["Categories"] = this.GetCategories();
-            return View();
+            CreateRecipeViewModel createViewModel = new CreateRecipeViewModel()
+            {
+                Categories = this.GetCategories()
+            };
+            return View(createViewModel);
         }
 
         // POST: Recipe/Create
         [HttpPost]
-        public async Task<ActionResult> Create(CreateViewModel recipeViewModel, IFormFile image)
+        public async Task<ActionResult> Create(CreateRecipeViewModel recipeViewModel, IFormFile image)
         {
             if (ModelState.IsValid)
             {
@@ -44,36 +47,39 @@ namespace CulinaryBlogCore.Controllers
                 this._recipeService.Add(this._mapper.Map<Recipe>(recipeViewModel));
                 return RedirectToAction("Index", "Home");
             }
-            ViewData["Categories"] = this.GetCategories();
+            recipeViewModel.Categories = this.GetCategories();
             return View(recipeViewModel);
         }
 
-        // GET: Recipe/Details/Salad
-        public ActionResult Details(string recipeType)
+        // GET: Recipe/Details/id
+        public ActionResult Details(long id)
         {
-            return View();
+            List<Recipe> recipes = this._recipeService.GetByCategoryId(id);
+            RecipeDetailsViewModel recipeDetailsViewModel = new RecipeDetailsViewModel();
+            recipeDetailsViewModel.Recipes = this._mapper.Map<List<RecipeDetailsViewModel>>(recipes);
+            return View(recipeDetailsViewModel);
         }
 
         // GET: Recipe/More/Id
         public ActionResult More(long id)
         {
             Recipe recipe = this._recipeService.GetById(id);
-            ViewData["RecipeMore"] = this._mapper.Map<MoreViewModel>(recipe);
-            return View();
+            MoreRecipeViewModel moreViewModel = this._mapper.Map<MoreRecipeViewModel>(recipe);
+            return View(moreViewModel);
         }
 
         // GET: Recipe/Update/Id
         public ActionResult Update(long id)
         {
             Recipe recipe = this._recipeService.GetById(id);
-            ViewData["Categories"] = this.GetCategories();
-            ViewData["RecipeUpdate"] = this._mapper.Map<UpdateViewModel>(recipe);
-            return View();
+            UpdateRecipeViewModel updateViewModel = this._mapper.Map<UpdateRecipeViewModel>(recipe);
+            updateViewModel.Categories = this.GetCategories();
+            return View(updateViewModel);
         }
 
         // POST: Recipe/Update/Id
         [HttpPost]
-        public async Task<ActionResult> Update(long id, UpdateViewModel recipeViewModel, IFormFile image, String oldImagePath)
+        public async Task<ActionResult> Update(long id, UpdateRecipeViewModel recipeViewModel, IFormFile image, String oldImagePath)
         {
             if (ModelState.IsValid)
             {
@@ -90,8 +96,7 @@ namespace CulinaryBlogCore.Controllers
             }
             recipeViewModel.Id = id;
             recipeViewModel.ImagePath = oldImagePath;
-            ViewData["RecipeUpdate"] = recipeViewModel;
-            ViewData["Categories"] = this.GetCategories();
+            recipeViewModel.Categories = this.GetCategories();
             return View(recipeViewModel);
         }
 
@@ -100,8 +105,8 @@ namespace CulinaryBlogCore.Controllers
         {
             Recipe recipe = this._recipeService.GetById(id);
             recipe.Category = this._categoryService.GetById(recipe.CategoryId);
-            ViewData["RecipeDeleteModel"] = this._mapper.Map<DeleteViewModel>(recipe);
-            return View();
+            DeleteRecipeViewModel deleteViewModel = this._mapper.Map<DeleteRecipeViewModel>(recipe);
+            return View(deleteViewModel);
         }
 
         // POST: Recipe/Delete/Id

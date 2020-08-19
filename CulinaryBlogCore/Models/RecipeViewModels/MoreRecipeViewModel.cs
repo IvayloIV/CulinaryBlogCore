@@ -1,6 +1,6 @@
 ﻿namespace CulinaryBlogCore.Models.RecipeViewModels
 {
-    public class MoreViewModel
+    public class MoreRecipeViewModel
     {
         public long Id { get; set; }
 

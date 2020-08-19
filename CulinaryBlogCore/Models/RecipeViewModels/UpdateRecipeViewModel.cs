@@ -1,9 +1,11 @@
-﻿using System;
+﻿using CulinaryBlogCore.Models.CategoryViewModels;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CulinaryBlogCore.Models.RecipeViewModels
 {
-    public class UpdateViewModel
+    public class UpdateRecipeViewModel
     {
         public long Id;
 
@@ -35,5 +37,7 @@ namespace CulinaryBlogCore.Models.RecipeViewModels
         [Display(Name = "Category")]
         [Required]
         public long? CategoryId { get; set; }
+
+        public List<CategoryViewModel> Categories { get; set; }
     }
 }
