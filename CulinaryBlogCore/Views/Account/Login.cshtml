@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Http.Authentication
 @model LoginViewModel
+@using CulinaryBlogCore.Data.Models.Identity;
 @inject SignInManager<ApplicationUser> SignInManager
 
 @{
@@ -17,9 +18,9 @@
             <i class="fas fa-utensils"></i>
         </div>
         <div class="login-content">
-            <form action="#">
+            <form  method="POST">
                 <label>
-                    <input type="text" name="name" placeholder="Name">
+                    <input type="text" name="email" placeholder="Email">
                     <i class="fas fa-user"></i>
                 </label>
                 <label>

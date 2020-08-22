@@ -9,5 +9,7 @@ namespace CulinaryBlogCore.Services.Contracts
         void RemoveById(long id);
 
         Product GetById(long id);
+
+        bool CheckIfExist(long recipeId, string productName);
     }
 }

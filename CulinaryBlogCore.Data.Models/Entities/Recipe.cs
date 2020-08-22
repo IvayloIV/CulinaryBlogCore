@@ -21,7 +21,11 @@ namespace CulinaryBlogCore.Data.Models.Entities
 
         public DateTime CookingTime { get; set; }
 
-        public double Rating { get; set; }
+        public long Rating { get; set; }
+
+        public long VoteCount { get; set; }
+
+        public long ViewCount { get; set; }
 
         public int Portions { get; set; }
 

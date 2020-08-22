@@ -10,6 +10,8 @@
 
         public string ImagePath { get; set; }
 
-        public double Rating { get; set; }
+        public long Rating { get; set; }
+
+        public long VoteCount { get; set; }
     }
 }

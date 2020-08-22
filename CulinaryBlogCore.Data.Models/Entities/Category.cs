@@ -14,6 +14,8 @@ namespace CulinaryBlogCore.Data.Models.Entities
 
         public int Order { get; set; }
 
+        public string BackgroundImgPath { get; set; }
+
         public virtual ICollection<Recipe> Recipes { get; set; }
     }
 }

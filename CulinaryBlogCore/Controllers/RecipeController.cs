@@ -27,6 +27,7 @@ namespace CulinaryBlogCore.Controllers
         }
 
         // GET: Recipe/Create
+        [Route("Administration/[controller]/[action]")]
         public ActionResult Create()
         {
             CreateRecipeViewModel createViewModel = new CreateRecipeViewModel()
@@ -56,6 +57,7 @@ namespace CulinaryBlogCore.Controllers
         {
             List<Recipe> recipes = this._recipeService.GetByCategoryId(id);
             RecipeDetailsViewModel recipeDetailsViewModel = new RecipeDetailsViewModel();
+            recipeDetailsViewModel.Category = this._categoryService.GetById(id);
             recipeDetailsViewModel.Recipes = this._mapper.Map<List<RecipeDetailsViewModel>>(recipes);
             return View(recipeDetailsViewModel);
         }
@@ -63,7 +65,7 @@ namespace CulinaryBlogCore.Controllers
         // GET: Recipe/More/Id
         public ActionResult More(long id)
         {
-            Recipe recipe = this._recipeService.GetById(id);
+            Recipe recipe = this._recipeService.UpdateViewCount(id);
             MoreRecipeViewModel moreViewModel = this._mapper.Map<MoreRecipeViewModel>(recipe);
             return View(moreViewModel);
         }
@@ -118,6 +120,13 @@ namespace CulinaryBlogCore.Controllers
                 this._recipeService.DeleteById(id);
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public double ChangeRating(long id, long newRating)
+        {
+            Recipe recipe = this._recipeService.UpdateByRating(id, newRating);
+            return recipe.Rating / (double)recipe.VoteCount;
         }
 
         private List<CategoryViewModel> GetCategories()

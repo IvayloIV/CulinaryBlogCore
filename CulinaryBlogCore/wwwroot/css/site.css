@@ -659,42 +659,50 @@ nav .header-inner-nav li:first-of-type a {
 }
 
     .best-receipts .best-receipts-posts div:last-of-type h4 {
-        margin: 1rem 0 .5rem
+        margin-top: 1rem;
+        margin-bottom: 0;
     }
 
     .best-receipts .best-receipts-posts div:last-of-type i {
         color: #ffc11c
     }
 
-    .best-receipts .best-receipts-posts div:last-of-type .rating {
+    .best-receipts .best-receipts-posts div:last-of-type .rating, .receipt .rating{
         margin: 0;
-        color: #7f7f7f
+        color: #7f7f7f;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding-bottom: 0.3rem;
     }
 
-        .best-receipts .best-receipts-posts div:last-of-type .rating span {
+        .best-receipts .best-receipts-posts div:last-of-type .rating span, .receipt .rating span {
             font-weight: 500;
-            margin-left: .4rem
         }
 
-    .best-receipts .best-receipts-posts div:last-of-type a {
-        background: 0 0;
-        border: 2px solid #ffc11c;
-        text-decoration: none;
-        padding: .6rem 1.7rem;
-        border-radius: 3px;
-        cursor: pointer;
-        outline: 0;
-        font-size: .95rem;
-        font-weight: 600;
-        color: #766f75;
-        margin-top: .3rem;
-        margin-bottom: .7rem;
-        -webkit-transition: all .3s ease;
-        transition: all .3s ease;
-        position: absolute;
-        bottom: .8rem;
-        left: 2rem
-    }
+        .best-receipts .best-receipts-posts div:last-of-type .rating > span:last-child, .receipt .rating > span:last-child {
+            margin-left: 10px;
+        }
+
+            .best-receipts .best-receipts-posts div:last-of-type a {
+                background: 0 0;
+                border: 2px solid #ffc11c;
+                text-decoration: none;
+                padding: .6rem 1.7rem;
+                border-radius: 3px;
+                cursor: pointer;
+                outline: 0;
+                font-size: .95rem;
+                font-weight: 600;
+                color: #766f75;
+                margin-top: .3rem;
+                margin-bottom: .7rem;
+                -webkit-transition: all .3s ease;
+                transition: all .3s ease;
+                position: absolute;
+                bottom: .8rem;
+                left: 2rem
+            }
 
         .best-receipts .best-receipts-posts div:last-of-type a:hover {
             background: #ffc11c;
@@ -1262,18 +1270,6 @@ nav .header-inner-nav li:first-of-type a {
     }
 }
 
-.salads {
-    background: url(../images/Salads/background.jpg) no-repeat center fixed
-}
-
-.pizza {
-    background: url(../images/Pizza/background2.jpg) no-repeat center fixed
-}
-
-.desserts {
-    background: url(../images/Dessert/background.jpg) no-repeat center fixed
-}
-
 .receipt {
     background-size: cover;
     margin: 0 auto;
@@ -1564,11 +1560,11 @@ nav .header-inner-nav li:first-of-type a {
     color: #ffc11c
 }
 
-.receipt article .votes span {
+/*.receipt article .votes span {
     margin-left: .3rem;
     font-weight: 500;
     color: #7f7f7f
-}
+}*/
 
 .receipt article .votes p {
     color: #666161
@@ -2791,5 +2787,38 @@ nav .header-inner-nav li:first-of-type a {
 }
 
 .add-product-button {
-    padding-right: 8px;
+    position: relative;
+    right: 8px;
+    color: #337ab7;
+    cursor: pointer;
+}
+
+.error-message-details {
+    display: none;
+    color: red;
+    font-size: 0.8rem;
+    text-align: left;
+    text-align: center;
+}
+
+.ratring-stars {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+}
+
+.ratring-stars > span {
+    display: inline-block;
+    position: relative;
+    font-size: 1.8rem;
+    margin: 0;
+    color: #FFC11C;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.ratring-stars > span:hover:before,
+.ratring-stars > span:hover ~ span:before {
+    content: "\2605";
+    position: absolute;
+    color: #FFC11C;
 }

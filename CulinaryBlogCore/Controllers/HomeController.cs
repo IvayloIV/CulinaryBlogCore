@@ -9,6 +9,9 @@ using CulinaryBlogCore.Services.Contracts;
 using AutoMapper;
 using CulinaryBlogCore.Data.Models.Entities;
 using CulinaryBlogCore.Models.RecipeViewModels;
+using CulinaryBlogCore.Data.Models.Identity;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace CulinaryBlogCore.Controllers
 {
@@ -25,7 +28,7 @@ namespace CulinaryBlogCore.Controllers
             this._mapper = mapper;
         }
 
-        public IActionResult Index()
+        public ActionResult Index()
         {
             IList<Recipe> recipesByRating = this._recipeService.GetByRatingWeek();
             List<RecipeViewModel> recipesByRatingModel = this._mapper.Map<List<RecipeViewModel>>(recipesByRating);

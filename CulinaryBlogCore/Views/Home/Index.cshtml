@@ -45,18 +45,12 @@
                 <div>
                     <h4>@recipe.Name</h4>
                     <p class="rating">
+                        <span class="ratring-stars" data-recipe-id="@recipe.Id">
+                            @for (int i = 5; i >= 1; i--)
+                            {<span class="rating-star" data-rating="@i">☆</span>}
+                        </span>
 
-                        @for (int i = 0; i < Math.Round(recipe.Rating); i++)
-                        {
-                            <i class="fas fa-star"></i>
-                        }
-
-                        @for (int i = (int)Math.Round(recipe.Rating); i < 5; i++)
-                        {
-                            <i class="far fa-star"></i>
-                        }
-
-                        <span>@recipe.Rating</span>
+                        <span class="recipe-vote">@Html.Raw(Math.Truncate(recipe.Rating / (double)Math.Max(recipe.VoteCount, 1) * 100) / 100) (@recipe.VoteCount)</span>
                     </p>
                     <p>
                         @recipe.Description.Substring(0, Math.Min(recipe.Description.Length, 100))

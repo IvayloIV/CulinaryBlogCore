@@ -14,20 +14,27 @@ namespace CulinaryBlogCore.Controllers
     public class ProductController : Controller
     {
         public readonly IProductService _productService;
+        private readonly IRecipeService _recipeService;
         private readonly IMapper _mapper;
 
-        public ProductController(IProductService productService,
+        public ProductController(
+            IProductService productService,
+            IRecipeService recipeService,
             IMapper mapper)
         {
             this._productService = productService;
+            this._recipeService = recipeService;
             this._mapper = mapper;
         }
 
         // POST: Product/Create
         [HttpPost]
-        public long Create(CreateProductViewModel createProductViewModel)
+        public long Create(CreateProductViewModel cpvm)
         {
-            Product product = this._mapper.Map<Product>(createProductViewModel);
+            Product product = this._mapper.Map<Product>(cpvm);
+            if (this._productService.CheckIfExist(cpvm.RecipeId, cpvm.Name)) {
+                return -1;
+            }
             this._productService.Add(product);
             return product.Id;
         }

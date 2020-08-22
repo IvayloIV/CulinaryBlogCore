@@ -18,5 +18,9 @@ namespace CulinaryBlogCore.Services.Contracts
         List<Recipe> GetLastAdded();
 
         List<Recipe> GetByCategoryId(long categoryId);
+
+        Recipe UpdateByRating(long recipeId, long rating);
+
+        Recipe UpdateViewCount(long recipeId);
     }
 }
