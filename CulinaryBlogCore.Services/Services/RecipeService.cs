@@ -45,7 +45,8 @@ namespace CulinaryBlogCore.Services
         public List<Recipe> GetByRatingWeek() {
             return this._repository.Set<Recipe>()
                 .Where(r => r.CreationTime >= DateTime.Now.AddDays(-7) && r.CreationTime <= DateTime.Now)
-                .OrderByDescending(r => r.Rating / Math.Max(r.VoteCount, 1))
+                .Include("UserRecipeRatings")
+                .OrderByDescending(r => r.UserRecipeRatings.Sum(ur => ur.Rating) / (double)Math.Max(r.UserRecipeRatings.Count, 1))
                 .Take(6)
                 .AsNoTracking()
                 .ToList();
@@ -55,6 +56,7 @@ namespace CulinaryBlogCore.Services
             return this._repository.Set<Recipe>()
                 .Include("Category")
                 .Include("Products")
+                .Include("UserRecipeRatings")
                 .Where(r => r.Id == id)
                 .First();
         }
@@ -62,6 +64,7 @@ namespace CulinaryBlogCore.Services
         public List<Recipe> GetLastAdded()
         {
             return this._repository.Set<Recipe>()
+                .Include("UserRecipeRatings")
                 .OrderByDescending(r => r.CreationTime)
                 .Take(3)
                 .ToList();
@@ -74,12 +77,15 @@ namespace CulinaryBlogCore.Services
                 .ToList();
         }
 
-        public Recipe UpdateByRating(long recipeId, long rating) {
-            Recipe recipe = this.GetById(recipeId);
-            recipe.Rating += rating;
-            recipe.VoteCount++;
-            this._repository.Update<Recipe>(recipe);
-            return recipe;
+        public Recipe UpdateByRating(UserRecipeRating recipeRating) {
+            this._repository.Add<UserRecipeRating>(recipeRating);
+            return this.GetById(recipeRating.RecipeId);
+        }
+
+        public List<UserRecipeRating> GetRecipeRatingByUser(string userId) {
+            return this._repository.Set<UserRecipeRating>()
+                .Where(r => r.UserId == userId)
+                .ToList();
         }
 
         public Recipe UpdateViewCount(long recipeId) {

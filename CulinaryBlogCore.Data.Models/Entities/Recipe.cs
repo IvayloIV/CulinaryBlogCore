@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CulinaryBlogCore.Data.Models.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,10 +22,6 @@ namespace CulinaryBlogCore.Data.Models.Entities
 
         public DateTime CookingTime { get; set; }
 
-        public long Rating { get; set; }
-
-        public long VoteCount { get; set; }
-
         public long ViewCount { get; set; }
 
         public int Portions { get; set; }
@@ -39,6 +36,12 @@ namespace CulinaryBlogCore.Data.Models.Entities
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
 
+        public string UserId { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
+
         public virtual ICollection<Product> Products { get; set; }
+
+        public virtual ICollection<UserRecipeRating> UserRecipeRatings { get; set; }
     }
 }

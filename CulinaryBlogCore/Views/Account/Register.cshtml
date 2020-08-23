@@ -3,34 +3,43 @@
     ViewData["Title"] = "Register";
 }
 
-<h2>@ViewData["Title"]</h2>
-
-<div class="row">
-    <div class="col-md-4">
-        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
-            <h4>Create a new account.</h4>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
+<section class="register">
+    <div class="register-form">
+        <div class="register-header">
+            <div><img src="/images/register-logo.png" alt="logo"></div>
+            <h2>Register</h2>
+        </div>
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+        { 
+            <div>
+                <label>
+                    <span>Name</span>
+                    <input asp-for="UserName" type="text" name="@Html.NameFor(r => r.UserName)" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </label>
+            </div>
+            <label>
+                <span>Email</span>
+                <input asp-for="Email" type="email" name="@Html.NameFor(r => r.Email)" />
                 <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
+            </label>
+            <label>
+                <span>Phone</span>
+                <input asp-for="PhoneNumber" type="number" name="@Html.NameFor(r => r.PhoneNumber)" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </label>
+            <label>
+                <span>Password</span>
+                <input asp-for="Password" type="password" name="@Html.NameFor(r => r.Password)" />
                 <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
+            </label>
+            <label>
+                <span>Confirm password</span>
+                <input asp-for="ConfirmPassword" type="password" name="@Html.NameFor(r => r.ConfirmPassword)" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-default">Register</button>
-        </form>
+            </label>
+            <input type="submit" value="Register">
+        }
+        <p><a href="/Account/Login/">Already have registration? <i class="fas fa-arrow-right"></i></a></p>
     </div>
-</div>
-
-@section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-}
+</section>

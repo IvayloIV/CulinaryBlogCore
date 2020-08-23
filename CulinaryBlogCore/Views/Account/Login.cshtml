@@ -18,25 +18,24 @@
             <i class="fas fa-utensils"></i>
         </div>
         <div class="login-content">
-            <form  method="POST">
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+            {
                 <label>
-                    <input type="text" name="email" placeholder="Email">
+                    <input asp-for="UserName" type="text" name="@Html.NameFor(r => r.UserName)" placeholder="Username"/>
                     <i class="fas fa-user"></i>
+                    <span asp-validation-for="UserName" class="text-danger"></span>
                 </label>
                 <label>
-                    <input type="password" name="password" placeholder="Password">
+                    <input asp-for="Password" type="password" name="@Html.NameFor(r => r.Password)" placeholder="Password" />
                     <i class="fas fa-lock"></i>
+                    <span asp-validation-for="Password" class="text-danger"></span>
                 </label>
                 <label>
-                    <input type="checkbox">
+                    <input asp-for="RememberMe" type="checkbox" name="@Html.NameFor(r => r.RememberMe)">
                     <span>Remember me</span>
                 </label>
                 <input type="submit" value="Login">
-            </form>
-            <div class="media">
-                <div class="fb-icon"><i class="fab fa-facebook-f"></i> Facebook</div>
-                <div class="google-icon"><i class="fab fa-google-plus-g"></i> Google+</div>
-            </div>
+            }
         </div>
     </div>
 </section>

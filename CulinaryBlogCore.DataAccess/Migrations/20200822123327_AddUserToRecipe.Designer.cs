@@ -4,14 +4,16 @@ using CulinaryBlogCore.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CulinaryBlogCore.DataAccess.Migrations
 {
     [DbContext(typeof(CulinaryBlogDbContext))]
-    partial class CulinaryBlogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200822123327_AddUserToRecipe")]
+    partial class AddUserToRecipe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,9 +75,13 @@ namespace CulinaryBlogCore.DataAccess.Migrations
 
                     b.Property<DateTime>("PreparationTime");
 
+                    b.Property<long>("Rating");
+
                     b.Property<string>("UserId");
 
                     b.Property<long>("ViewCount");
+
+                    b.Property<long>("VoteCount");
 
                     b.HasKey("Id");
 
@@ -84,21 +90,6 @@ namespace CulinaryBlogCore.DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Recipe");
-                });
-
-            modelBuilder.Entity("CulinaryBlogCore.Data.Models.Entities.UserRecipeRating", b =>
-                {
-                    b.Property<string>("UserId");
-
-                    b.Property<long>("RecipeId");
-
-                    b.Property<int>("Rating");
-
-                    b.HasKey("UserId", "RecipeId");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("UserRecipeRating");
                 });
 
             modelBuilder.Entity("CulinaryBlogCore.Data.Models.Identity.ApplicationUser", b =>
@@ -278,19 +269,6 @@ namespace CulinaryBlogCore.DataAccess.Migrations
                     b.HasOne("CulinaryBlogCore.Data.Models.Identity.ApplicationUser", "User")
                         .WithMany("Recipes")
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("CulinaryBlogCore.Data.Models.Entities.UserRecipeRating", b =>
-                {
-                    b.HasOne("CulinaryBlogCore.Data.Models.Entities.Recipe", "Recipe")
-                        .WithMany("UserRecipeRatings")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("CulinaryBlogCore.Data.Models.Identity.ApplicationUser", "User")
-                        .WithMany("UserRecipeRatings")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

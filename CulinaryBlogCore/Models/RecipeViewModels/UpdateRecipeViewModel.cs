@@ -38,6 +38,8 @@ namespace CulinaryBlogCore.Models.RecipeViewModels
         [Required]
         public long? CategoryId { get; set; }
 
+        public string UserId { get; set; }
+
         public List<CategoryViewModel> Categories { get; set; }
     }
 }

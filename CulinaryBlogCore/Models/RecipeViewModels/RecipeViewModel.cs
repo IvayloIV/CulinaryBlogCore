@@ -10,8 +10,12 @@
 
         public string ImagePath { get; set; }
 
-        public long Rating { get; set; }
+        public string Rating { get; set; }
 
         public long VoteCount { get; set; }
+
+        public string UserId { get; set; }
+
+        public long? UserRating { get; set; }
     }
 }

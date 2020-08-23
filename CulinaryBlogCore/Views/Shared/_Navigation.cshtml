@@ -11,7 +11,14 @@
         </li>
         <li><a asp-controller="Trick" asp-action="Index">Tricks</a></li>
         <li><a asp-controller="Gallery" asp-action="Index">Gallery</a></li>
-        <li><a asp-controller="Account" asp-action="Login">Login</a></li>
-        <li><a asp-controller="Account" asp-action="Register">Register</a></li>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li><a asp-controller="Account" asp-action="Logout">Logout</a></li>
+        }
+        else
+        {
+            <li><a asp-controller="Account" asp-action="Login">Login</a></li>
+            <li><a asp-controller="Account" asp-action="Register">Register</a></li>
+        }
     </ul>
 </nav>

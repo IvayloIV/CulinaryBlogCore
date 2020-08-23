@@ -7,5 +7,7 @@ namespace CulinaryBlogCore.Models.RecipeViewModels
         public List<RecipeViewModel> recipesByRating { get; set; }
 
         public List<RecipeViewModel> lastAddedRecipes { get; set; }
+
+        public string CurrUserId { get; set; }
     }
 }

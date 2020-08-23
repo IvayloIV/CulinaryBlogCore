@@ -65,6 +65,7 @@
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
                 <input type="hidden" name="oldImagePath" value="@Model.ImagePath" />
             </label>
+            <input asp-for="UserId" type="hidden" name="@Html.NameFor(r => r.UserId)" value="@Model.UserId">
             <div class="button-wrapper">
                 <button type="button" class="btn-recipe-update" data-toggle="modal" data-target="#updateRecipeModal">
                     Update

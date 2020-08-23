@@ -19,7 +19,9 @@ namespace CulinaryBlogCore.Services.Contracts
 
         List<Recipe> GetByCategoryId(long categoryId);
 
-        Recipe UpdateByRating(long recipeId, long rating);
+        Recipe UpdateByRating(UserRecipeRating recipeRating);
+
+        List<UserRecipeRating> GetRecipeRatingByUser(string userId);
 
         Recipe UpdateViewCount(long recipeId);
     }

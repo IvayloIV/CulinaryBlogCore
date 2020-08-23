@@ -26,43 +26,53 @@
         <h2>Best recipes of the week</h2>
         <hr>
     </div>
-    <div class="create-recipe-button">
-        <a href="/Recipe/Create">Create</a>
-    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="create-recipe-button">
+            <a href="/Recipe/Create">Create</a>
+        </div>
+    }
     <div class="best-receipts-posts">
         @foreach (var recipe in Model.recipesByRating)
         {
             <article>
-                <a href="/Recipe/Update/@recipe.Id">
-                    <i class="fas fa-pen"></i>
-                </a>
-                <a href="/Recipe/Delete/@recipe.Id">
-                    <i class="fas fa-times"></i>
-                </a>
+                @if (User.IsInRole("Admin") || Model.CurrUserId == recipe.UserId)
+                {
+                    <a href="/Recipe/Update/@recipe.Id">
+                        <i class="fas fa-pen"></i>
+                    </a>
+                    <a href="/Recipe/Delete/@recipe.Id">
+                        <i class="fas fa-times"></i>
+                    </a>
+                }
                 <div>
                     <img src="@recipe.ImagePath" alt="pasta">
                 </div>
                 <div>
                     <h4>@recipe.Name</h4>
-                    <p class="rating">
-                        <span class="ratring-stars" data-recipe-id="@recipe.Id">
-                            @for (int i = 5; i >= 1; i--)
-                            {<span class="rating-star" data-rating="@i">☆</span>}
-                        </span>
-
-                        <span class="recipe-vote">@Html.Raw(Math.Truncate(recipe.Rating / (double)Math.Max(recipe.VoteCount, 1) * 100) / 100) (@recipe.VoteCount)</span>
+                    <p class="@if (recipe.UserRating == 0) { <text>rating</text> } else { <text>rating-already</text> } ">
+                        @if (User.Identity.IsAuthenticated && recipe.UserRating == 0 && Model.CurrUserId != recipe.UserId) {
+                            <span class="ratring-stars" data-recipe-id="@recipe.Id">
+                                @for (int i = 5; i >= 1; i--){<span class="rating-star" data-rating="@i">☆</span>}
+                            </span>
+                        } else if (User.Identity.IsAuthenticated && Model.CurrUserId != recipe.UserId) {
+                            @for (int i = 1; i <= 5; i++){<span class="rating-blocked">@if(i <= recipe.UserRating){<text>★</text>}else{<text>☆</text>}</span>}
+                        } else {
+                            <span class="rating-text">Rating: </span>
+                        }
+                        <span class="recipe-vote">@recipe.Rating (@recipe.VoteCount)</span>
                     </p>
                     <p>
                         @recipe.Description.Substring(0, Math.Min(recipe.Description.Length, 100))
-                    @if (recipe.Description.Length > 100)
-                    {
-                        @:...
-                    }
-                </p>
-                <a href="/Recipe/More/@recipe.Id">Read More</a>
-            </div>
-        </article>
-    }
+                        @if (recipe.Description.Length > 100)
+                        {
+                            <text>...</text>
+                        }
+                    </p>
+                    <a href="/Recipe/More/@recipe.Id">Read More</a>
+                </div>
+            </article>
+        }
     </div>
 </section>
 <section class="new-dishes">

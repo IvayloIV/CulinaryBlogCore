@@ -208,7 +208,7 @@ h4 {
 
 .header .header-logo {
     display: grid;
-    grid-template-columns: 15% auto;
+    grid-template-columns: 15% 31% auto;
     -webkit-animation: slideleft .6s ease forwards;
     animation: slideleft .6s ease forwards
 }
@@ -1788,7 +1788,7 @@ nav .header-inner-nav li:first-of-type a {
     background: rgba(255,255,255,.8);
     -webkit-box-shadow: 0 .5em 1em 0 rgba(51,51,51,.25);
     box-shadow: 0 .5em 1em 0 rgba(51,51,51,.25);
-    padding: 3rem;
+    padding: 3rem 3rem 0.3rem 3rem;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     position: relative
@@ -2032,7 +2032,7 @@ nav .header-inner-nav li:first-of-type a {
     cursor: pointer;
     outline: 0;
     font-weight: 600;
-    margin: 1rem auto .7rem;
+    margin: 2rem auto .7rem;
     -webkit-transition: all .3s ease;
     transition: all .3s ease;
     border: 3px solid transparent
@@ -2821,4 +2821,48 @@ nav .header-inner-nav li:first-of-type a {
     content: "\2605";
     position: absolute;
     color: #FFC11C;
+}
+
+.rating-already {
+    display: flex;
+    align-items: center;
+    padding-bottom: 0.3rem;
+    margin-bottom: 0;
+}
+
+.rating-already .rating-blocked {
+    display: inline-block;
+    position: relative;
+    font-size: 1.8rem;
+    margin: 0;
+    color: #FFC11C;
+    font-weight: 500;
+}
+
+.rating-already .recipe-vote {
+    margin: 0;
+    color: #7f7f7f;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.best-receipts .best-receipts-posts div:last-of-type .rating span.rating-text {
+    color: #FFC11C;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.rating-text + .recipe-vote {
+    margin-top: 8px;
+}
+
+.log-user {
+    font-style: italic;
+    color: #ffbc00;
+    font-weight: 500;
+    font-size: 1.2rem;
+    border-left: 2px solid;
+    padding-left: 4px;
 }

@@ -17,6 +17,7 @@ using CulinaryBlogCore.Services.Repository;
 using AutoMapper;
 using CulinaryBlogCore.Utils;
 using CulinaryBlogCore.Services.Services;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace CulinaryBlogCore
 {
@@ -41,6 +42,15 @@ namespace CulinaryBlogCore
                 .AddEntityFrameworkStores<CulinaryBlogDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 3;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            });
+
             // Add application services.
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IRecipeService, RecipeService>();
@@ -59,6 +69,8 @@ namespace CulinaryBlogCore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            // Seed data on application startup
+
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();

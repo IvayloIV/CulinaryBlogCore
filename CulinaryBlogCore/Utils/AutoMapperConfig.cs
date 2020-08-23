@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using CulinaryBlogCore.Data.Models.Entities;
+using CulinaryBlogCore.Data.Models.Identity;
+using CulinaryBlogCore.Models.AccountViewModels;
 using CulinaryBlogCore.Models.CategoryViewModels;
 using CulinaryBlogCore.Models.ProductViewModels;
 using CulinaryBlogCore.Models.RecipeViewModels;
@@ -33,6 +35,9 @@ namespace CulinaryBlogCore.Utils
 
             CreateMap<Product, CreateProductViewModel>();
             CreateMap<CreateProductViewModel, Product>();
+
+            CreateMap<UserRecipeRating, RecipeRatingViewModel>();
+            CreateMap<RecipeRatingViewModel, UserRecipeRating>();
         }
     }
 }
