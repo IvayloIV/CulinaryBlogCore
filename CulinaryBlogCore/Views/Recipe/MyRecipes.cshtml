@@ -2,10 +2,10 @@
 @model CulinaryBlogCore.Models.RecipeViewModels.RecipeDetailsViewModel;
 
 @{
-    ViewData["Title"] = "Details Recipe";
+    ViewData["Title"] = "My Recipes";
     ViewData["CurrUserId"] = Model.CurrUserId;
 }
-<section class="receipt @Model.Category.Name" style="background: url( @Model.Category.BackgroundImgPath ) no-repeat center fixed; background-size: cover;">
+<section class="receipt salads">
     @foreach (RecipeDetailsViewModel recipe in Model.Recipes)
     {
         @Html.Partial("RecipePartial", recipe)

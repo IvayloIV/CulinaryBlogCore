@@ -31,7 +31,7 @@
             .attr('data-toggle', 'modal').attr('data-target', '#deleteProductModal')
             .append($('<i>').addClass('fas fa-trash'));
         let liItem = $('<li>').text(inputField.val()).val(res).css('display', 'none')
-            .prepend(removeItem.on('click', moveIdToModel));
+            .prepend(" ").prepend(removeItem.on('click', moveIdToModel));
 
         productList.append(liItem);
         inputField.val('');

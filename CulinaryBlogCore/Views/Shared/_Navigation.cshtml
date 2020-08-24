@@ -9,6 +9,10 @@
                 <li><a href="/Recipe/Details/3">Desserts</a></li>
             </ul>
         </li>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li><a asp-controller="Recipe" asp-action="MyRecipes">My Recipes</a></li>
+        }
         <li><a asp-controller="Trick" asp-action="Index">Tricks</a></li>
         <li><a asp-controller="Gallery" asp-action="Index">Gallery</a></li>
         @if (User.Identity.IsAuthenticated)

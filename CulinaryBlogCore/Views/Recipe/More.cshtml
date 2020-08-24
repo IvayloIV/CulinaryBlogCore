@@ -1,72 +1,11 @@
-﻿@model CulinaryBlogCore.Models.RecipeViewModels.MoreRecipeViewModel
+﻿@model CulinaryBlogCore.Models.RecipeViewModels.RecipeDetailsViewModel
 
 @{
     ViewBag.Title = "More recipe";
+    ViewData["CurrUserId"] = Model.CurrUserId;
 }
 
 <section class="receipt @Model.Category.Name" style="background: url( @Model.Category.BackgroundImgPath ) no-repeat center fixed; background-size: cover;">
-    <article>
-        <h2>@Model.Name</h2>
-        <div class="receipt-header">
-            <ul>
-                <li><h4>Preparation</h4> <i class="far fa-clock"></i> <span>@Model.PreparationTime.ToString("hh:mm") min</span></li>
-                <li><h4>Cooking</h4> <i class="fas fa-cookie-bite"></i> <span>@Model.CookingTime.ToString("hh:mm") min</span></li>
-                <li><h4>Portions</h4> <i class="fas fa-coffee"></i> <span>@Model.Portions</span></li>
-            </ul>
-            <div class="votes">
-                <p class="rating">
-                    <span class="ratring-stars" data-recipe-id="@Model.Id">
-                        @for (int i = 5; i >= 1; i--)
-                        {<span class="rating-star" data-rating="@i">☆</span>}
-                    </span>
-
-                    <span class="recipe-vote">@Html.Raw(Math.Truncate(Model.Rating / (double)Math.Max(Model.VoteCount, 1) * 100) / 100) (@Model.VoteCount)</span>
-                    <p><i class="fas fa-eye"></i> @Model.ViewCount views</p>
-                </p>
-            </div>
-        </div>
-        <div class="receipt-main">
-            <div class="receipt-main-image">
-                <img src="@Model.ImagePath" alt="salad-healthy">
-            </div>
-            <div class="receipt-main-products">
-                <h4><i class="add-product-button fas fa-cart-plus"></i>Products:</h4>
-                <ol class="ol-products">
-                    @foreach (var product in Model.Products)
-                    {
-                        <li value="@product.Id"><span class="remove-product-confirm" data-toggle="modal" data-target="#deleteProductModal"><i class="fas fa-trash"></i></span> @product.Name</li>
-                    }
-                </ol>
-                <div class="add-product-block">
-                    <input type="text" class="product-input" />
-                    <input type="hidden" class="recipe-id" value="@Model.Id" />
-                    <button class="product-add"><i class="fas fa-plus"></i></button>
-                    <p class="error-message-details">Product name cannot be empty!</p>
-                </div>
-            </div>
-        </div>
-        <div class="receipt-content">
-            <h4>Receipt:</h4>
-            <p>@Model.Description</p>
-        </div>
-    </article>
-    <div class="modal fade" id="deleteProductModal" tabindex="-1" role="dialog" aria-labelledby="productDeleteLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="productDeleteLabel">Delete Product</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to permanently remove this product?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-close-model" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn btn-danger remove-product">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    @Html.Partial("RecipePartial", Model)
+    @Html.Partial("ModalBox")
 </section>

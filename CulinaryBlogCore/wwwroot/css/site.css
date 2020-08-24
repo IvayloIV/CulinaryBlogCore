@@ -180,7 +180,7 @@ h4 {
     .header, .header .header-logo {
         -webkit-box-align: center;
         -ms-flex-align: center;
-        align-items: center
+        align-items: center;
     }
 
 .header {
@@ -208,9 +208,10 @@ h4 {
 
 .header .header-logo {
     display: grid;
-    grid-template-columns: 15% 31% auto;
+    grid-template-columns: 15% 36% auto;
     -webkit-animation: slideleft .6s ease forwards;
-    animation: slideleft .6s ease forwards
+    animation: slideleft .6s ease forwards;
+    width: 50%;
 }
 
 @media all and (max-width:750px) {
@@ -1417,6 +1418,11 @@ nav .header-inner-nav li:first-of-type a {
     overflow: hidden;
     border-radius: 10px;
     position: relative
+}
+
+.salads {
+    background: url(/images/Backgrounds/Salad.jpg) no-repeat center fixed;
+    background-size: cover;
 }
 
 @media all and (max-width:900px) {
@@ -2848,10 +2854,15 @@ nav .header-inner-nav li:first-of-type a {
     margin-left: 10px;
 }
 
-.best-receipts .best-receipts-posts div:last-of-type .rating span.rating-text {
+.rating-text {
     color: #FFC11C;
     font-weight: 600;
     margin-top: 8px;
+}
+
+body > main > section div.receipt-header > div > p > span.rating-text,
+body > main > section.best-receipts > div.best-receipts-posts > article > div > p.rating > span.rating-text {
+    font-weight: 600;
 }
 
 .rating-text + .recipe-vote {
@@ -2865,4 +2876,10 @@ nav .header-inner-nav li:first-of-type a {
     font-size: 1.2rem;
     border-left: 2px solid;
     padding-left: 4px;
+}
+
+.fa-circle {
+    color: #FFC11C;
+    font-size: 0.9rem;
+    padding-right: 7px;
 }

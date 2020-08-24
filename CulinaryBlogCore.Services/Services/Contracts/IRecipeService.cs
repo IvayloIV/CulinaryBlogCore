@@ -24,5 +24,7 @@ namespace CulinaryBlogCore.Services.Contracts
         List<UserRecipeRating> GetRecipeRatingByUser(string userId);
 
         Recipe UpdateViewCount(long recipeId);
+
+        List<Recipe> GetByUserId(string userId);
     }
 }

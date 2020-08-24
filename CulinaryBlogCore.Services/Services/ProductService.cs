@@ -1,6 +1,7 @@
 ﻿using CulinaryBlogCore.Data.Models.Entities;
 using CulinaryBlogCore.Services.Contracts;
 using CulinaryBlogCore.Services.Repository.Contracts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -28,7 +29,10 @@ namespace CulinaryBlogCore.Services.Services
 
         public Product GetById(long id)
         { 
-            return this._repository.GetById<Product>(id);
+            return this._repository.Set<Product>()
+                .Include("Recipe")
+                .Where(p => p.Id == id)
+                .First();
         }
 
         public bool CheckIfExist(long recipeId, string productName) {

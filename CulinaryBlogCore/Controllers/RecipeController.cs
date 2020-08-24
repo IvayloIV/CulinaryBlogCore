@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace CulinaryBlogCore.Controllers
 {
@@ -66,20 +67,27 @@ namespace CulinaryBlogCore.Controllers
         }
 
         // GET: Recipe/Details/id
-        public ActionResult Details(long id)
+        public async Task<ActionResult> Details(long id)
         {
+            ApplicationUser user = await this._userManager.GetUserAsync(HttpContext.User);
             List<Recipe> recipes = this._recipeService.GetByCategoryId(id);
-            RecipeDetailsViewModel recipeDetailsViewModel = new RecipeDetailsViewModel();
+            RecipeDetailsViewModel recipeDetailsViewModel = this.CreateRecipeDetailsViewModel(user, recipes);
             recipeDetailsViewModel.Category = this._categoryService.GetById(id);
-            recipeDetailsViewModel.Recipes = this._mapper.Map<List<RecipeDetailsViewModel>>(recipes);
             return View(recipeDetailsViewModel);
         }
 
         // GET: Recipe/More/Id
-        public ActionResult More(long id)
+        public async Task<ActionResult> More(long id)
         {
+            ApplicationUser user = await this._userManager.GetUserAsync(HttpContext.User);
             Recipe recipe = this._recipeService.UpdateViewCount(id);
-            MoreRecipeViewModel moreViewModel = this._mapper.Map<MoreRecipeViewModel>(recipe);
+            RecipeDetailsViewModel moreViewModel = this._mapper.Map<RecipeDetailsViewModel>(recipe);
+            this.CalculateRatingSingle(recipe, moreViewModel);
+            if (user != null)
+            {
+                moreViewModel.CurrUserId = user.Id;
+                this.CalculateUserVotesSingle(moreViewModel, user, recipe);
+            }
             return View(moreViewModel);
         }
 
@@ -174,6 +182,15 @@ namespace CulinaryBlogCore.Controllers
             return 0;
         }
 
+        [Authorize]
+        public async Task<ActionResult> MyRecipes()
+        {
+            ApplicationUser user = await this._userManager.GetUserAsync(HttpContext.User);
+            List<Recipe> recipes = this._recipeService.GetByUserId(user.Id);
+            RecipeDetailsViewModel recipeDetailsViewModel = this.CreateRecipeDetailsViewModel(user, recipes);
+            return View(recipeDetailsViewModel);
+        }
+
         private List<CategoryViewModel> GetCategories()
         {
             IList<Category> categories = this._categoryService.GetAll();
@@ -185,6 +202,50 @@ namespace CulinaryBlogCore.Controllers
             IList<string> roles = await _userManager.GetRolesAsync(user);
 
             return roles.Any(r => r == Role.Admin.ToString()) || user.Id == getUserId.Invoke();
+        }
+
+        private void CalculateRating(List<Recipe> recipes, List<RecipeDetailsViewModel> recipeViewModel)
+        {
+            for (int i = 0; i < recipes.Count; i++)
+            {
+                Recipe currRecipe = recipes[i];
+                RecipeDetailsViewModel currRecipeViewModel = recipeViewModel.Find(r => r.Id == currRecipe.Id);
+                this.CalculateRatingSingle(currRecipe, currRecipeViewModel);
+            }
+        }
+
+        private void CalculateUserVotes(List<RecipeDetailsViewModel> recipeViewModel, ApplicationUser user, IList<Recipe> recipes)
+        {
+            for (int i = 0; i < recipes.Count; i++)
+            {
+                Recipe currRecipe = recipes[i];
+                RecipeDetailsViewModel currRecipeViewModel = recipeViewModel.Find(r => r.Id == currRecipe.Id);
+                this.CalculateUserVotesSingle(currRecipeViewModel, user, currRecipe);
+            }
+        }
+
+        private void CalculateRatingSingle(Recipe currRecipe, RecipeDetailsViewModel currRecipeViewModel) {
+            double rating = currRecipe.UserRecipeRatings.Sum(ur => ur.Rating) / (double)Math.Max(currRecipe.UserRecipeRatings.Count, 1);
+            currRecipeViewModel.Rating = $"{rating:F2}";
+            currRecipeViewModel.VoteCount = currRecipe.UserRecipeRatings.Count;
+        }
+
+        private void CalculateUserVotesSingle(RecipeDetailsViewModel currRecipeViewModel, ApplicationUser user, Recipe currRecipe) {
+            UserRecipeRating userRecipeRating = currRecipe.UserRecipeRatings.FirstOr(ur => ur.UserId == user.Id, null);
+            currRecipeViewModel.UserRating = userRecipeRating != null ? userRecipeRating.Rating : 0;
+        }
+
+        private RecipeDetailsViewModel CreateRecipeDetailsViewModel(ApplicationUser user, List<Recipe> recipes) {
+            RecipeDetailsViewModel recipeDetailsViewModel = new RecipeDetailsViewModel();
+            recipeDetailsViewModel.Recipes = this._mapper.Map<List<RecipeDetailsViewModel>>(recipes);
+            this.CalculateRating(recipes, recipeDetailsViewModel.Recipes);
+            if (user != null)
+            {
+                recipeDetailsViewModel.CurrUserId = user.Id;
+                this.CalculateUserVotes(recipeDetailsViewModel.Recipes, user, recipes);
+            }
+
+            return recipeDetailsViewModel;
         }
     }
 }

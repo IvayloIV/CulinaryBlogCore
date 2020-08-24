@@ -6,11 +6,15 @@
 
     let ratingBlock = $(event.target).parent().parent();
     ratingBlock.removeClass('rating');
-    ratingBlock.empty();
+    ratingBlock.find('span').each((i, e) => {
+        if ($(e).attr('class') === 'rating-star') {
+            $(e).remove();
+        }
+    });
 
     ratingBlock.addClass('rating-already');
-    for (let i = 1; i <= 5; i++) {
-        ratingBlock.append($('<span>').addClass('rating-blocked').html(i <= rating ? '★' : '☆'));
+    for (let i = 5; i >= 1; i--) {
+        ratingBlock.prepend($('<span>').addClass('rating-blocked').html(i <= rating ? '★' : '☆'));
     }
 
     $.ajax({
@@ -21,7 +25,6 @@
             RecipeId: recipeId
         }
     }).then((newRating) => {
-        console.log(newRating);
-        ratingBlock.append($('<span>').addClass('recipe-vote').text(`${newRating.toFixed(2)} (${Number(recipeRating) + 1})`));
+        ratingBlock.find('.recipe-vote').text(`${newRating.toFixed(2)} (${Number(recipeRating) + 1})`);
     });
 });

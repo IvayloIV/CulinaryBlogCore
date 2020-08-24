@@ -19,7 +19,7 @@ namespace CulinaryBlogCore.Models.RecipeViewModels
         [DataType(DataType.Time)]
         public DateTime CookingTime { get; set; }
 
-        public long Rating { get; set; }
+        public string Rating { get; set; }
 
         public long VoteCount { get; set; }
 
@@ -32,6 +32,12 @@ namespace CulinaryBlogCore.Models.RecipeViewModels
         public List<Product> Products { get; set; }
 
         public Category Category { get; set; }
+
+        public string UserId { get; set; }
+
+        public string CurrUserId { get; set; }
+
+        public long? UserRating { get; set; }
 
         public List<RecipeDetailsViewModel> Recipes { get; set; }
     }

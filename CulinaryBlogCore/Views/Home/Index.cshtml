@@ -51,13 +51,31 @@
                 <div>
                     <h4>@recipe.Name</h4>
                     <p class="@if (recipe.UserRating == 0) { <text>rating</text> } else { <text>rating-already</text> } ">
-                        @if (User.Identity.IsAuthenticated && recipe.UserRating == 0 && Model.CurrUserId != recipe.UserId) {
+                        @if (User.Identity.IsAuthenticated && recipe.UserRating == 0 && Model.CurrUserId != recipe.UserId)
+                        {
                             <span class="ratring-stars" data-recipe-id="@recipe.Id">
-                                @for (int i = 5; i >= 1; i--){<span class="rating-star" data-rating="@i">☆</span>}
+                                @for (int i = 5; i >= 1; i--)
+                                {<span class="rating-star" data-rating="@i">☆</span>}
                             </span>
-                        } else if (User.Identity.IsAuthenticated && Model.CurrUserId != recipe.UserId) {
-                            @for (int i = 1; i <= 5; i++){<span class="rating-blocked">@if(i <= recipe.UserRating){<text>★</text>}else{<text>☆</text>}</span>}
-                        } else {
+                        }
+                        else if (User.Identity.IsAuthenticated && Model.CurrUserId != recipe.UserId)
+                        {
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <span class="rating-blocked">
+                                    @if (i <= recipe.UserRating)
+                                    {
+                                        <text>★</text>
+                                    }
+                                    else
+                                    {
+                                        <text>☆</text>
+                                    }
+                                </span>
+                            }
+                        }
+                        else
+                        {
                             <span class="rating-text">Rating: </span>
                         }
                         <span class="recipe-vote">@recipe.Rating (@recipe.VoteCount)</span>

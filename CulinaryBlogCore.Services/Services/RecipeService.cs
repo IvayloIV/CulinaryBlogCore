@@ -43,11 +43,13 @@ namespace CulinaryBlogCore.Services
         }
 
         public List<Recipe> GetByRatingWeek() {
+        Func<Recipe, double> sumRecipeRating = (r) => r.UserRecipeRatings.Sum(ur => ur.Rating) / (double)Math.Max(r.UserRecipeRatings.Count, 1);
             return this._repository.Set<Recipe>()
+                .Include(x => x.UserRecipeRatings)
                 .Where(r => r.CreationTime >= DateTime.Now.AddDays(-7) && r.CreationTime <= DateTime.Now)
-                .Include("UserRecipeRatings")
-                .OrderByDescending(r => r.UserRecipeRatings.Sum(ur => ur.Rating) / (double)Math.Max(r.UserRecipeRatings.Count, 1))
+                .OrderByDescending(sumRecipeRating)
                 .Take(6)
+                .AsQueryable()
                 .AsNoTracking()
                 .ToList();
         }
@@ -57,6 +59,7 @@ namespace CulinaryBlogCore.Services
                 .Include("Category")
                 .Include("Products")
                 .Include("UserRecipeRatings")
+                .Include("User")
                 .Where(r => r.Id == id)
                 .First();
         }
@@ -73,6 +76,7 @@ namespace CulinaryBlogCore.Services
         public List<Recipe> GetByCategoryId(long categoryId) {
             return this._repository.Set<Recipe>()
                 .Include("Products")
+                .Include("UserRecipeRatings")
                 .Where(r => r.CategoryId == categoryId)
                 .ToList();
         }
@@ -93,6 +97,17 @@ namespace CulinaryBlogCore.Services
             recipe.ViewCount += 1;
             this._repository.Update(recipe);
             return recipe;
+        }
+
+        public List<Recipe> GetByUserId(string userId)
+        {
+            return this._repository.Set<Recipe>()
+                .Include("UserRecipeRatings")
+                .Include("User")
+                .Include("Products")
+                .Where(r => r.User.Id == userId)
+                .OrderByDescending(r => r.CreationTime)
+                .ToList();
         }
     }
 }
