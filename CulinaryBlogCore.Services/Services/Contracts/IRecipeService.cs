@@ -1,5 +1,6 @@
-﻿using CulinaryBlogCore.Data.Models.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
+using CulinaryBlogCore.Data.Models.Entities;
 
 namespace CulinaryBlogCore.Services.Contracts
 {

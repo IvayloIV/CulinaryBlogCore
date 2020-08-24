@@ -1,7 +1,12 @@
-﻿@model CulinaryBlogCore.Models.RecipeViewModels.RecipeHomeViewModel
+﻿@model CulinaryBlogCore.Models.RecipeViewModels.RecipeHomeViewModel;
+
+@using CulinaryBlogCore.Models.RecipeViewModels;
 
 @{
     ViewData["Title"] = "Cooking";
+    Func<RecipeViewModel, string> userRatingClass = (r) => r.UserRating == 0 ? "rating" : "rating-already";
+    Func<RecipeViewModel, string> descriptionSubstr = (r) => r.Description.Substring(0, Math.Min(r.Description.Length, 100));
+    Func<RecipeViewModel, bool> isNotOwner = (r) => User.Identity.IsAuthenticated && Model.CurrUserId != r.UserId;
 }
 
 <section class="site-logo">
@@ -33,7 +38,7 @@
         </div>
     }
     <div class="best-receipts-posts">
-        @foreach (var recipe in Model.recipesByRating)
+        @foreach (var recipe in Model.RecipesByRating)
         {
             <article>
                 @if (User.IsInRole("Admin") || Model.CurrUserId == recipe.UserId)
@@ -50,15 +55,17 @@
                 </div>
                 <div>
                     <h4>@recipe.Name</h4>
-                    <p class="@if (recipe.UserRating == 0) { <text>rating</text> } else { <text>rating-already</text> } ">
-                        @if (User.Identity.IsAuthenticated && recipe.UserRating == 0 && Model.CurrUserId != recipe.UserId)
+                    <p class="@userRatingClass.Invoke(recipe)">
+                        @if (isNotOwner.Invoke(recipe) && recipe.UserRating == 0)
                         {
                             <span class="ratring-stars" data-recipe-id="@recipe.Id">
                                 @for (int i = 5; i >= 1; i--)
-                                {<span class="rating-star" data-rating="@i">☆</span>}
+                                {
+                                    <span class="rating-star" data-rating="@i">☆</span>
+                                }
                             </span>
                         }
-                        else if (User.Identity.IsAuthenticated && Model.CurrUserId != recipe.UserId)
+                        else if (isNotOwner.Invoke(recipe))
                         {
                             @for (int i = 1; i <= 5; i++)
                             {
@@ -81,7 +88,7 @@
                         <span class="recipe-vote">@recipe.Rating (@recipe.VoteCount)</span>
                     </p>
                     <p>
-                        @recipe.Description.Substring(0, Math.Min(recipe.Description.Length, 100))
+                        @descriptionSubstr.Invoke(recipe)
                         @if (recipe.Description.Length > 100)
                         {
                             <text>...</text>
@@ -99,7 +106,7 @@
         <hr>
     </div>
     <div class="new-dishes-images">
-        @foreach (var recipe in Model.lastAddedRecipes)
+        @foreach (var recipe in Model.LastAddedRecipes)
         {
             <a href="/Recipe/More/@recipe.Id" data-img-name="@recipe.Name">
                 <img src="@recipe.ImagePath" alt="@recipe.Name">

@@ -1,10 +1,9 @@
-﻿using CulinaryBlogCore.Data.Models.Entities;
+﻿using System.Collections.Generic;
+using System.Linq;
+
+using CulinaryBlogCore.Data.Models.Entities;
 using CulinaryBlogCore.Services.Contracts;
 using CulinaryBlogCore.Services.Repository.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CulinaryBlogCore.Services
 {
@@ -16,7 +15,6 @@ namespace CulinaryBlogCore.Services
         {
             this._repository = repository;
         }
-
 
         public List<Category> GetAll()
         {

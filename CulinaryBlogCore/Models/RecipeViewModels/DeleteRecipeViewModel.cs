@@ -1,5 +1,6 @@
-﻿using CulinaryBlogCore.Data.Models.Entities;
-using System;
+﻿using System;
+
+using CulinaryBlogCore.Data.Models.Entities;
 
 namespace CulinaryBlogCore.Models.RecipeViewModels
 {

@@ -1,10 +1,9 @@
-﻿using AutoMapper;
-using CulinaryBlogCore.Data.Models.Entities;
-using CulinaryBlogCore.Data.Models.Identity;
-using CulinaryBlogCore.Models.AccountViewModels;
+﻿using CulinaryBlogCore.Data.Models.Entities;
 using CulinaryBlogCore.Models.CategoryViewModels;
 using CulinaryBlogCore.Models.ProductViewModels;
 using CulinaryBlogCore.Models.RecipeViewModels;
+
+using AutoMapper;
 
 namespace CulinaryBlogCore.Utils
 {

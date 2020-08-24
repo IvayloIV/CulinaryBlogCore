@@ -1,5 +1,6 @@
-﻿using CulinaryBlogCore.Data.Models.Identity;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+using CulinaryBlogCore.Data.Models.Identity;
 
 namespace CulinaryBlogCore.Data.Models.Entities
 {

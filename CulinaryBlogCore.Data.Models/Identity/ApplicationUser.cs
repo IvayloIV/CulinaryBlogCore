@@ -1,6 +1,8 @@
-﻿using CulinaryBlogCore.Data.Models.Entities;
+﻿using System.Collections.Generic;
+
+using CulinaryBlogCore.Data.Models.Entities;
+
 using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
 
 namespace CulinaryBlogCore.Data.Models.Identity
 {

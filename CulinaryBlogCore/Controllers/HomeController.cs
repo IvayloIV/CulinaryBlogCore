@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+
 using CulinaryBlogCore.Models;
 using CulinaryBlogCore.Services.Contracts;
-using AutoMapper;
 using CulinaryBlogCore.Data.Models.Entities;
 using CulinaryBlogCore.Models.RecipeViewModels;
 using CulinaryBlogCore.Data.Models.Identity;
+
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
 using Microsoft.EntityFrameworkCore.Internal;
 
 namespace CulinaryBlogCore.Controllers
 {
     public class HomeController : Controller
     {
-        private IRecipeService _recipeService;
+        private readonly IRecipeService _recipeService;
         private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
 
@@ -46,8 +47,8 @@ namespace CulinaryBlogCore.Controllers
             List<RecipeViewModel> lastAddedRecipesModel = this._mapper.Map<List<RecipeViewModel>>(lastAddedRecipes);
 
             RecipeHomeViewModel recipeHomeViewModel = new RecipeHomeViewModel() { 
-                recipesByRating = recipesByRatingModel,
-                lastAddedRecipes = lastAddedRecipesModel,
+                RecipesByRating = recipesByRatingModel,
+                LastAddedRecipes = lastAddedRecipesModel,
                 CurrUserId = user?.Id
             };
             return View(recipeHomeViewModel);

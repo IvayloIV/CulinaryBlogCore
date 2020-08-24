@@ -1,4 +1,5 @@
-﻿@model RegisterViewModel
+﻿@model RegisterViewModel;
+
 @{
     ViewData["Title"] = "Register";
 }
@@ -10,7 +11,7 @@
             <h2>Register</h2>
         </div>
         @using (Html.BeginForm("Register", "Account", FormMethod.Post))
-        { 
+        {
             <div>
                 <label>
                     <span>Name</span>

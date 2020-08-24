@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
+
 using CulinaryBlogCore.Data.Models.Entities;
 using CulinaryBlogCore.Data.Models.Identity;
 using CulinaryBlogCore.Enums;
@@ -10,6 +10,8 @@ using CulinaryBlogCore.Models.CategoryViewModels;
 using CulinaryBlogCore.Models.RecipeViewModels;
 using CulinaryBlogCore.Services.Contracts;
 using CulinaryBlogCore.Utils;
+
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -20,8 +22,8 @@ namespace CulinaryBlogCore.Controllers
 {
     public class RecipeController : Controller
     {
-        private ICategoryService _categoryService;
-        private IRecipeService _recipeService;
+        private readonly ICategoryService _categoryService;
+        private readonly IRecipeService _recipeService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
 
@@ -36,8 +38,6 @@ namespace CulinaryBlogCore.Controllers
             this._userManager = userManager;
         }
 
-        // GET: Recipe/Create
-        //[Route("Administration/[controller]/[action]")]
         [Authorize]
         public ActionResult Create()
         {
@@ -48,7 +48,6 @@ namespace CulinaryBlogCore.Controllers
             return View(createViewModel);
         }
 
-        // POST: Recipe/Create
         [HttpPost]
         [Authorize]
         public async Task<ActionResult> Create(CreateRecipeViewModel recipeViewModel, IFormFile image)
@@ -66,7 +65,6 @@ namespace CulinaryBlogCore.Controllers
             return View(recipeViewModel);
         }
 
-        // GET: Recipe/Details/id
         public async Task<ActionResult> Details(long id)
         {
             ApplicationUser user = await this._userManager.GetUserAsync(HttpContext.User);
@@ -76,7 +74,6 @@ namespace CulinaryBlogCore.Controllers
             return View(recipeDetailsViewModel);
         }
 
-        // GET: Recipe/More/Id
         public async Task<ActionResult> More(long id)
         {
             ApplicationUser user = await this._userManager.GetUserAsync(HttpContext.User);
@@ -91,7 +88,6 @@ namespace CulinaryBlogCore.Controllers
             return View(moreViewModel);
         }
 
-        // GET: Recipe/Update/Id
         [Authorize]
         public async Task<ActionResult> Update(long id)
         {
@@ -106,10 +102,9 @@ namespace CulinaryBlogCore.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // POST: Recipe/Update/Id
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> Update(long id, UpdateRecipeViewModel recipeViewModel, IFormFile image, String oldImagePath)
+        public async Task<ActionResult> Update(long id, UpdateRecipeViewModel recipeViewModel, IFormFile image, string oldImagePath)
         {
             if (ModelState.IsValid)
             {
@@ -135,7 +130,6 @@ namespace CulinaryBlogCore.Controllers
             return View(recipeViewModel);
         }
 
-        // GET: Recipe/Delete/Id
         [Authorize]
         public async Task<ActionResult> Delete(long id)
         {
@@ -150,7 +144,6 @@ namespace CulinaryBlogCore.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // POST: Recipe/Delete/Id
         [HttpPost]
         [Authorize]
         public async Task<ActionResult> Delete(long id, string imagePath)

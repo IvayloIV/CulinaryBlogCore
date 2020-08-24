@@ -1,9 +1,7 @@
-﻿@using System.Collections.Generic
-@using System.Linq
-@using Microsoft.AspNetCore.Http
-@using Microsoft.AspNetCore.Http.Authentication
-@model LoginViewModel
+﻿@model LoginViewModel
+
 @using CulinaryBlogCore.Data.Models.Identity;
+
 @inject SignInManager<ApplicationUser> SignInManager
 
 @{
@@ -21,7 +19,7 @@
             @using (Html.BeginForm("Login", "Account", FormMethod.Post))
             {
                 <label>
-                    <input asp-for="UserName" type="text" name="@Html.NameFor(r => r.UserName)" placeholder="Username"/>
+                    <input asp-for="UserName" type="text" name="@Html.NameFor(r => r.UserName)" placeholder="Username" />
                     <i class="fas fa-user"></i>
                     <span asp-validation-for="UserName" class="text-danger"></span>
                 </label>

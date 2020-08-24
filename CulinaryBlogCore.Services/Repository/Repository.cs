@@ -63,15 +63,6 @@ namespace CulinaryBlogCore.Services.Repository
             return _context.Set<T>().Find(id);
         }
 
-        public IQueryable<T> Query<T>(string sql, params object[] parameters) where T : class
-        {
-            //TODO Check if tehre is support for EFCore query in EF
-            return null;
-            // _context.Query<T>()
-            //               .FromSql(sql, parameters)
-            //               .AsQueryable<T>();
-        }
-
         public IQueryable<T> SetNoTracking<T>(params string[] includes) where T : class
         {
             var query = _context.Set<T>().AsNoTracking();

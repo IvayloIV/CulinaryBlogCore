@@ -10,7 +10,7 @@
             <div><img src="/images/register-logo.png" alt="logo"></div>
             <h2>Delete Recipe</h2>
         </div>
-        @using (Html.BeginForm("Delete/" + Model.Id, "Recipe", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("Delete", "Recipe", FormMethod.Post, new { id = Model.Id, enctype = "multipart/form-data" }))
         {
             <div>
                 <span><img src="@Model.ImagePath" alt="@Model.Name" height="120" /></span>

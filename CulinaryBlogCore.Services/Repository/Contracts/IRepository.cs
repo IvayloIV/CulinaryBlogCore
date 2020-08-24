@@ -24,8 +24,6 @@ namespace CulinaryBlogCore.Services.Repository.Contracts
 
         T GetById<T>(object id) where T : class;
 
-        IQueryable<T> Query<T>(string sql, params object[] parameters) where T : class;
-
         IQueryable<T> SetNoTracking<T>(params string[] includes) where T : class;
 
         void SaveChanges();

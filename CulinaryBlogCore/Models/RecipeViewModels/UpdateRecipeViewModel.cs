@@ -1,7 +1,8 @@
-﻿using CulinaryBlogCore.Models.CategoryViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
+using CulinaryBlogCore.Models.CategoryViewModels;
 
 namespace CulinaryBlogCore.Models.RecipeViewModels
 {

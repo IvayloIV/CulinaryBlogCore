@@ -1,23 +1,24 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 using CulinaryBlogCore.Data.Models.Entities;
 using CulinaryBlogCore.Data.Models.Identity;
 using CulinaryBlogCore.Enums;
 using CulinaryBlogCore.Models.ProductViewModels;
 using CulinaryBlogCore.Services.Contracts;
-using CulinaryBlogCore.Services.Services;
+
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CulinaryBlogCore.Controllers
 {
     public class ProductController : Controller
     {
-        public readonly IProductService _productService;
+        private readonly IProductService _productService;
         private readonly IRecipeService _recipeService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
@@ -34,7 +35,6 @@ namespace CulinaryBlogCore.Controllers
             this._userManager = userManager;
         }
 
-        // POST: Product/Create
         [HttpPost]
         [Authorize]
         public async Task<long> Create(CreateProductViewModel cpvm)
@@ -53,7 +53,6 @@ namespace CulinaryBlogCore.Controllers
             return product.Id;
         }
 
-        // POST: Product/Delete/Id
         [HttpPost]
         [Authorize]
         public async Task Delete(long id)

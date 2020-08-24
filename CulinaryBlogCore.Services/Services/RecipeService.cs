@@ -1,10 +1,12 @@
-﻿using CulinaryBlogCore.Data.Models.Entities;
-using CulinaryBlogCore.Services.Contracts;
-using CulinaryBlogCore.Services.Repository.Contracts;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using CulinaryBlogCore.Data.Models.Entities;
+using CulinaryBlogCore.Services.Contracts;
+using CulinaryBlogCore.Services.Repository.Contracts;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace CulinaryBlogCore.Services
 {

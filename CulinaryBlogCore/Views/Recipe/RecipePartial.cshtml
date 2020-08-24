@@ -1,42 +1,65 @@
 ﻿@model CulinaryBlogCore.Models.RecipeViewModels.RecipeDetailsViewModel;
 
-@{ 
+@{
     string currUserId = (string)ViewData["CurrUserId"];
-    string test = Model.UserRating == 0 ? "rating" : "rating-already";
+    string userRatingClass = Model.UserRating == 0 ? "rating" : "rating-already";
+    bool isNotOwner = User.Identity.IsAuthenticated && currUserId != Model.UserId;
+    bool isAdminOrOwner = User.IsInRole("Admin") || Model.UserId == currUserId;
 }
+
 <article>
     <h2>@Model.Name</h2>
     <div class="receipt-header">
         <ul>
-            <li><h4>Preparation</h4> <i class="far fa-clock"></i> <span>@Model.PreparationTime.ToString("hh:mm") min</span></li>
-            <li><h4>Cooking</h4> <i class="fas fa-cookie-bite"></i> <span>@Model.CookingTime.ToString("hh:mm") min</span></li>
-            <li><h4>Portions</h4> <i class="fas fa-coffee"></i> <span>@Model.Portions</span></li>
+            <li>
+                <h4>Preparation</h4>
+                <i class="far fa-clock"></i>
+                <span>@Model.PreparationTime.ToString("hh:mm") min</span>
+            </li>
+            <li>
+                <h4>Cooking</h4>
+                <i class="fas fa-cookie-bite"></i>
+                <span>@Model.CookingTime.ToString("hh:mm") min</span>
+            </li>
+            <li>
+                <h4>Portions</h4>
+                <i class="fas fa-coffee"></i>
+                <span>@Model.Portions</span>
+            </li>
         </ul>
         <div class="votes">
-            <p class="@test">
-                @if (User.Identity.IsAuthenticated && Model.UserRating == 0 && (string)ViewData["CurrUserId"] != Model.UserId)
+            <p class="@userRatingClass">
+                @if (isNotOwner && Model.UserRating == 0)
                 {
                     <span class="ratring-stars" data-recipe-id="@Model.Id">
                         @for (int i = 5; i >= 1; i--)
-                        {<span class="rating-star" data-rating="@i">☆</span>}
+                        {
+                            <span class="rating-star" data-rating="@i">☆</span>
+                        }
                     </span>
                 }
-                else if (User.Identity.IsAuthenticated && (string)ViewData["CurrUserId"] != Model.UserId)
+                else if (isNotOwner)
                 {
                     @for (int i = 1; i <= 5; i++)
-                    {<span class="rating-blocked">
+                    {
+                        <span class="rating-blocked">
                             @if (i <= Model.UserRating)
-                            {<text>★</text>}
-                        else
-                        {<text>☆</text>}
-                        </span>}
+                            {
+                                <text>★</text>
+                            }
+                            else
+                            {
+                                <text>☆</text>
+                            }
+                        </span>
+                    }
                 }
                 else
                 {
                     <span class="rating-text">Rating: </span>
                 }
                 <span class="recipe-vote">@Model.Rating (@Model.VoteCount)</span>
-                <p><i class="fas fa-eye"></i> @Model.ViewCount views</p>
+            <p><i class="fas fa-eye"></i> @Model.ViewCount views</p>
             </p>
         </div>
     </div>
@@ -45,14 +68,32 @@
             <img src="@Model.ImagePath" alt="salad-healthy">
         </div>
         <div class="receipt-main-products">
-            <h4>@if (Model.UserId == (string)ViewData["CurrUserId"] || User.IsInRole("Admin")){<i class="add-product-button fas fa-cart-plus"></i>}Products:</h4>
+            <h4>
+                @if (isAdminOrOwner)
+                {
+                    <i class="add-product-button fas fa-cart-plus"></i>
+                }
+                Products:
+            </h4>
             <ol class="ol-products">
                 @foreach (var product in Model.Products)
                 {
-                    <li value="@product.Id">@if (Model.UserId == (string)ViewData["CurrUserId"]  || User.IsInRole("Admin")){<span class="remove-product-confirm" data-toggle="modal" data-target="#deleteProductModal"><i class="fas fa-trash"></i></span> }else{<i class="fas fa-circle"></i>}@product.Name</li>
+                    <li value="@product.Id">
+                        @if (isAdminOrOwner)
+                        {
+                            <span class="remove-product-confirm" data-toggle="modal" data-target="#deleteProductModal">
+                                <i class="fas fa-trash"></i>
+                            </span>
+                        }
+                        else
+                        {
+                            <i class="fas fa-circle"></i>
+                        }
+                        @product.Name
+                    </li>
                 }
             </ol>
-            @if (Model.UserId == (string)ViewData["CurrUserId"] || User.IsInRole("Admin"))
+            @if (isAdminOrOwner)
             {
                 <div class="add-product-block">
                     <input type="text" class="product-input" />

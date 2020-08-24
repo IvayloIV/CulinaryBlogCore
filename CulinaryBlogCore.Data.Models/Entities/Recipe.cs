@@ -1,8 +1,9 @@
-﻿using CulinaryBlogCore.Data.Models.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
+using CulinaryBlogCore.Data.Models.Identity;
 
 namespace CulinaryBlogCore.Data.Models.Entities
 {

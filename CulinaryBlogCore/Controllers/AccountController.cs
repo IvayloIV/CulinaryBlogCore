@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
+
+using CulinaryBlogCore.Models.AccountViewModels;
+using CulinaryBlogCore.Data.Models.Identity;
+using CulinaryBlogCore.Enums;
+
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using CulinaryBlogCore.Models;
-using CulinaryBlogCore.Models.AccountViewModels;
-using CulinaryBlogCore.Data.Models.Identity;
-using CulinaryBlogCore.Enums;
 
 namespace CulinaryBlogCore.Controllers
 {
@@ -37,9 +33,6 @@ namespace CulinaryBlogCore.Controllers
             this._roleManager = roleManager;
             _logger = logger;
         }
-
-        [TempData]
-        public string ErrorMessage { get; set; }
 
         [HttpGet]
         [AllowAnonymous]

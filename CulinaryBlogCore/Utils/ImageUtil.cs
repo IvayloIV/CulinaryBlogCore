@@ -9,7 +9,7 @@ namespace CulinaryBlogCore.Utils
     public static class ImageUtil
     {
         public static async Task<string> UploadImage(IFormFile image, string destination) {
-            string fileName = String.Empty;
+            string fileName = string.Empty;
             if (image != null && image.Length > 0)
             {
                 fileName = Path.GetFileName(image.FileName);
