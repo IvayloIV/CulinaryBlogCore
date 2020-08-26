@@ -2883,3 +2883,10 @@ body > main > section.best-receipts > div.best-receipts-posts > article > div > 
     font-size: 0.9rem;
     padding-right: 7px;
 }
+
+.subscription-message {
+    display: none;
+    color: #e8ae12;
+    padding: 0.3rem;
+    font-size: 1.05rem;
+}

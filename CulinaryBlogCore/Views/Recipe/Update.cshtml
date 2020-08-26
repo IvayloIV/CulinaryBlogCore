@@ -12,7 +12,7 @@
             <div><img src="/images/register-logo.png" alt="logo"></div>
             <h2>Update Recipe</h2>
         </div>
-        @using (Html.BeginForm("Update", "Recipe", FormMethod.Post, new { id = Model.Id, enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("Update", "Recipe", new { id = Model.Id }, FormMethod.Post, null, new { enctype = "multipart/form-data" }))
         {
             <div class="names">
                 <label>

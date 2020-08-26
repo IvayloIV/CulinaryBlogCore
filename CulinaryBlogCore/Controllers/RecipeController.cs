@@ -39,6 +39,8 @@ namespace CulinaryBlogCore.Controllers
         }
 
         [Authorize]
+        [Route("[controller]/[action]")]
+        [Route("Administration/[controller]/[action]")]
         public ActionResult Create()
         {
             CreateRecipeViewModel createViewModel = new CreateRecipeViewModel()
@@ -50,6 +52,8 @@ namespace CulinaryBlogCore.Controllers
 
         [HttpPost]
         [Authorize]
+        [Route("[controller]/[action]")]
+        [Route("Administration/[controller]/[action]")]
         public async Task<ActionResult> Create(CreateRecipeViewModel recipeViewModel, IFormFile image)
         {
             if (ModelState.IsValid)

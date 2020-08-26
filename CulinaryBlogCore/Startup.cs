@@ -52,6 +52,9 @@ namespace CulinaryBlogCore
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IMailService, MailService>();
+
+            services.Configure<SubscriptionMailData>(Configuration.GetSection("SubscriptionMailData"));
 
             var mapperConfig = new MapperConfiguration(mc =>
             {

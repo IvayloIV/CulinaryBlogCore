@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Recipe Subscription</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+</head>
+<body bgcolor="#028bd2" style="margin: 0; background-color: #f6f1e6">
+    <center>
+        <div style="width: 600px;">
+
+            <table bgcolor="#eeddac" style="border-collapse: collapse;table-layout: fixed; width: 600px; border-spacing: 0; background-size: cover;" border="0" cellmargin="0" cellspacing="0" background="https://i.imgur.com/LbuM3co.jpg">
+                <tr>
+                    <!-- hero -->
+                    <td align="center" style="height: 332px; color:#fff;">
+                        <div style="margin: 0 84px;">
+                            <div>
+                                <img src="https://i.imgur.com/XY9EF5R.png" width="150" alt="Cooking">
+                            </div>
+                            <div class="h1" style="font-family: Arial; font-size: 36px; font-weight: bold; margin: 20px 0 10px 0;">
+                                Best recipes of the week
+                            </div> <!-- ./ h1 -->
+                            <div class="h1" style="font-family: Arial; font-size: 28px; font-weight: bold; margin: 0;">
+                                {{dateFrom}} - {{dateTo}}
+                            </div> <!-- ./ h1 -->
+                        </div>
+                    </td>
+                </tr><!-- ./ hero -->
+            </table>
+            <section style="background: white;">
+                {{recipe-articles}}
+                <div class="text-c" style="font-family: Courier; font-size: 14px; font-weight: normal; line-height: 20px; margin-top: 19px;">
+                    <div class="text-a-small" style="font-family: Arial; font-size: 11px; font-weight: normal; line-height: 16px; margin-bottom: 6px;">
+                        Click <a href="{{unsubscribelink}}" style="color:#d09f13; text-decoration: none;">here</a> to unsubscribe request to the postal address above.
+                    </div>
+                    <div class="text-a-small" style="font-family: Arial; font-size: 11px; font-weight: normal; line-height: 16px; margin-bottom: 6px;">
+                        To ensure future delivery of email, add <a href="mailto::cooking@gmail.com" style="color:#d09f13; text-decoration: none;">cooking@gmail.com</a> to your address book, contacts, or safe senders list.
+                    </div>
+                    <div class="text-a-small" style="font-family: Arial; font-size: 11px; font-weight: normal; line-height: 16px; margin-bottom: 16px;">
+                        Please do not reply to this message. To contact Cooking,  reach us at <a href="mailto::cooking@gmail.com" style="color:#d09f13; text-decoration: none;">cooking@gmail.com</a>
+                    </div>
+
+                    <div class="text-a-small" style="font-family: Arial; font-size: 11px; font-weight: normal; line-height: 16px;">
+                        &copy; copyright 2020 Cooking
+                    </div>
+                </div>
+            </section>
+        </div>
+    </center>
+</body>
+</html>

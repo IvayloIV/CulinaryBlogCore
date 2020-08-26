@@ -29,5 +29,7 @@ namespace CulinaryBlogCore.DataAccess
         public DbSet<Product> Products { get; set; }
 
         public DbSet<UserRecipeRating> UserRecipeRatings { get; set; }
+
+        public DbSet<RecipeSubscription> RecipeSubscriptions { get; set; }
     }
 }

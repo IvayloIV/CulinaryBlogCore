@@ -4,7 +4,6 @@
 
 @{
     ViewData["Title"] = "Cooking";
-    Func<RecipeViewModel, string> userRatingClass = (r) => r.UserRating == 0 ? "rating" : "rating-already";
     Func<RecipeViewModel, string> descriptionSubstr = (r) => r.Description.Substring(0, Math.Min(r.Description.Length, 100));
     Func<RecipeViewModel, bool> isNotOwner = (r) => User.Identity.IsAuthenticated && Model.CurrUserId != r.UserId;
 }
@@ -34,12 +33,24 @@
     @if (User.Identity.IsAuthenticated)
     {
         <div class="create-recipe-button">
-            <a href="/Recipe/Create">Create</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a href="/Administration/Recipe/Create">Create</a>
+            }
+            else
+            {
+                <a href="/Recipe/Create">Create</a>
+            }
         </div>
     }
     <div class="best-receipts-posts">
-        @foreach (var recipe in Model.RecipesByRating)
+        @foreach (RecipeViewModel recipe in Model.RecipesByRating)
         {
+            @functions { 
+                public string GetUserRatingClass(RecipeViewModel recipe) {
+                    return recipe.UserRating == 0 ? "rating" : "rating-already";
+                }
+            }
             <article>
                 @if (User.IsInRole("Admin") || Model.CurrUserId == recipe.UserId)
                 {
@@ -55,8 +66,8 @@
                 </div>
                 <div>
                     <h4>@recipe.Name</h4>
-                    <p class="@userRatingClass.Invoke(recipe)">
-                        @if (isNotOwner.Invoke(recipe) && recipe.UserRating == 0)
+                    <p class="@GetUserRatingClass(recipe)">
+                        @if (isNotOwner(recipe) && recipe.UserRating == 0)
                         {
                             <span class="ratring-stars" data-recipe-id="@recipe.Id">
                                 @for (int i = 5; i >= 1; i--)
@@ -65,7 +76,7 @@
                                 }
                             </span>
                         }
-                        else if (isNotOwner.Invoke(recipe))
+                        else if (isNotOwner(recipe))
                         {
                             @for (int i = 1; i <= 5; i++)
                             {
@@ -88,7 +99,7 @@
                         <span class="recipe-vote">@recipe.Rating (@recipe.VoteCount)</span>
                     </p>
                     <p>
-                        @descriptionSubstr.Invoke(recipe)
+                        @descriptionSubstr(recipe)
                         @if (recipe.Description.Length > 100)
                         {
                             <text>...</text>

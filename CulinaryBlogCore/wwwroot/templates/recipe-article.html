@@ -1,0 +1,29 @@
+﻿<article style="padding-bottom: 30px; border-top: 1px dashed black; border-bottom: 1px dashed black;">
+    <h2 style="margin: 0 0 25px 0; padding: 25px 0 0 0; font-size: 32px; border-bottom: 2px solid black; width: 42%;">{{name}}</h2>
+    <div>
+        <div>
+            <ul style="text-align: center; padding: 0; list-style: none; display: flex; justify-content: space-evenly; width: 80%; border-bottom: 2px solid black; border-top: 2px solid black;">
+                <li style="width: 100%; padding: 17px 0; border-right: 2px solid black;">
+                    <h4 style="font-size: 21px; margin: 0 0 10px 0;">Preparation</h4> 🕓 <span>{{preparationTime}} min</span>
+                </li>
+                <li style="width: 100%; padding: 17px 0;">
+                    <h4 style="font-size: 21px; margin: 0 0 10px 0;">Cooking</h4> ⏰ <span>{{cookingTime}} min</span>
+                </li>
+                <li style="width: 100%; padding: 17px 0; border-left: 2px solid black;">
+                    <h4 style="font-size: 21px; margin: 0 0 10px 0;">Portions</h4> 🍴 <span>{{portions}}</span>
+                </li>
+            </ul>
+            <img src="https://p0.pikist.com/photos/135/651/piza-food-cheese-plate-lunch-hungry-vegetables-italian-snack.jpg" alt="Food image" style="width: 75%; border-radius: 10px; margin: 12px 0;" />
+            <div class="votes">
+                {{ratingStars}}
+                <span style="color: #9b978a; font-size: 18px;">{{rating}}({{voteCount}})</span>
+                <p style="margin: 0; color: #9b978a; font-size: 18px;">👀 {{views}} views</p>
+            </div>
+            <p style="font-family: cursive; font-weight: 800; font-size: 23px; margin: 7px 0 6px 0;">Description:</p>
+            <p style="font-family: cursive; margin: 0; width: 81%; font-size: 17px; padding-bottom: 30px;">
+                {{description}}
+            </p>
+            <a href="{{detailsLink}}" target="_blank" style="background: #ffc11c; border: 2px solid #ffc11c; text-decoration: none; padding: .6rem 1.7rem; border-radius: 3px; cursor: pointer; outline: 0; font-size: .95rem; font-weight: 600; color: white;">Read More</a>
+        </div>
+    </div>
+</article>
