@@ -63,7 +63,8 @@
                 <img src="@Model.ImagePath" alt="@Model.Name" height="120" />
                 <input asp-for="ImagePath" type="file" name="image" value="@Model.ImagePath">
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
-                <input type="hidden" name="oldImagePath" value="@Model.ImagePath" />
+                <input type="hidden" name="ImageId" value="@Model.ImageId" />
+                <input type="hidden" name="ImagePath" value="@Model.ImagePath" />
             </label>
             <input asp-for="UserId" type="hidden" name="@Html.NameFor(r => r.UserId)" value="@Model.UserId">
             <div class="button-wrapper">

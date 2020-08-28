@@ -34,6 +34,7 @@ namespace CulinaryBlogCore.Services
             oldRecipe.CookingTime = recipe.CookingTime;
             oldRecipe.Portions = recipe.Portions;
             oldRecipe.ImagePath = recipe.ImagePath;
+            oldRecipe.ImageId = recipe.ImageId;
             oldRecipe.CategoryId = recipe.CategoryId;
 
             this._repository.Update<Recipe>(oldRecipe);

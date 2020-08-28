@@ -4,6 +4,7 @@ using System.Linq;
 using CulinaryBlogCore.Data.Models.Entities;
 using CulinaryBlogCore.Services.Contracts;
 using CulinaryBlogCore.Services.Repository.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace CulinaryBlogCore.Services.Services
 {
@@ -26,7 +27,9 @@ namespace CulinaryBlogCore.Services.Services
         }
 
         public List<RecipeSubscription> GetAll() {
-            return this._repository.Set<RecipeSubscription>().ToList();
+            return this._repository.Set<RecipeSubscription>()
+                .Include(s => s.User)
+                .ToList();
         }
 
         public void Remove(RecipeSubscription recipe)

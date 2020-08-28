@@ -2,7 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>2faf6871-a844-4318-ae23-651dfd1f385a</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Imgur.API" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.0.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CulinaryBlogCore.DataAccess\CulinaryBlogCore.DataAccess.csproj" />

@@ -16,6 +16,8 @@ namespace CulinaryBlogCore.Models.RecipeViewModels
 
         public string ImagePath { get; set; }
 
+        public string ImageId { get; set; }
+
         public int? Portions { get; set; }
 
         public long CategoryId { get; set; }

@@ -4,14 +4,16 @@ using CulinaryBlogCore.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CulinaryBlogCore.DataAccess.Migrations
 {
     [DbContext(typeof(CulinaryBlogDbContext))]
-    partial class CulinaryBlogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200828140638_ChangeRecipeImageId")]
+    partial class ChangeRecipeImageId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,8 +81,6 @@ namespace CulinaryBlogCore.DataAccess.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired();
-
-                    b.Property<string>("ImageId");
 
                     b.Property<string>("ImagePath");
 

@@ -27,6 +27,8 @@ namespace CulinaryBlogCore.Data.Models.Entities
 
         public int Portions { get; set; }
 
+        public string ImageId { get; set; }
+
         public string ImagePath { get; set; }
 
         public DateTime CreationTime { get; set; }

@@ -1,0 +1,41 @@
+﻿@model CulinaryBlogCore.Models.RecipeViewModels.RecipeSubscriptionViewModel;
+
+@using CulinaryBlogCore.Models.RecipeViewModels;
+
+@{
+    ViewData["Title"] = "Recipe Subscriptions";
+}
+
+<section class="subscriptions">
+    <div class="subscriptions-block">
+        <div class="subscription-title">
+            <h2>Recipe Subscriptions</h2>
+        </div>
+        <article>
+            <p>Email</p>
+            <p>User</p>
+            <p>Subscription Date</p>
+        </article>
+        @foreach (RecipeSubscriptionViewModel subscription in Model.Subscriptions)
+        {
+            <article>
+                <p>@subscription.Email</p>
+                <p>
+                    @if (subscription.User != null)
+                    {
+                        <text>@subscription.User.UserName</text>
+                    }
+                    else
+                    {
+                        <text> - </text>
+                    }
+                </p>
+                <p>@subscription.CreationTime.ToString("dd.MM.yyyy")</p>
+            </article>
+        }
+        <div class="subscriptions-send-block">
+            <a href="#" class="subscriptions-send">Send best recipes</a>
+            <p class="subscriptions-send-message"></p>
+        </div>
+    </div>
+</section>

@@ -17,6 +17,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
+using Imgur.API.Endpoints;
+using Imgur.API.Models;
+using Microsoft.Extensions.Options;
 
 namespace CulinaryBlogCore.Controllers
 {
@@ -26,16 +29,19 @@ namespace CulinaryBlogCore.Controllers
         private readonly IRecipeService _recipeService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly IImgurTokenService _imgurTokenService;
 
         public RecipeController(
                 ICategoryService categoryService, 
                 IRecipeService recipeService, 
                 IMapper mapper,
+                IImgurTokenService imgurTokenService,
                 UserManager<ApplicationUser> userManager) {
             this._categoryService = categoryService;
             this._recipeService = recipeService;
             this._mapper = mapper;
             this._userManager = userManager;
+            this._imgurTokenService = imgurTokenService;
         }
 
         [Authorize]
@@ -58,8 +64,11 @@ namespace CulinaryBlogCore.Controllers
         {
             if (ModelState.IsValid)
             {
-                string imagePath = await ImageUtil.UploadImage(image, "Recipe");
-                recipeViewModel.ImagePath = imagePath;
+                ImageEndpoint imageEndpoint = await this._imgurTokenService.GetImageEndpoint();
+                IImage imageData = await imageEndpoint.UploadImageAsync(image.OpenReadStream());
+                recipeViewModel.ImagePath = imageData.Link;
+                recipeViewModel.ImageId = imageData.Id;
+
                 ApplicationUser user = await this._userManager.GetUserAsync(HttpContext.User);
                 recipeViewModel.UserId = user.Id;
                 this._recipeService.Add(this._mapper.Map<Recipe>(recipeViewModel));
@@ -108,7 +117,7 @@ namespace CulinaryBlogCore.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> Update(long id, UpdateRecipeViewModel recipeViewModel, IFormFile image, string oldImagePath)
+        public async Task<ActionResult> Update(long id, UpdateRecipeViewModel recipeViewModel, IFormFile image)
         {
             if (ModelState.IsValid)
             {
@@ -116,20 +125,18 @@ namespace CulinaryBlogCore.Controllers
                 {
                     if (image != null)
                     {
-                        ImageUtil.DeleteImage(oldImagePath);
-                        string imagePath = await ImageUtil.UploadImage(image, "Recipe");
-                        recipeViewModel.ImagePath = imagePath;
+                        ImageEndpoint imageEndpoint = await this._imgurTokenService.GetImageEndpoint();
+                        await imageEndpoint.DeleteImageAsync(recipeViewModel.ImageId);
+                        IImage uploadedImage = await imageEndpoint.UploadImageAsync(image.OpenReadStream());
+                        recipeViewModel.ImageId = uploadedImage.Id;
+                        recipeViewModel.ImagePath = uploadedImage.Link;
                     }
-                    else
-                    {
-                        recipeViewModel.ImagePath = oldImagePath;
-                    }
+
                     this._recipeService.UpdateById(id, this._mapper.Map<Recipe>(recipeViewModel));
                 }
                 return RedirectToAction("Index", "Home");
             }
             recipeViewModel.Id = id;
-            recipeViewModel.ImagePath = oldImagePath;
             recipeViewModel.Categories = this.GetCategories();
             return View(recipeViewModel);
         }
@@ -150,12 +157,13 @@ namespace CulinaryBlogCore.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> Delete(long id, string imagePath)
+        public async Task<ActionResult> Delete(long id, string imageId)
         {
             Recipe recipe = this._recipeService.GetById(id);
-            if (await this.IsAdminOrOwner(() => recipe.UserId) && imagePath != null && imagePath.Length > 1)
+            if (await this.IsAdminOrOwner(() => recipe.UserId) && imageId != null)
             {
-                ImageUtil.DeleteImage(imagePath);
+                ImageEndpoint imageEndpoint = await this._imgurTokenService.GetImageEndpoint();
+                await imageEndpoint.DeleteImageAsync(imageId);
                 this._recipeService.DeleteById(id);
             }
             return RedirectToAction("Index", "Home");

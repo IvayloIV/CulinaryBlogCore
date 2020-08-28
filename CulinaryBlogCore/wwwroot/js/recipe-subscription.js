@@ -18,3 +18,18 @@
         message.text(res);
     });
 });
+
+$('.subscriptions-send').on('click', (event) => {
+    event.preventDefault();
+    let message = $('.subscriptions-send-message');
+
+    message.text('Sending...');
+    message.fadeIn(600);
+
+    $.ajax({
+        url: '/Administration/Mail/Recipe/Send',
+        method: 'POST'
+    }).then((res) => {
+        message.text("You have successfully sent recipes.");
+    });
+});

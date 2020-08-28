@@ -18,6 +18,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MimeKit;
+using Imgur.API.Authentication;
+using System.Net.Http;
+using Imgur.API.Endpoints;
+using Imgur.API.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CulinaryBlogCore.Controllers
 {
@@ -107,8 +112,8 @@ namespace CulinaryBlogCore.Controllers
             return View("UnsubscribeRecipes");
         }
 
-        //[HttpPost]
-        //TODO: [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
         [Route("Administration/[controller]/Recipe/Send")]
         public void SendToSubscribers() {
             List<Recipe> recipes = this._recipeService.GetByRatingWeek();
@@ -186,7 +191,7 @@ namespace CulinaryBlogCore.Controllers
                     .Replace("{{preparationTime}}", recipe.PreparationTime.ToString("hh:mm"))
                     .Replace("{{cookingTime}}", recipe.CookingTime.ToString("hh:mm"))
                     .Replace("{{portions}}", recipe.Portions.ToString())
-                    .Replace("{{imageUrl}}", $"{baseUrl}/{recipe.ImagePath}")
+                    .Replace("{{imageUrl}}", $"{recipe.ImagePath}")
                     .Replace("{{ratingStars}}", stars)
                     .Replace("{{rating}}", $"{rating:F2}")
                     .Replace("{{voteCount}}", recipe.UserRecipeRatings.Count.ToString())

@@ -37,6 +37,9 @@ namespace CulinaryBlogCore.Utils
 
             CreateMap<UserRecipeRating, RecipeRatingViewModel>();
             CreateMap<RecipeRatingViewModel, UserRecipeRating>();
+
+            CreateMap<RecipeSubscription, RecipeSubscriptionViewModel>();
+            CreateMap<RecipeSubscriptionViewModel, RecipeSubscription>();
         }
     }
 }

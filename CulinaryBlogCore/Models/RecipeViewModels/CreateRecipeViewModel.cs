@@ -26,6 +26,8 @@ namespace CulinaryBlogCore.Models.RecipeViewModels
         [Required]
         public DateTime? CookingTime { get; set; }
 
+        public string ImageId { get; set; }
+
         [Display(Name = "Image")]
         public string ImagePath { get; set; }
 

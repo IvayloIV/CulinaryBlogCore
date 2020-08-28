@@ -662,6 +662,7 @@ nav .header-inner-nav li:first-of-type a {
     .best-receipts .best-receipts-posts div:last-of-type h4 {
         margin-top: 1rem;
         margin-bottom: 0;
+        word-break: break-word;
     }
 
     .best-receipts .best-receipts-posts div:last-of-type i {
@@ -2889,4 +2890,129 @@ body > main > section.best-receipts > div.best-receipts-posts > article > div > 
     color: #e8ae12;
     padding: 0.3rem;
     font-size: 1.05rem;
+}
+
+.unsubscribe {
+    background: linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.2)),url(/images/Backgrounds/bg-subscribe.jpg);
+    background-size: cover;
+    position: relative;
+    height: 37rem;
+    font-size: 1.05em;
+}
+
+.message-info {
+    width: 50%;
+    text-align: center;
+    background: rgba(255,255,255,.9);
+    box-shadow: 0 0 40px 0 rgba(0,0,0,.75);
+    padding: 2rem;
+    position: absolute;
+    top: 9rem;
+    left: 8rem;
+    animation: slideup .8s ease forwards;
+}
+
+.message-info h3 {
+    border-bottom: 3px solid #e00030;
+    padding-bottom: 1rem;
+    font-weight: 400;
+    font-size: 1.4em;
+}
+
+.subscriptions {
+    background: linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),url(/images/Backgrounds/recipe-subscription.jpg);
+    background-size: cover;
+    position: relative;
+    height: 42rem;
+    font-size: 1.05em;
+    padding-top: 8rem;
+}
+
+.subscriptions-block {
+    width: 60%;
+    text-align: center;
+    background: rgba(255,255,255,.9);
+    box-shadow: 0 0 40px 0 rgba(0,0,0,.75);
+    padding: 2rem 0;
+    margin: 0 auto;
+    animation: slideup .8s ease forwards;
+}
+
+.subscriptions-block article {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.subscriptions-block p {
+    width: 33%;
+    text-align: center;
+    margin: 0 0 0px;
+    padding-bottom: 10px;
+}
+
+.subscriptions-block p:first-child {
+    border-right: 2px solid black;
+    padding-right: 20px;
+}
+
+.subscriptions-block p:last-child {
+    border-left: 2px solid black;
+    padding-left: 20px;
+}
+
+.subscriptions-block article:first-of-type p {
+    border-bottom: 2px solid black;
+    font-weight: 900;
+}
+.subscriptions-block article:nth-of-type(2) p {
+    padding-top: 10px;
+}
+
+.subscription-title {
+    border-bottom: 3px solid #e00030;
+    width: 50%;
+    margin: 0 auto 24px;
+}
+
+.subscriptions-send {
+    background: 0 0;
+    border: 2px solid #ffc11c;
+    padding: .6rem 1.7rem;
+    border-radius: 3px;
+    cursor: pointer;
+    outline: none;
+    font-size: .95rem;
+    font-weight: 600;
+    color: #766f75;
+    margin-bottom: 10px;
+    transition: all .3s ease;
+    display: block;
+    width: 25%;
+    margin: 0 auto;
+    text-decoration: none;
+}
+
+.subscriptions-send, .subscriptions-send:hover, .subscriptions-send:active, .subscriptions-send:visited, .subscriptions-send:focus {
+    text-decoration: none;
+    color: #766f75;
+}
+
+.subscriptions-send:hover {
+    background: #ffc11c;
+    color: #fff;
+    text-decoration: none;
+}
+
+.subscriptions-send-block {
+    margin-top: 34px;
+}
+
+.subscriptions-block p.subscriptions-send-message {
+    border-left: none;
+    padding-left: 0;
+    width: 100%;
+    margin-top: 10px;
+    color: #ee9d0a;
 }

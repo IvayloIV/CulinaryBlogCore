@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using CulinaryBlogCore.Services.Utils;
 
 namespace CulinaryBlogCore
 {
@@ -53,8 +54,10 @@ namespace CulinaryBlogCore
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IMailService, MailService>();
+            services.AddScoped<IImgurTokenService, ImgurTokenService>();
 
             services.Configure<SubscriptionMailData>(Configuration.GetSection("SubscriptionMailData"));
+            services.Configure<ImgurConfigData>(Configuration.GetSection("ImgurConfigData"));
 
             var mapperConfig = new MapperConfiguration(mc =>
             {
