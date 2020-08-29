@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulinaryBlogCore.DataAccess
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulinaryBlogCore.Data.Models", "CulinaryBlogCore.Data.Models\CulinaryBlogCore.Data.Models.csproj", "{253FC035-42B7-40BA-AE83-A9FA171A806F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulinaryBlogCore.Services", "CulinaryBlogCore.Services\CulinaryBlogCore.Services.csproj", "{493E15F0-D936-4A1B-946B-DB7C31DB6EDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulinaryBlogCore.Services", "CulinaryBlogCore.Services\CulinaryBlogCore.Services.csproj", "{493E15F0-D936-4A1B-946B-DB7C31DB6EDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

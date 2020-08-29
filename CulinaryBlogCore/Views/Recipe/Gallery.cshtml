@@ -1,0 +1,55 @@
+﻿@model CulinaryBlogCore.Models.RecipeViewModels.GalleryViewModel;
+
+@using CulinaryBlogCore.Models.CategoryViewModels;
+@using CulinaryBlogCore.Models.RecipeViewModels;
+
+@{
+    ViewBag.Title = "Gallery";
+    int columnCount = 3;
+}
+
+@functions {
+    public List<RecipeViewModel> GetRecipesByCategory(long categoryId)
+    {
+        return Model.Recipes.Where(r => r.Category.Id == categoryId).ToList();
+    }
+}
+
+@foreach (CategoryViewModel category in Model.Categories)
+{
+    <section class="salads-pictures">
+        <div class="salads-pictures-title">
+            <h2>@category.Name</h2>
+            <hr>
+        </div>
+        @{ 
+            List<RecipeViewModel> recipes = Model.Recipes.Where(r => r.Category.Id == category.Id).ToList();
+            int imageIndex = 0;
+        }
+        <div class="salads-pictures-gallery">
+            @for (int row = 0; row < columnCount; row++)
+            {
+                <article>
+                    @{
+                        int recipesPerColumn = (int)Math.Ceiling((recipes.Count - imageIndex) / (double)(columnCount - row));
+                    }
+
+                    @for (int column = 0; column < recipesPerColumn; column++)
+                    {
+                        int imagePostition = column * columnCount + row;
+                        imageIndex++;
+                        if (imagePostition < recipes.Count)
+                        {
+                            RecipeViewModel recipe = recipes[imagePostition++];
+                            <a href="/Recipe/More/@recipe.Id">
+                                <div data-attr="@recipe.Name">
+                                    <img src="@recipe.ImagePath" alt="@recipe.Name">
+                                </div>
+                            </a>
+                        }
+                    }
+                </article>
+            }
+        </div>
+    </section>
+}

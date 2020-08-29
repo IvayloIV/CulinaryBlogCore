@@ -55,6 +55,7 @@ namespace CulinaryBlogCore
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IMailService, MailService>();
             services.AddScoped<IImgurTokenService, ImgurTokenService>();
+            services.AddScoped<IChefService, ChefService>();
 
             services.Configure<SubscriptionMailData>(Configuration.GetSection("SubscriptionMailData"));
             services.Configure<ImgurConfigData>(Configuration.GetSection("ImgurConfigData"));

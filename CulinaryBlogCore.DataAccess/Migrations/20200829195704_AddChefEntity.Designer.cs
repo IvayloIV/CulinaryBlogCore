@@ -4,14 +4,16 @@ using CulinaryBlogCore.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CulinaryBlogCore.DataAccess.Migrations
 {
     [DbContext(typeof(CulinaryBlogDbContext))]
-    partial class CulinaryBlogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200829195704_AddChefEntity")]
+    partial class AddChefEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,26 +34,6 @@ namespace CulinaryBlogCore.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("CulinaryBlogCore.Data.Models.Entities.Chef", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("ImageId");
-
-                    b.Property<string>("ImagePath");
-
-                    b.Property<string>("LastName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Chef");
                 });
 
             modelBuilder.Entity("CulinaryBlogCore.Data.Models.Entities.ImgurToken", b =>

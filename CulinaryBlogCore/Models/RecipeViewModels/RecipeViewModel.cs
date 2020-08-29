@@ -1,4 +1,6 @@
-﻿namespace CulinaryBlogCore.Models.RecipeViewModels
+﻿using CulinaryBlogCore.Data.Models.Entities;
+
+namespace CulinaryBlogCore.Models.RecipeViewModels
 {
     public class RecipeViewModel
     {
@@ -17,5 +19,7 @@
         public string UserId { get; set; }
 
         public long? UserRating { get; set; }
+
+        public Category Category { get; set; }
     }
 }

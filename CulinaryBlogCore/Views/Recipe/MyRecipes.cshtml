@@ -11,5 +11,12 @@
     {
         @Html.Partial("RecipePartial", recipe)
     }
-    @Html.Partial("ModalBox")
+    @Html.Partial("ModalBox", new ModalBoxViewModel
+    {
+        TargetId = "deleteProductModal",
+        Title = "Delete Product",
+        Message = "Are you sure you want to permanently remove this product?",
+        ButtonClass = "btn-danger remove-product",
+        ButtonText = "Delete"
+    });
 </section>

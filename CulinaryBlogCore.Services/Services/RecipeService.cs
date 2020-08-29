@@ -112,5 +112,11 @@ namespace CulinaryBlogCore.Services
                 .OrderByDescending(r => r.CreationTime)
                 .ToList();
         }
+
+        public List<Recipe> GetAll() {
+            return this._repository.Set<Recipe>()
+                .Include(r => r.Category)
+                .ToList();
+        }
     }
 }

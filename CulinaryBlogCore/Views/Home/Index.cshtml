@@ -130,6 +130,12 @@
         <h2>Chefs</h2>
         <hr>
     </div>
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="create-recipe-button">
+            <a href="/Administration/Chef/Create">Create</a>
+        </div>
+    }
     <div class="chefs-content">
         <article>
             <div>

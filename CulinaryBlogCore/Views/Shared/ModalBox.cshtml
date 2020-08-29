@@ -1,18 +1,18 @@
-﻿<div class="modal fade" id="deleteProductModal" tabindex="-1" role="dialog" aria-labelledby="productDeleteLabel" aria-hidden="true">
+﻿@model CulinaryBlogCore.Models.ModalBoxViewModel;
+
+<div class="modal fade" id="@Model.TargetId" tabindex="-1" role="dialog" aria-labelledby="modelBoxLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="productDeleteLabel">Delete Product</h5>
+                <h5 class="modal-title" id="modelBoxLabel">@Model.Title</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                Are you sure you want to permanently remove this product?
-            </div>
+            <div class="modal-body">@Model.Message</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-close-model" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn btn-danger remove-product">Delete</button>
+                <button type="submit" class="btn btn @Model.ButtonClass">@Model.ButtonText</button>
             </div>
         </div>
     </div>

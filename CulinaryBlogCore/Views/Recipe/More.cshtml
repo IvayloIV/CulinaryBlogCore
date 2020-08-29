@@ -7,5 +7,12 @@
 
 <section class="receipt @Model.Category.Name" style="background: url( @Model.Category.BackgroundImgPath ) no-repeat center fixed; background-size: cover;">
     @Html.Partial("RecipePartial", Model)
-    @Html.Partial("ModalBox")
+    @Html.Partial("ModalBox", new ModalBoxViewModel
+    {
+        TargetId = "deleteProductModal",
+        Title = "Delete Product",
+        Message = "Are you sure you want to permanently remove this product?",
+        ButtonClass = "btn-danger remove-product",
+        ButtonText = "Delete"
+    });
 </section>

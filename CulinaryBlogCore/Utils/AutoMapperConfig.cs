@@ -4,6 +4,7 @@ using CulinaryBlogCore.Models.ProductViewModels;
 using CulinaryBlogCore.Models.RecipeViewModels;
 
 using AutoMapper;
+using CulinaryBlogCore.Models.ChefViewModels;
 
 namespace CulinaryBlogCore.Utils
 {
@@ -40,6 +41,9 @@ namespace CulinaryBlogCore.Utils
 
             CreateMap<RecipeSubscription, RecipeSubscriptionViewModel>();
             CreateMap<RecipeSubscriptionViewModel, RecipeSubscription>();
+
+            CreateMap<Chef, CreateChefViewModel>();
+            CreateMap<CreateChefViewModel, Chef>();
         }
     }
 }

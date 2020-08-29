@@ -196,6 +196,18 @@ namespace CulinaryBlogCore.Controllers
             return View(recipeDetailsViewModel);
         }
 
+        public IActionResult Gallery() {
+            List<Recipe> recipes = this._recipeService.GetAll();
+            List<CategoryViewModel> categories = this.GetCategories();
+            GalleryViewModel galleryViewModel = new GalleryViewModel
+            {
+                Recipes = this._mapper.Map<List<RecipeViewModel>>(recipes),
+                Categories = categories
+            };
+
+            return View(galleryViewModel);
+        }
+
         private List<CategoryViewModel> GetCategories()
         {
             IList<Category> categories = this._categoryService.GetAll();

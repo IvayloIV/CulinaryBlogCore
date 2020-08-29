@@ -3016,3 +3016,12 @@ body > main > section.best-receipts > div.best-receipts-posts > article > div > 
     margin-top: 10px;
     color: #ee9d0a;
 }
+
+.chefs-input-name {
+    display: flex;
+    align-items: flex-end;
+}
+
+.chefs-input-name span:first-of-type {
+    text-transform: lowercase;
+}

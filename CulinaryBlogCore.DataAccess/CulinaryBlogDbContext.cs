@@ -33,5 +33,7 @@ namespace CulinaryBlogCore.DataAccess
         public DbSet<RecipeSubscription> RecipeSubscriptions { get; set; }
 
         public DbSet<ImgurToken> ImgurToken { get; set; }
+
+        public DbSet<Chef> Chefs { get; set; }
     }
 }

@@ -1,0 +1,38 @@
+﻿@model CulinaryBlogCore.Models.ChefViewModels.CreateChefViewModel;
+
+@{
+    ViewBag.Title = "Create chef";
+}
+
+<section class="create-recipe register">
+    <div class="register-form">
+        <div class="register-header">
+            <div><img src="/images/register-logo.png" alt="logo"></div>
+            <h2>Create Chef</h2>
+        </div>
+        @using (Html.BeginForm("Create", "Chef", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="names">
+                <label>
+                    <span>Last Name</span>
+                    <div class="chefs-input-name">
+                        <span>chef</span>
+                        <input asp-for="LastName" type="text" name="@Html.NameFor(r => r.LastName)" />
+                    </div>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </label>
+            </div>
+            <label>
+                <span>Description</span>
+                <textarea asp-for="Description" type="text" name="@Html.NameFor(r => r.Description)"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </label>
+            <label>
+                <span>Image</span>
+                <input asp-for="ImagePath" type="file" name="image">
+                <span asp-validation-for="ImagePath" class="text-danger"></span>
+            </label>
+            <input type="submit" value="Create">
+        }
+    </div>
+</section>
