@@ -46,8 +46,9 @@
     <div class="best-receipts-posts">
         @foreach (RecipeViewModel recipe in Model.RecipesByRating)
         {
-            @functions { 
-                public string GetUserRatingClass(RecipeViewModel recipe) {
+            @functions {
+                public string GetUserRatingClass(RecipeViewModel recipe)
+                {
                     return recipe.UserRating == 0 ? "rating" : "rating-already";
                 }
             }
@@ -137,26 +138,21 @@
         </div>
     }
     <div class="chefs-content">
-        <article>
-            <div>
-                <img src="/images/headchef.jpg" alt="chef-petrov">
-            </div>
-            <h4>Chef Petrov</h4>
-            <p>He has been working in the culinary sphere for 15 years. There are many international awards. He was declared chef of the year in France. His specialties are desserts.</p>
-        </article>
-        <article>
-            <div>
-                <img src="/images/chef2.png" alt="chef-nikolov">
-            </div>
-            <h4>Chef Nikilov</h4>
-            <p>His prominence has long since left the borders of Bulgaria. It recommends vegetarianism as a healthy way of life. Cooked from his childhood for 21 years.</p>
-        </article>
-        <article>
-            <div>
-                <img src="/images/chef3.jpg" alt="chef-marinov">
-            </div>
-            <h4>Chef Marinov</h4>
-            <p>It has an interesting cooking style that combines Asian and Indian cuisine. He traveled for many years to Asia and collected his recipes from the local population.</p>
-        </article>
+        @foreach (var chef in Model.Chefs)
+        {
+            <article>
+                <a href="/Administration/Chef/Update/@chef.Id">
+                    <i class="fas fa-pen"></i>
+                </a>
+                <a href="/Administration/Chef/Delete/@chef.Id">
+                    <i class="fas fa-times"></i>
+                </a>
+                <div>
+                    <img src="@chef.ImagePath" alt="chef-@chef.LastName">
+                </div>
+                <h4>Chef @chef.LastName</h4>
+                <p>@chef.Description</p>
+            </article>
+        }
     </div>
 </section>

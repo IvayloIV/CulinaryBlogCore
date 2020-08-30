@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using CulinaryBlogCore.Models.CategoryViewModels;
+using Microsoft.AspNetCore.Http;
 
 namespace CulinaryBlogCore.Models.RecipeViewModels
 {
@@ -30,8 +31,9 @@ namespace CulinaryBlogCore.Models.RecipeViewModels
 
         public string ImageId { get; set; }
 
-        [Display(Name = "Image")]
         public string ImagePath { get; set; }
+
+        public IFormFile Image { get; set; }
 
         [Range(1, 100)]
         [Required]

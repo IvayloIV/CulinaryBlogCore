@@ -14,21 +14,25 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Internal;
+using CulinaryBlogCore.Models.ChefViewModels;
 
 namespace CulinaryBlogCore.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IRecipeService _recipeService;
+        private readonly IChefService _chefService;
         private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public HomeController(
-            IRecipeService recipeService, 
+            IRecipeService recipeService,
+            IChefService chefService, 
             IMapper mapper,
             UserManager<ApplicationUser> userManager)
         {
             this._recipeService = recipeService;
+            this._chefService = chefService;
             this._mapper = mapper;
             this._userManager = userManager;
         }
@@ -46,9 +50,13 @@ namespace CulinaryBlogCore.Controllers
             IList<Recipe> lastAddedRecipes = this._recipeService.GetLastAdded();
             List<RecipeViewModel> lastAddedRecipesModel = this._mapper.Map<List<RecipeViewModel>>(lastAddedRecipes);
 
+            List<Chef> chefs = this._chefService.GetAll();
+            List<ChefViewModel> chefsViewModel = this._mapper.Map<List<ChefViewModel>>(chefs);
+
             RecipeHomeViewModel recipeHomeViewModel = new RecipeHomeViewModel() { 
                 RecipesByRating = recipesByRatingModel,
                 LastAddedRecipes = lastAddedRecipesModel,
+                Chefs = chefsViewModel,
                 CurrUserId = user?.Id
             };
             return View(recipeHomeViewModel);

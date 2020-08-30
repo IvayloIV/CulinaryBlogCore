@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Http;
 
 namespace CulinaryBlogCore.Models.ChefViewModels
 {
-    public class CreateChefViewModel
+    public class UpdateChefViewModel
     {
+        public long Id { get; set; }
+
         [Required]
         [StringLength(60, MinimumLength = 4)]
         [Display(Name = "Last Name")]
@@ -15,12 +17,10 @@ namespace CulinaryBlogCore.Models.ChefViewModels
         [StringLength(800, MinimumLength = 20)]
         public string Description { get; set; }
 
-        [Display(Name = "Image")]
         public string ImagePath { get; set; }
 
         public string ImageId { get; set; }
 
-        [Required]
         public IFormFile Image { get; set; }
     }
 }

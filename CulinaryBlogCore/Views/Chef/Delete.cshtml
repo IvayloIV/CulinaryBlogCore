@@ -1,0 +1,37 @@
+﻿@model CulinaryBlogCore.Models.ChefViewModels.DeleteChefViewModel;
+
+@{
+    ViewBag.Title = "Delete chef";
+}
+
+<section class="delete-recipe register chef-delete">
+    <div class="register-form">
+        <div class="register-header delete-chef-title">
+            <h2>Delete Chef</h2>
+        </div>
+        @using (Html.BeginForm("Delete", "Chef", new { id = Model.Id }, FormMethod.Post))
+        {
+            <div class="chef-img-block">
+                <img src="@Model.ImagePath" alt="chef-@Model.LastName">
+            </div>
+            <div class="chef-name">
+                <span>chef</span> <span>@Model.LastName</span>
+            </div>
+            <div class="chef-description">
+                <span>@Model.Description</span>
+            </div>
+            <input type="hidden" name="imageId" value="@Model.ImageId" />
+            <button type="button" class="btn-recipe-delete" data-toggle="modal" data-target="#deleteChefModal">
+                Delete
+            </button>
+            @Html.Partial("ModalBox", new ModalBoxViewModel
+            {
+                TargetId = "deleteChefModal",
+                Title = "Delete Chef",
+                Message = "Are you sure you want to permanently remove this chef?",
+                ButtonClass = "btn-danger",
+                ButtonText = "Delete"
+            });
+        }
+    </div>
+</section>

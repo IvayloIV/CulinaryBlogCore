@@ -44,6 +44,15 @@ namespace CulinaryBlogCore.Utils
 
             CreateMap<Chef, CreateChefViewModel>();
             CreateMap<CreateChefViewModel, Chef>();
+
+            CreateMap<Chef, ChefViewModel>();
+            CreateMap<ChefViewModel, Chef>();
+
+            CreateMap<Chef, DeleteChefViewModel>();
+            CreateMap<DeleteChefViewModel, Chef>();
+
+            CreateMap<Chef, UpdateChefViewModel>();
+            CreateMap<UpdateChefViewModel, Chef>();
         }
     }
 }

@@ -61,8 +61,7 @@
             <label>
                 <span>Current Image</span>
                 <img src="@Model.ImagePath" alt="@Model.Name" height="120" />
-                <input asp-for="ImagePath" type="file" name="image" value="@Model.ImagePath">
-                <span asp-validation-for="ImagePath" class="text-danger"></span>
+                <input asp-for="Image" type="file" name="@Html.NameFor(r => r.Image)"/>
                 <input type="hidden" name="ImageId" value="@Model.ImageId" />
                 <input type="hidden" name="ImagePath" value="@Model.ImagePath" />
             </label>

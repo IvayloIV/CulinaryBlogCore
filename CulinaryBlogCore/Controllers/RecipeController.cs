@@ -9,7 +9,6 @@ using CulinaryBlogCore.Enums;
 using CulinaryBlogCore.Models.CategoryViewModels;
 using CulinaryBlogCore.Models.RecipeViewModels;
 using CulinaryBlogCore.Services.Contracts;
-using CulinaryBlogCore.Utils;
 
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -19,7 +18,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
 using Imgur.API.Endpoints;
 using Imgur.API.Models;
-using Microsoft.Extensions.Options;
 
 namespace CulinaryBlogCore.Controllers
 {
@@ -60,12 +58,12 @@ namespace CulinaryBlogCore.Controllers
         [Authorize]
         [Route("[controller]/[action]")]
         [Route("Administration/[controller]/[action]")]
-        public async Task<ActionResult> Create(CreateRecipeViewModel recipeViewModel, IFormFile image)
+        public async Task<ActionResult> Create(CreateRecipeViewModel recipeViewModel)
         {
             if (ModelState.IsValid)
             {
                 ImageEndpoint imageEndpoint = await this._imgurTokenService.GetImageEndpoint();
-                IImage imageData = await imageEndpoint.UploadImageAsync(image.OpenReadStream());
+                IImage imageData = await imageEndpoint.UploadImageAsync(recipeViewModel.Image.OpenReadStream());
                 recipeViewModel.ImagePath = imageData.Link;
                 recipeViewModel.ImageId = imageData.Id;
 
@@ -117,17 +115,17 @@ namespace CulinaryBlogCore.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> Update(long id, UpdateRecipeViewModel recipeViewModel, IFormFile image)
+        public async Task<ActionResult> Update(long id, UpdateRecipeViewModel recipeViewModel)
         {
             if (ModelState.IsValid)
             {
                 if (await this.IsAdminOrOwner(() => recipeViewModel.UserId))
                 {
-                    if (image != null)
+                    if (recipeViewModel.Image != null)
                     {
                         ImageEndpoint imageEndpoint = await this._imgurTokenService.GetImageEndpoint();
                         await imageEndpoint.DeleteImageAsync(recipeViewModel.ImageId);
-                        IImage uploadedImage = await imageEndpoint.UploadImageAsync(image.OpenReadStream());
+                        IImage uploadedImage = await imageEndpoint.UploadImageAsync(recipeViewModel.Image.OpenReadStream());
                         recipeViewModel.ImageId = uploadedImage.Id;
                         recipeViewModel.ImagePath = uploadedImage.Link;
                     }

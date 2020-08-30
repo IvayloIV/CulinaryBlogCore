@@ -560,7 +560,7 @@ nav .header-inner-nav li:first-of-type a {
         flex-wrap: wrap
     }
 
-.best-receipts-posts .fa-pen {
+.best-receipts-posts .fa-pen, .chefs-content .fa-pen {
     position: absolute;
     top: 8px;
     right: 33px;
@@ -570,12 +570,18 @@ nav .header-inner-nav li:first-of-type a {
     transition: all .3s ease;
 }
 
-    .best-receipts-posts .fa-pen:hover {
+.chefs-content .fa-pen {
+    top: 12px;
+    right: 37px;
+    opacity: 0.4;
+}
+
+    .best-receipts-posts .fa-pen:hover, .chefs-content .fa-pen:hover {
         color: #fcc600;
         opacity: 1;
     }
 
-.best-receipts-posts .fa-times {
+.best-receipts-posts .fa-times, .chefs-content .fa-times {
     position: absolute;
     top: 5px;
     right: 9px;
@@ -586,7 +592,13 @@ nav .header-inner-nav li:first-of-type a {
     transition: all .3s ease;
 }
 
-    .best-receipts-posts .fa-times:hover {
+.chefs-content .fa-times {
+    top: 9px;
+    right: 13px;
+    opacity: 0.2;
+}
+
+    .best-receipts-posts .fa-times:hover, .chefs-content .fa-times:hover {
         opacity: 1;
     }
 
@@ -906,10 +918,10 @@ nav .header-inner-nav li:first-of-type a {
     padding: 2.5rem 1.5rem;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    cursor: pointer;
     -webkit-box-shadow: 8px 6px 36px 0 rgba(0,0,0,.15);
     box-shadow: 8px 6px 36px 0 rgba(0,0,0,.15);
-    background: #f8f8f8
+    background: #f8f8f8;
+    position: relative;
 }
 
 @media all and (max-width:820px) {
@@ -933,7 +945,9 @@ nav .header-inner-nav li:first-of-type a {
 .chefs .chefs-content article p {
     color: #7a7a7a;
     font-style: italic;
-    margin-bottom: 0
+    margin-bottom: 0;
+    word-break: break-word;
+    margin-top: 18px;
 }
 
 .chefs .chefs-content article div {
@@ -1509,7 +1523,7 @@ nav .header-inner-nav li:first-of-type a {
 
 .receipt article h2 {
     position: absolute;
-    top: -3.52rem;
+    top: -3.41rem;
     left: 3rem;
     padding: .7rem 2.5rem;
     background: bisque url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23090909' fill-opacity='0.07' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
@@ -3024,4 +3038,64 @@ body > main > section.best-receipts > div.best-receipts-posts > article > div > 
 
 .chefs-input-name span:first-of-type {
     text-transform: lowercase;
+}
+
+.delete-recipe .chef-img-block, .update-chef .chef-img-block {
+    position: relative;
+    width: 38%;
+    margin: 0 auto;
+}
+
+.update-chef .chef-img-block {
+    width: 31%;
+}
+
+.delete-recipe .chef-img-block img, .update-chef .chef-img-block img {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+}
+
+.delete-recipe .chef-img-block:before, .update-chef .chef-img-block:before {
+    display: block;
+    content: '';
+    padding-top: 100%;
+}
+
+.delete-recipe .chef-img-block:after, .update-chef .chef-img-block:after {
+    display: block;
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 5px rgba(255,255,255,.52);
+}
+
+.chef-delete .chef-name {
+    margin-top: 16px;
+    font-size: 1.4rem;
+    font-style: italic;
+}
+
+.chef-delete .chef-description {
+    width: 76%;
+    word-break: break-word;
+    margin: 0 auto;
+    margin-top: 16px;
+    color: #7a7a7a;
+}
+
+.chef-delete .chef-description span {
+    color: #7a7a7a;
+}
+
+.chef-delete .delete-chef-title h2 {
+    margin-bottom: 25px;
 }

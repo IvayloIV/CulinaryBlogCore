@@ -1,0 +1,54 @@
+﻿@model CulinaryBlogCore.Models.ChefViewModels.UpdateChefViewModel;
+
+@{
+    ViewBag.Title = "Update recipe";
+}
+
+<section class="update-recipe create-recipe register update-chef">
+    <div class="register-form">
+        <div class="register-header">
+            <div><img src="/images/register-logo.png" alt="logo"></div>
+            <h2>Update Chef</h2>
+        </div>
+        @using (Html.BeginForm("Update", "Chef", new { id = Model.Id }, FormMethod.Post, null, new { enctype = "multipart/form-data" }))
+        {
+            <div class="names">
+                <label>
+                    <span>Last Name</span>
+                    <div class="chefs-input-name">
+                        <span>chef</span>
+                        <input asp-for="LastName" type="text" name="@Html.NameFor(r => r.LastName)" value="@Model.LastName" />
+                    </div>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </label>
+            </div>
+            <label>
+                <span>Description</span>
+                <textarea asp-for="Description" type="text" name="@Html.NameFor(r => r.Description)">@Model.Description</textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </label>
+            <label>
+                <span>Current Image</span>
+                <div class="chef-img-block">
+                    <img src="@Model.ImagePath" alt="@Model.LastName" height="120" />
+                </div>
+                <input asp-for="Image" type="file" name="@Html.NameFor(r => r.Image)">
+                <input type="hidden" name="ImageId" value="@Model.ImageId" />
+                <input type="hidden" name="ImagePath" value="@Model.ImagePath" />
+            </label>
+            <div class="button-wrapper">
+                <button type="button" class="btn-recipe-update" data-toggle="modal" data-target="#updateChefModal">
+                    Update
+                </button>
+            </div>
+            @Html.Partial("ModalBox", new ModalBoxViewModel
+            {
+               TargetId = "updateChefModal",
+               Title = "Update Chef",
+               Message = "Are you sure you want to update this chef?",
+               ButtonClass = "btn-warning",
+               ButtonText = "Update"
+            });
+        }
+    </div>
+</section>
