@@ -1,4 +1,6 @@
-﻿@{
+﻿@model CulinaryBlogCore.Models.TrickViewModels.TrickViewModel;
+
+@{
     ViewData["Title"] = "Tricks";
 }
 <section class="tricks">
@@ -6,107 +8,33 @@
         <h2>Tricks</h2>
         <hr>
         <p>The most famous Bulgarian chefs have revealed to us the finer tricks of cooking. They are easy and convenient to use and at the same time the dishes are always successful and very tasty. Let's trust them!</p>
+        <button class="new-trick">Add new</button>
+        <form class="trick-create" action="#" method="post" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder="Name" class="add-trick-name" />
+            <textarea name="description" rows="4" placeholder="Description" class="add-trick-description"></textarea>
+            <select name="chef" class="chefs-tricks"></select>
+            <label class="trick-image-create">
+                <i class="far fa-image"></i>
+                <span class="curr-image-trick">Add image</span>
+                <input type="file" name="image" class="trick-img" />
+            </label>
+            <input type="submit" value="Create" />
+            <p class="trick-back-create">back</p>
+        </form>
     </div>
     <div class="tricks-articles">
-        <article>
-            <div class="tricks-articles-picture">
-                <img src="/images/Tricks/cauliflower.jpg" alt="cauliflower">
-            </div>
-            <div class="tricks-articles-content">
-                <h4>Cauliflower</h4>
-                <p>If the cauliflower is bumped incorrectly, then it loses its beautiful appearance, and nobody likes to eat that kind of food. To prevent this, add sugar to the water when it boils.</p>
-                <span>chef Ivanov</span>
-            </div>
-        </article>
-        <article>
-            <div class="tricks-articles-picture">
-                <img src="/images/Tricks/frying-meat.jpg" alt="rying-meat">
-            </div>
-            <div class="tricks-articles-content">
-                <h4>Frying meat</h4>
-                <p>When frying meat it gets very hard. To avoid it, wait for the fat to get hot enough and use a thick bottom pan. So it will quickly be sealed, that is, the juice will not leak out of it and will remain fragile.</p>
-                <span>chef Petrov</span>
-            </div>
-        </article>
-        <article>
-            <div class="tricks-articles-picture">
-                <img src="/images/Tricks/beans.jpg" alt="bob">
-            </div>
-            <div class="tricks-articles-content">
-                <h4>Beans</h4>
-                <p>In order not to hurt our stomach, beautify the beans in cold water for 8-10 hours before cooking and add to the boiling it is a tablespoon soda bicarbonate.</p>
-                <span>chef Naidenov</span>
-            </div>
-        </article>
-        <article>
-            <div class="tricks-articles-picture">
-                <img src="/images/Tricks/onion.jpg" alt="onion">
-            </div>
-            <div class="tricks-articles-content">
-                <h4>Onion</h4>
-                <p>You will keep the shape of fried whole onions and you will also improve their taste if you immerse them in a mixed with a little salt flour.</p>
-                <span>chef Nikolaev</span>
-            </div>
-        </article>
-        <article>
-            <div class="tricks-articles-picture">
-                <img src="/images/Tricks/eggplant.jpg" alt="eggplant">
-            </div>
-            <div class="tricks-articles-content">
-                <h4>Eggplant</h4>
-                <p>The eggplant contains a substance called solanine, which makes it hot, especially if the eggplant is old. Let it stand for 20-30 minutes to make sure that the bitterness comes out.</p>
-                <span>chef Naidenov</span>
-            </div>
-        </article>
-        <article>
-            <div class="tricks-articles-picture">
-                <img src="/images/Tricks/pasta.jpg" alt="pasta">
-            </div>
-            <div class="tricks-articles-content">
-                <h4>Pasta</h4>
-                <p>Always cook pasta one minute less than necessary as it further softens when you add sauce. Put the paste in boiling water and add a spoonful of oil.</p>
-                <span>chef Petrov</span>
-            </div>
-        </article>
-        <article>
-            <div class="tricks-articles-picture">
-                <img src="/images/Tricks/tomatoes.jpg" alt="tomatoes">
-            </div>
-            <div class="tricks-articles-content">
-                <h4>Tomatoes</h4>
-                <p>Before cutting the vegetables, put some salt on the board. So you better control their movement. Vegetables cut off shortly before being cooked.</p>
-                <span>chef Manchev</span>
-            </div>
-        </article>
-        <article>
-            <div class="tricks-articles-picture">
-                <img src="/images/Tricks/chicken.jpg" alt="chicken">
-            </div>
-            <div class="tricks-articles-content">
-                <h4>Chicken</h4>
-                <p>Never fry a chicken with garlic because it will completely remove the taste and smell of the chicken. Add salt to the end of cooking.</p>
-                <span>chef Georgiev</span>
-            </div>
-        </article>
-        <article>
-            <div class="tricks-articles-picture">
-                <img src="/images/Tricks/oil.jpg" alt="oil">
-            </div>
-            <div class="tricks-articles-content">
-                <h4>Oil</h4>
-                <p>Always buy quality olive oil. Bad oil can completely destroy the taste. Olive oil adds flavor to the dish and improves gustatory qualities.</p>
-                <span>chef Mihalkov</span>
-            </div>
-        </article>
-        <article>
-            <div class="tricks-articles-picture">
-                <img src="/images/Tricks/pumpkin.jpg" alt="pumpkin">
-            </div>
-            <div class="tricks-articles-content">
-                <h4>Pumpkin</h4>
-                <p>Pumpkin puree will not only get delicious but also very fast if you prepare it in the microwave oven. Immerse it for 10 minutes in hot water.</p>
-                <span>chef Trifonov</span>
-            </div>
-        </article>
+        @foreach (var trick in Model.Tricks)
+        {
+            <article>
+                <div class="tricks-articles-picture">
+                    <img src="@trick.ImagePath" alt="@trick.Name">
+                </div>
+                <div class="tricks-articles-content">
+                    <h4>@trick.Name</h4>
+                    <p>@trick.Description</p>
+                    <span>chef @trick.Chef.LastName</span>
+                </div>
+            </article>
+        }
     </div>
 </section>

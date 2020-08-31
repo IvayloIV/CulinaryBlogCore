@@ -35,5 +35,7 @@ namespace CulinaryBlogCore.DataAccess
         public DbSet<ImgurToken> ImgurToken { get; set; }
 
         public DbSet<Chef> Chefs { get; set; }
+
+        public DbSet<Trick> Tricks { get; set; }
     }
 }

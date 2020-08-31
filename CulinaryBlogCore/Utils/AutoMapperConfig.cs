@@ -5,6 +5,7 @@ using CulinaryBlogCore.Models.RecipeViewModels;
 
 using AutoMapper;
 using CulinaryBlogCore.Models.ChefViewModels;
+using CulinaryBlogCore.Models.TrickViewModels;
 
 namespace CulinaryBlogCore.Utils
 {
@@ -53,6 +54,12 @@ namespace CulinaryBlogCore.Utils
 
             CreateMap<Chef, UpdateChefViewModel>();
             CreateMap<UpdateChefViewModel, Chef>();
+
+            CreateMap<Trick, CreateTrickViewModel>();
+            CreateMap<CreateTrickViewModel, Trick>();
+
+            CreateMap<Trick, TrickViewModel>();
+            CreateMap<TrickViewModel, Trick>();
         }
     }
 }

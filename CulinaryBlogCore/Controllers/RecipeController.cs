@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
 using Imgur.API.Endpoints;
 using Imgur.API.Models;
+using Microsoft.AspNetCore.Routing;
 
 namespace CulinaryBlogCore.Controllers
 {
@@ -105,7 +106,7 @@ namespace CulinaryBlogCore.Controllers
             Recipe recipe = this._recipeService.GetById(id);
             UpdateRecipeViewModel updateViewModel = this._mapper.Map<UpdateRecipeViewModel>(recipe);
 
-            if (await this.IsAdminOrOwner(() => updateViewModel.UserId)) {
+            if (await this.IsAdminOrOwner(updateViewModel.UserId)) {
                 updateViewModel.Categories = this.GetCategories();
                 return View(updateViewModel);
             }
@@ -119,7 +120,7 @@ namespace CulinaryBlogCore.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (await this.IsAdminOrOwner(() => recipeViewModel.UserId))
+                if (await this.IsAdminOrOwner(recipeViewModel.UserId))
                 {
                     if (recipeViewModel.Image != null)
                     {
@@ -143,7 +144,7 @@ namespace CulinaryBlogCore.Controllers
         public async Task<ActionResult> Delete(long id)
         {
             Recipe recipe = this._recipeService.GetById(id);
-            if (await this.IsAdminOrOwner(() => recipe.UserId))
+            if (await this.IsAdminOrOwner(recipe.UserId))
             {
                 recipe.Category = this._categoryService.GetById(recipe.CategoryId);
                 DeleteRecipeViewModel deleteViewModel = this._mapper.Map<DeleteRecipeViewModel>(recipe);
@@ -158,7 +159,7 @@ namespace CulinaryBlogCore.Controllers
         public async Task<ActionResult> Delete(long id, string imageId)
         {
             Recipe recipe = this._recipeService.GetById(id);
-            if (await this.IsAdminOrOwner(() => recipe.UserId) && imageId != null)
+            if (await this.IsAdminOrOwner(recipe.UserId) && imageId != null)
             {
                 ImageEndpoint imageEndpoint = await this._imgurTokenService.GetImageEndpoint();
                 await imageEndpoint.DeleteImageAsync(imageId);
@@ -212,11 +213,11 @@ namespace CulinaryBlogCore.Controllers
             return this._mapper.Map<List<CategoryViewModel>>(categories);
         }
 
-        private async Task<bool> IsAdminOrOwner(Func<string> getUserId) {
+        private async Task<bool> IsAdminOrOwner(string userId) {
             ApplicationUser user = await this._userManager.GetUserAsync(HttpContext.User);
             IList<string> roles = await _userManager.GetRolesAsync(user);
 
-            return roles.Any(r => r == Role.Admin.ToString()) || user.Id == getUserId.Invoke();
+            return roles.Any(r => r == Role.Admin.ToString()) || user.Id == userId;
         }
 
         private void CalculateRating(List<Recipe> recipes, List<RecipeDetailsViewModel> recipeViewModel)

@@ -6,7 +6,7 @@
 
     emailInput.val('');
     message.fadeIn(600);
-    message.text('Sending...');
+    message.text('Subscribing...');
 
     $.ajax({
         url: '/Mail/Recipe/Subscribe',
@@ -19,10 +19,11 @@
     });
 });
 
-$('.subscriptions-send').on('click', (event) => {
+$('.subscriptions-send-form').on('submit', (event) => {
     event.preventDefault();
     let message = $('.subscriptions-send-message');
 
+    $('.btn-close-model').click();
     message.text('Sending...');
     message.fadeIn(600);
 

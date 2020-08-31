@@ -38,9 +38,14 @@ namespace CulinaryBlogCore.Services.Services
 
         public bool CheckIfExist(long recipeId, string productName) {
             int productCount = this._repository.Set<Product>()
-                .Where(c => c.RecipeId == recipeId && c.Name == productName)
+                .Where(p => p.RecipeId == recipeId && p.Name == productName)
+                //.Where(prod => test(prod, recipeId, productName))
                 .Count();
             return productCount != 0;
+        }
+
+        public bool test(Product c, long recipeId, string productName) {
+            return c.RecipeId == recipeId && c.Name == productName;
         }
     }
 }

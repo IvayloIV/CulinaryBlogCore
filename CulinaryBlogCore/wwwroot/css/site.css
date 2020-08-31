@@ -1619,7 +1619,10 @@ nav .header-inner-nav li:first-of-type a {
     text-align: center;
     color: #fff;
     padding: 8rem 0;
-    font-size: 1.05em
+    font-size: 1.05em;
+    height: 24rem;
+    overflow: hidden;
+    transition: all 1.5s ease;
 }
 
     .tricks .tricks-title h2 {
@@ -3098,4 +3101,78 @@ body > main > section.best-receipts > div.best-receipts-posts > article > div > 
 
 .chef-delete .delete-chef-title h2 {
     margin-bottom: 25px;
+}
+
+.trick-create {
+    display: flex;
+    flex-direction: column;
+    width: 23%;
+    margin: 35px auto;
+}
+
+.trick-create input, .trick-create textarea, .trick-create select {
+    outline: none;
+    margin: 0.5rem 0;
+    border-radius: 16px;
+    border: 2px solid white;
+    padding: 7px 16px;
+    box-sizing: border-box;
+    background: #fafafa;
+    font-size: 17px;
+    opacity: 0.8;
+    color: #7a7a7a;
+    font-weight: 400;
+}
+
+.trick-create input[type="submit"] {
+    background: #32d381;
+    color: white;
+    font-weight: 700;
+    width: 70%;
+    margin: 0 auto;
+    transition: all .3s ease;
+}
+
+.trick-create input[type="submit"]:hover {
+    color: #32d381;
+    background: white;
+    border: 2px solid #32d381;
+}
+
+.trick-create input[type="file"] {
+    display: none;
+}
+
+.new-trick {
+    border: 3px solid #ffc11c;
+    text-decoration: none;
+    padding: .6rem 2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    outline: 0;
+    font-size: .95rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-top: .3rem;
+    margin-bottom: .7rem;
+    background: rgba(252, 243, 207, 0.8);
+    margin-top: 22px;
+    transition: all .3s ease;
+}
+
+.new-trick:hover {
+    background: #ffc11c;
+}
+
+.trick-image-create {
+    margin: 0.4rem auto 0.5rem;
+    cursor: pointer;
+}
+
+.tricks .tricks-title p.trick-back-create {
+    text-decoration: underline;
+    font-style: italic;
+    font-weight: 100;
+    cursor: pointer;
+    width: auto;
 }

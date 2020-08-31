@@ -10,6 +10,7 @@ using Imgur.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace CulinaryBlogCore.Controllers
 {
@@ -97,6 +98,12 @@ namespace CulinaryBlogCore.Controllers
                 this._chefService.DeleteById(id);
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        public List<ChefViewModel> GetAll() {
+            List<Chef> chefs = this._chefService.GetAll();
+            List<ChefViewModel> chefViewModel = this._mapper.Map<List<ChefViewModel>>(chefs);
+            return chefViewModel;
         }
     }
 }
