@@ -9,5 +9,11 @@ namespace CulinaryBlogCore.Services.Contracts
         void Add(Trick trick);
 
         List<Trick> GetAll();
+
+        Trick GetById(long id);
+
+        void Delete(Trick trick);
+
+        void Update(long id, Trick newTrick);
     }
 }

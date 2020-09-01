@@ -560,7 +560,7 @@ nav .header-inner-nav li:first-of-type a {
         flex-wrap: wrap
     }
 
-.best-receipts-posts .fa-pen, .chefs-content .fa-pen {
+.best-receipts-posts .fa-pen, .chefs-content .fa-pen, .tricks .fa-pen {
     position: absolute;
     top: 8px;
     right: 33px;
@@ -570,18 +570,18 @@ nav .header-inner-nav li:first-of-type a {
     transition: all .3s ease;
 }
 
-.chefs-content .fa-pen {
+.chefs-content .fa-pen, .tricks .fa-pen {
     top: 12px;
     right: 37px;
     opacity: 0.4;
 }
 
-    .best-receipts-posts .fa-pen:hover, .chefs-content .fa-pen:hover {
-        color: #fcc600;
+    .best-receipts-posts .fa-pen:hover, .chefs-content .fa-pen:hover, .tricks .fa-pen:hover {
+        /*color: #fcc600;*/
         opacity: 1;
     }
 
-.best-receipts-posts .fa-times, .chefs-content .fa-times {
+.best-receipts-posts .fa-times, .chefs-content .fa-times, .tricks .fa-times {
     position: absolute;
     top: 5px;
     right: 9px;
@@ -592,13 +592,23 @@ nav .header-inner-nav li:first-of-type a {
     transition: all .3s ease;
 }
 
-.chefs-content .fa-times {
+.chefs-content .fa-times, .tricks .fa-times {
     top: 9px;
     right: 13px;
     opacity: 0.2;
 }
 
-    .best-receipts-posts .fa-times:hover, .chefs-content .fa-times:hover {
+.tricks .fa-times {
+    position: unset;
+}
+
+.tricks .fa-pen {
+    left: 1px;
+    position: relative;
+    top: -2px;
+}
+
+    .best-receipts-posts .fa-times:hover, .chefs-content .fa-times:hover, .tricks .fa-times:hover {
         opacity: 1;
     }
 
@@ -1701,7 +1711,7 @@ nav .header-inner-nav li:first-of-type a {
     }
 }
 
-.tricks .tricks-articles article:after {
+/*.tricks .tricks-articles article:before {
     display: block;
     content: '';
     position: absolute;
@@ -1712,7 +1722,7 @@ nav .header-inner-nav li:first-of-type a {
     border: 1rem transparent;
     -webkit-transition: border .4s ease;
     transition: border .4s ease
-}
+}*/
 
 .tricks .tricks-articles article:hover:after {
     border: 1rem solid rgba(0,0,0,.2)
@@ -1744,7 +1754,8 @@ nav .header-inner-nav li:first-of-type a {
     padding: 0 3rem;
     -ms-flex-item-align: center;
     align-self: center;
-    font-size: 1.05em
+    font-size: 1.05em;
+    position: relative;
 }
 
 @media all and (max-width:1200px) {
@@ -3106,25 +3117,32 @@ body > main > section.best-receipts > div.best-receipts-posts > article > div > 
 .trick-create {
     display: flex;
     flex-direction: column;
-    width: 23%;
+    width: 24%;
     margin: 35px auto;
 }
 
-.trick-create input, .trick-create textarea, .trick-create select {
-    outline: none;
-    margin: 0.5rem 0;
-    border-radius: 16px;
-    border: 2px solid white;
-    padding: 7px 16px;
-    box-sizing: border-box;
-    background: #fafafa;
-    font-size: 17px;
-    opacity: 0.8;
-    color: #7a7a7a;
-    font-weight: 400;
+.trick-update {
+    width: 36%;
+    text-align: center;
 }
 
-.trick-create input[type="submit"] {
+    .trick-create input, .trick-create textarea, .trick-create select,
+    .trick-update input, .trick-update textarea, .trick-update select {
+        outline: none;
+        margin: 0.5rem 0;
+        border-radius: 16px;
+        border: 2px solid white;
+        padding: 7px 16px;
+        box-sizing: border-box;
+        background: #fafafa;
+        font-size: 17px;
+        opacity: 0.8;
+        color: #7a7a7a;
+        font-weight: 400;
+    }
+
+.trick-create input[type="submit"],
+.trick-update input[type="submit"] {
     background: #32d381;
     color: white;
     font-weight: 700;
@@ -3133,7 +3151,8 @@ body > main > section.best-receipts > div.best-receipts-posts > article > div > 
     transition: all .3s ease;
 }
 
-.trick-create input[type="submit"]:hover {
+.trick-create input[type="submit"]:hover,
+.trick-update input[type="submit"]:hover {
     color: #32d381;
     background: white;
     border: 2px solid #32d381;
@@ -3157,7 +3176,7 @@ body > main > section.best-receipts > div.best-receipts-posts > article > div > 
     margin-bottom: .7rem;
     background: rgba(252, 243, 207, 0.8);
     margin-top: 22px;
-    transition: all .3s ease;
+    transition: background .3s ease;
 }
 
 .new-trick:hover {
@@ -3175,4 +3194,101 @@ body > main > section.best-receipts > div.best-receipts-posts > article > div > 
     font-weight: 100;
     cursor: pointer;
     width: auto;
+}
+
+.tricks .tricks-articles article:nth-child(4n+1) .update-trick-buttons,
+.tricks .tricks-articles article:nth-child(4n+2) .update-trick-buttons {
+    position: absolute;
+    top: 32px;
+    padding: 11px 25px 11px 19px;
+    box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.43);
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    right: -82px;
+    transition: all 1.3s ease;
+}
+
+.tricks .tricks-articles article:nth-child(4n+3) .update-trick-buttons,
+.tricks .tricks-articles article:nth-child(4n+4) .update-trick-buttons {
+    position: absolute;
+    top: 32px;
+    padding: 11px 19px 11px 25px;
+    box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.43);
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    left: -82px;
+    transition: all 1.3s ease;
+}
+
+
+.tricks .tricks-articles article:nth-child(4n+1) .update-trick-buttons:hover,
+.tricks .tricks-articles article:nth-child(4n+2) .update-trick-buttons:hover {
+    right: 0;
+}
+.tricks .tricks-articles article:nth-child(4n+3) .update-trick-buttons:hover,
+.tricks .tricks-articles article:nth-child(4n+4) .update-trick-buttons:hover {
+    left: 0;
+}
+
+.update-trick-buttons a:first-child {
+    padding-right: 4px;
+}
+
+.tricks-articles .btn-trick-delete, .tricks-articles .btn-trick-update {
+    border: none;
+    background: transparent;
+    outline: none;
+}
+
+.tricks .tricks-articles article:nth-child(4n+1) .trick-update,
+.tricks .tricks-articles article:nth-child(4n+2) .trick-update {
+    position: absolute;
+    top: 70px;
+    left: 54px;
+    z-index: -1;
+}
+
+.tricks .tricks-articles article:nth-child(4n+3) .trick-update,
+.tricks .tricks-articles article:nth-child(4n+4) .trick-update {
+    position: absolute;
+    top: 70px;
+    right: 54px;
+    z-index: -1;
+}
+
+.trick-update h2 {
+    text-align: center;
+}
+
+.btn-trick-update-submit {
+    background: #32d381;
+    color: white;
+    font-weight: 700;
+    width: 70%;
+    margin: 5px auto;
+    outline: none;
+    border-radius: 16px;
+    border: 2px solid white;
+    padding: 0.4rem;
+    transition: all .3s ease;
+}
+
+.btn-trick-update-submit:hover {
+    background: white;
+    color: #32d381;
+    border: 2px solid #32d381;
+}
+
+.tricks .tricks-articles-content span.chef-id {
+    display: none;
+}
+
+.tricks .undo {
+    display: none;
+    background: transparent;
+    border: none;
+    color: #f4cb36;
+    position: relative;
+    bottom: 2px;
+    outline: none;
 }

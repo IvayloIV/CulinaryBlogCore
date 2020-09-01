@@ -56,5 +56,26 @@ namespace CulinaryBlogCore.Controllers
             this._trickService.Add(trick);
             return trick;
         }
+
+        [HttpPost]
+        public void Update(long id, UpdateTrickViewModel updateTrickViewModel)
+        {
+            Trick trick = this._mapper.Map<Trick>(updateTrickViewModel);
+            this._trickService.Update(id, trick);
+        }
+
+        [HttpPost]
+        public async Task Delete(long id)
+        {
+            Trick trick = this._trickService.GetById(id);
+            if (trick != null)
+            {
+                if (trick.ImageId != null) {
+                    ImageEndpoint imageEndpoint = await this._imgurTokenService.GetImageEndpoint();
+                    await imageEndpoint.DeleteImageAsync(trick.ImageId);
+                }
+                this._trickService.Delete(trick);
+            }
+        }
     }
 }

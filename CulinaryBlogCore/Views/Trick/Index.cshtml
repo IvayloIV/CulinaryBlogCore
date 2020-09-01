@@ -25,16 +25,53 @@
     <div class="tricks-articles">
         @foreach (var trick in Model.Tricks)
         {
-            <article>
+            <article data-trick-id="@trick.Id">
+                <div class="update-trick-buttons">
+                    <button type="button" class="btn-trick-update">
+                        <i class="fas fa-pen"></i>
+                    </button>
+                    <button class="undo">
+                        <i class="fas fa-undo-alt"></i>
+                    </button>
+                    <button type="button" class="btn-trick-delete" data-toggle="modal" data-target="#deleteTrickModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
                 <div class="tricks-articles-picture">
                     <img src="@trick.ImagePath" alt="@trick.Name">
                 </div>
                 <div class="tricks-articles-content">
                     <h4>@trick.Name</h4>
                     <p>@trick.Description</p>
-                    <span>chef @trick.Chef.LastName</span>
+                    <span class="chef-name-trick">chef @trick.Chef.LastName</span>
+                    <span class="chef-id">@trick.Chef.Id</span>
                 </div>
+                <form class="trick-update" action="#" method="post">
+                    <h2>Update</h2>
+                    <input type="text" name="name" placeholder="Name" class="add-trick-name" />
+                    <textarea name="description" rows="4" placeholder="Description" class="add-trick-description"></textarea>
+                    <select name="chef" class="chefs-tricks"></select>
+                    <button type="button" class="btn-trick-update-submit" data-toggle="modal" data-target="#updateTrickModal">
+                        Update
+                    </button>
+                </form>
             </article>
         }
     </div>
+    @Html.Partial("ModalBox", new ModalBoxViewModel
+    {
+        TargetId = "updateTrickModal",
+        Title = "Update Trick",
+        Message = "Are you sure you want to permanently update this trick?",
+        ButtonClass = "btn-warning update-trick",
+        ButtonText = "Update"
+    });
+    @Html.Partial("ModalBox", new ModalBoxViewModel
+    {
+        TargetId = "deleteTrickModal",
+        Title = "Delete Trick",
+        Message = "Are you sure you want to permanently remove this trick?",
+        ButtonClass = "btn-danger delete-trick",
+        ButtonText = "Delete"
+    });
 </section>

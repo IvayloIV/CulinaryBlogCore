@@ -22,11 +22,29 @@ namespace CulinaryBlogCore.Services
             this._repository.Add<Trick>(trick);
         }
 
+        public Trick GetById(long id) {
+            return this._repository.GetById<Trick>(id);
+        }
+
+        public void Delete(Trick trick) {
+            this._repository.Delete<Trick>(trick);
+        }
+
         public List<Trick> GetAll() {
             return this._repository.Set<Trick>()
                 .Include(t => t.Chef)
                 .OrderByDescending(t => t.CreationTime)
                 .ToList();
+        }
+
+        public void Update(long id, Trick newTrick) {
+            Trick trick = this.GetById(id);
+
+            trick.Name = newTrick.Name;
+            trick.Description = newTrick.Description;
+            trick.ChefId = newTrick.ChefId;
+
+            this._repository.Update<Trick>(trick);
         }
     }
 }

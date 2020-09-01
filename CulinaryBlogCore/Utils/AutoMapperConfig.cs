@@ -60,6 +60,9 @@ namespace CulinaryBlogCore.Utils
 
             CreateMap<Trick, TrickViewModel>();
             CreateMap<TrickViewModel, Trick>();
+
+            CreateMap<Trick, UpdateTrickViewModel>();
+            CreateMap<UpdateTrickViewModel, Trick>();
         }
     }
 }
