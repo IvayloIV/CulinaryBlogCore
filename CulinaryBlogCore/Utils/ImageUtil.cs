@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Http;
@@ -8,7 +7,8 @@ namespace CulinaryBlogCore.Utils
 {
     public static class ImageUtil
     {
-        public static async Task<string> UploadImage(IFormFile image, string destination) {
+        public static async Task<string> UploadImage(IFormFile image, string destination)
+        {
             string fileName = string.Empty;
             if (image != null && image.Length > 0)
             {
@@ -23,7 +23,8 @@ namespace CulinaryBlogCore.Utils
             return $"/images/{destination}/{fileName}";
         }
 
-        public static void DeleteImage(string imagePath) {
+        public static void DeleteImage(string imagePath)
+        {
             if (imagePath != null && imagePath.Length > 0)
             {
                 string filePath = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot\\{imagePath}");

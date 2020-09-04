@@ -1,10 +1,10 @@
 ﻿@model CulinaryBlogCore.Models.RecipeViewModels.RecipeDetailsViewModel;
 
 @{
-    string currUserId = (string)ViewData["CurrUserId"];
+    string currentUserId = (string)ViewData["CurrentUserId"];
     string userRatingClass = Model.UserRating == 0 ? "rating" : "rating-already";
-    bool isNotOwner = User.Identity.IsAuthenticated && currUserId != Model.UserId;
-    bool isAdminOrOwner = User.IsInRole("Admin") || Model.UserId == currUserId;
+    bool isNotOwner = User.Identity.IsAuthenticated && currentUserId != Model.UserId;
+    bool isAdminOrOwner = User.IsInRole("Admin") || Model.UserId == currentUserId;
 }
 
 <article>
@@ -59,7 +59,9 @@
                     <span class="rating-text">Rating: </span>
                 }
                 <span class="recipe-vote">@Model.Rating (@Model.VoteCount)</span>
-            <p><i class="fas fa-eye"></i> @Model.ViewCount views</p>
+                <p>
+                    <i class="fas fa-eye"></i> @Model.ViewCount views
+                </p>
             </p>
         </div>
     </div>

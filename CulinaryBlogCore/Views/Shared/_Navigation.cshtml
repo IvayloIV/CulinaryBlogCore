@@ -1,28 +1,59 @@
-﻿<nav>
+﻿@inject CulinaryBlogCore.Services.Contracts.ICategoryService CategoryService
+
+@{
+    var categories = CategoryService.GetAll();
+}
+
+<nav>
     <ul class="header-nav">
         <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
         <li id="receipt-menu">
-            <a href="#">Receipts</a>
+            <a href="#">Recipes</a>
             <ul class="header-inner-nav">
-                <li><a href="/Recipe/Details/1">Salads</a></li>
-                <li><a href="/Recipe/Details/2">Pizza</a></li>
-                <li><a href="/Recipe/Details/3">Desserts</a></li>
+                @foreach (var category in categories)
+                {
+                    <li>
+                        <a href="/Recipe/Details/@category.Id">@category.Name</a>
+                    </li>
+                }
             </ul>
         </li>
+
         @if (User.Identity.IsAuthenticated)
         {
-            <li><a asp-controller="Recipe" asp-action="MyRecipes">My Recipes</a></li>
+            <li>
+                <a asp-controller="Recipe" asp-action="MyRecipes">My Recipes</a>
+            </li>
         }
-        <li><a asp-controller="Trick" asp-action="Index">Tricks</a></li>
-        <li><a asp-controller="Recipe" asp-action="Gallery">Gallery</a></li>
+
+        <li>
+            <a asp-controller="Trick" asp-action="Index">Tricks</a>
+        </li>
+        <li>
+            <a asp-controller="Recipe" asp-action="Gallery">Gallery</a>
+        </li>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <li class="subscriptions-admin">
+                <a href="/Administration/Recipe/Subscriptions">Subscriptions</a>
+            </li>
+        }
+
         @if (User.Identity.IsAuthenticated)
         {
-            <li><a asp-controller="Account" asp-action="Logout">Logout</a></li>
+            <li>
+                <a asp-controller="Account" asp-action="Logout">Logout</a>
+            </li>
         }
         else
         {
-            <li><a asp-controller="Account" asp-action="Login">Login</a></li>
-            <li><a asp-controller="Account" asp-action="Register">Register</a></li>
+            <li>
+                <a asp-controller="Account" asp-action="Login">Login</a>
+            </li>
+            <li>
+                <a asp-controller="Account" asp-action="Register">Register</a>
+            </li>
         }
     </ul>
 </nav>

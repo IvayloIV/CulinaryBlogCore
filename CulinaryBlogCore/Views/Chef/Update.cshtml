@@ -7,7 +7,9 @@
 <section class="update-recipe create-recipe register update-chef">
     <div class="register-form">
         <div class="register-header">
-            <div><img src="/images/register-logo.png" alt="logo"></div>
+            <div>
+                <img src="/images/register-logo.png" alt="logo">
+            </div>
             <h2>Update Chef</h2>
         </div>
         @using (Html.BeginForm("Update", "Chef", new { id = Model.Id }, FormMethod.Post, null, new { enctype = "multipart/form-data" }))

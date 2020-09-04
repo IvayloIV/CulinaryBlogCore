@@ -12,8 +12,14 @@ namespace CulinaryBlogCore.Services.Contracts
 
         RecipeSubscription GetById(long id);
 
-        void Remove(RecipeSubscription recipe);
+        void Remove(RecipeSubscription recipeSubscription);
 
         List<RecipeSubscription> GetAll();
+
+        void SubscribeRecipes(long subscriptionId, string email);
+
+        void UnsubscribeRecipes(string email);
+
+        void SendToSubscribers(List<Recipe> recipes, List<RecipeSubscription> subscribers);
     }
 }

@@ -1,42 +1,51 @@
 ﻿@model CulinaryBlogCore.Models.TrickViewModels.TrickViewModel;
 
+@using CulinaryBlogCore.Models.TrickViewModels;
+
 @{
     ViewData["Title"] = "Tricks";
 }
+
 <section class="tricks">
     <div class="tricks-title">
         <h2>Tricks</h2>
         <hr>
         <p>The most famous Bulgarian chefs have revealed to us the finer tricks of cooking. They are easy and convenient to use and at the same time the dishes are always successful and very tasty. Let's trust them!</p>
-        <button class="new-trick">Add new</button>
-        <form class="trick-create" action="#" method="post" enctype="multipart/form-data">
-            <input type="text" name="name" placeholder="Name" class="add-trick-name" />
-            <textarea name="description" rows="4" placeholder="Description" class="add-trick-description"></textarea>
-            <select name="chef" class="chefs-tricks"></select>
-            <label class="trick-image-create">
-                <i class="far fa-image"></i>
-                <span class="curr-image-trick">Add image</span>
-                <input type="file" name="image" class="trick-img" />
-            </label>
-            <input type="submit" value="Create" />
-            <p class="trick-back-create">back</p>
-        </form>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <button class="new-trick">Add new</button>
+            <form class="trick-create" action="#" method="post" enctype="multipart/form-data">
+                <input type="text" name="name" placeholder="Name" class="add-trick-name" pattern=".{3,}" required />
+                <textarea name="description" rows="4" placeholder="Description" class="add-trick-description" pattern=".{4,}" required></textarea>
+                <select name="chef" class="chefs-tricks"></select>
+                <label class="trick-image-create">
+                    <i class="far fa-image"></i>
+                    <span class="curr-image-trick">Add image</span>
+                    <input type="file" name="image" class="trick-img" />
+                </label>
+                <input type="submit" value="Create" />
+                <p class="trick-back-create">back</p>
+            </form>
+        }
     </div>
     <div class="tricks-articles">
         @foreach (var trick in Model.Tricks)
         {
             <article data-trick-id="@trick.Id">
-                <div class="update-trick-buttons">
-                    <button type="button" class="btn-trick-update">
-                        <i class="fas fa-pen"></i>
-                    </button>
-                    <button class="undo">
-                        <i class="fas fa-undo-alt"></i>
-                    </button>
-                    <button type="button" class="btn-trick-delete" data-toggle="modal" data-target="#deleteTrickModal">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
+                @if (IsAdminOrOwner(trick))
+                {
+                    <div class="update-trick-buttons">
+                        <button type="button" class="btn-trick-update">
+                            <i class="fas fa-pen"></i>
+                        </button>
+                        <button class="undo">
+                            <i class="fas fa-undo-alt"></i>
+                        </button>
+                        <button type="button" class="btn-trick-delete" data-toggle="modal" data-target="#deleteTrickModal">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                }
                 <div class="tricks-articles-picture">
                     <img src="@trick.ImagePath" alt="@trick.Name">
                 </div>
@@ -46,32 +55,48 @@
                     <span class="chef-name-trick">chef @trick.Chef.LastName</span>
                     <span class="chef-id">@trick.Chef.Id</span>
                 </div>
-                <form class="trick-update" action="#" method="post">
-                    <h2>Update</h2>
-                    <input type="text" name="name" placeholder="Name" class="add-trick-name" />
-                    <textarea name="description" rows="4" placeholder="Description" class="add-trick-description"></textarea>
-                    <select name="chef" class="chefs-tricks"></select>
-                    <button type="button" class="btn-trick-update-submit" data-toggle="modal" data-target="#updateTrickModal">
-                        Update
-                    </button>
-                </form>
+                @if (IsAdminOrOwner(trick))
+                {
+                    <form class="trick-update" action="#" method="post">
+                        <h2>Update</h2>
+                        <input type="text" name="name" placeholder="Name" class="add-trick-name" required />
+                        <textarea name="description" rows="4" placeholder="Description" class="add-trick-description" required></textarea>
+                        <select name="chef" class="chefs-tricks"></select>
+                        <button type="button" class="btn-trick-update-submit" data-toggle="modal" data-target="#updateTrickModal">
+                            Update
+                        </button>
+                        <p class="trick-update-message"></p>
+                    </form>
+                }
             </article>
         }
     </div>
-    @Html.Partial("ModalBox", new ModalBoxViewModel
+    @if (User.Identity.IsAuthenticated)
     {
-        TargetId = "updateTrickModal",
-        Title = "Update Trick",
-        Message = "Are you sure you want to permanently update this trick?",
-        ButtonClass = "btn-warning update-trick",
-        ButtonText = "Update"
-    });
-    @Html.Partial("ModalBox", new ModalBoxViewModel
-    {
-        TargetId = "deleteTrickModal",
-        Title = "Delete Trick",
-        Message = "Are you sure you want to permanently remove this trick?",
-        ButtonClass = "btn-danger delete-trick",
-        ButtonText = "Delete"
-    });
+        @Html.Partial("ModalBox", new ModalBoxViewModel
+        {
+            TargetId = "updateTrickModal",
+            Title = "Update Trick",
+            Message = "Are you sure you want to permanently update this trick?",
+            ButtonClass = "btn-warning update-trick",
+            ButtonText = "Update"
+        })
+
+        @Html.Partial("ModalBox", new ModalBoxViewModel
+        {
+            TargetId = "deleteTrickModal",
+            Title = "Delete Trick",
+            Message = "Are you sure you want to permanently remove this trick?",
+            ButtonClass = "btn-danger delete-trick",
+            ButtonText = "Delete"
+        })
+    }
 </section>
+
+@functions
+{
+    public bool IsAdminOrOwner(TrickViewModel trick)
+    {
+        return User.Identity.IsAuthenticated && (User.IsInRole("Admin") || Model.CurrentUserId == trick.UserId);
+    }
+}

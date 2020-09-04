@@ -1,13 +1,24 @@
 ﻿using System.Collections.Generic;
 
-using CulinaryBlogCore.Models.CategoryViewModels;
-
 namespace CulinaryBlogCore.Models.RecipeViewModels
 {
     public class GalleryViewModel
     {
+        public string CategoryName { get; set; }
+
         public List<RecipeViewModel> Recipes { get; set; }
 
-        public List<CategoryViewModel> Categories { get ;set; }
+        public List<GalleryViewModel> Galleries { get; set; }
+
+        public GalleryViewModel()
+        {
+            this.Galleries = new List<GalleryViewModel>();
+        }
+
+        public GalleryViewModel(string CategoryName, List<RecipeViewModel> Recipes)
+        {
+            this.CategoryName = CategoryName;
+            this.Recipes = Recipes;
+        }
     }
 }

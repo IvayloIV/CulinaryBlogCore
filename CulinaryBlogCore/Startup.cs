@@ -5,7 +5,6 @@ using CulinaryBlogCore.Services;
 using CulinaryBlogCore.Services.Repository.Contracts;
 using CulinaryBlogCore.Services.Repository;
 using CulinaryBlogCore.Utils;
-using CulinaryBlogCore.Services.Services;
 
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
@@ -27,10 +26,10 @@ namespace CulinaryBlogCore
 
         public IConfiguration Configuration { get; set; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddDbContext<CulinaryBlogDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -48,13 +47,12 @@ namespace CulinaryBlogCore
                 options.Password.RequireUppercase = false;
             });
 
-            // Add application services.
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IMailService, MailService>();
-            services.AddScoped<IImgurTokenService, ImgurTokenService>();
+            services.AddScoped<IImgurService, ImgurService>();
             services.AddScoped<IChefService, ChefService>();
             services.AddScoped<ITrickService, TrickService>();
 
@@ -70,10 +68,8 @@ namespace CulinaryBlogCore
             services.AddSingleton(mapper);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            // Seed data on application startup
 
             if (env.IsDevelopment())
             {
@@ -85,8 +81,6 @@ namespace CulinaryBlogCore
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
-            //db.Database.Migrate();
 
             app.UseStaticFiles();
 

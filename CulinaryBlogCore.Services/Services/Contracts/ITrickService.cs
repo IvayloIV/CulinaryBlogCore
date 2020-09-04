@@ -14,6 +14,6 @@ namespace CulinaryBlogCore.Services.Contracts
 
         void Delete(Trick trick);
 
-        void Update(long id, Trick newTrick);
+        void Update(Trick oldTrick, Trick newTrick);
     }
 }

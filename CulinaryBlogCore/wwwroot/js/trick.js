@@ -32,7 +32,7 @@ $('.trick-create').on('submit', (event) => {
         contentType: false,
         data: formData
     }).then((res) => {
-        let article = $('<article>').attr('data-trick-id', res.id)
+        let article = $('<article>').data('trickId', res.id)
             .append(buildArticleButtons())
             .append($('<div>').addClass('tricks-articles-picture')
                 .append($('<img>').attr('src', res.imagePath).attr('alt', res.name)))
@@ -47,7 +47,7 @@ $('.trick-create').on('submit', (event) => {
 $('.btn-trick-update').on('click', bthTrickUpdate);
 
 async function bthTrickUpdate(event) {
-    let article = $(event.target).parent().parent().parent();
+    let article = $(event.target).closest('article');
     let name = article.find('.tricks-articles-content h4').text();
     let description = article.find('.tricks-articles-content p').text();
     let chefId = article.find('.tricks-articles-content .chef-id').text();
@@ -55,8 +55,8 @@ async function bthTrickUpdate(event) {
     $(article).find('.btn-trick-update').css('display', 'none');
     $(article).find('.undo').css('display', 'inline-block');
 
-    $('.trick-update .add-trick-name').val(name);
-    $('.trick-update .add-trick-description').val(description);
+    $(article).find('.trick-update .add-trick-name').val(name);
+    $(article).find('.trick-update .add-trick-description').val(description);
     let chefsSelect = article.find('.trick-update .chefs-tricks');
     await loadCategories(chefsSelect, chefId);
     moveUpdateForm('54px', '388px', 1, article);
@@ -65,7 +65,7 @@ async function bthTrickUpdate(event) {
 $('.tricks .undo').on('click', trickUndo);
 
 function trickUndo(event) {
-    let article = $(event.target).parent().parent().parent();
+    let article = $(event.target).closest('article');
     undoButtons(article);
     moveUpdateForm('388px', '54px', -1, article);
 }
@@ -80,7 +80,7 @@ $('.btn-trick-delete').on('click', addTrickId);
 $('.delete-trick').on('click', (event) => {
     event.preventDefault();
 
-    let trickId = $(event.target).attr('data-trick-id');
+    let trickId = $(event.target).data('trickId')
     $.ajax({
         method: 'POST',
         url: `/Trick/Delete/${trickId}`,
@@ -88,10 +88,8 @@ $('.delete-trick').on('click', (event) => {
             id: trickId
         }
     }).then((res) => {
-        console.log($('.tricks-articles article'));
-        console.log(trickId);
         $('.tricks-articles article').each((i, e) => {
-            if ($(e).attr('data-trick-id') == trickId) {
+            if ($(e).data('trickId') == trickId) {
                 $(e).remove();
             }
         });
@@ -103,16 +101,28 @@ $('.delete-trick').on('click', (event) => {
 $('.btn-trick-update-submit').on('click', updateTrickBtn);
 
 function updateTrickBtn(event) {
-    let article = $(event.target).parent().parent();
-    let trickId = article.attr('data-trick-id');
-    $('.update-trick').attr('data-trick-id', trickId);
+    let article = $(event.target).closest('article');
+    let trickId = article.data('trickId');
+    $('.update-trick').data('trickId', trickId)
 }
 
 $('.update-trick').on('click', (event) => {
-    let trickId = $(event.target).attr('data-trick-id');
+    let trickId = $(event.target).data('trickId');
     let article = $('.tricks-articles article')
         .toArray()
-        .find(a => $(a).attr('data-trick-id') === trickId);
+        .find(a => $(a).data('trickId') === trickId);
+
+    let updateMessage = $(article).find('.trick-update-message');
+
+    let updateForm = $(article).find('.trick-update');
+    if (!updateForm[0].checkValidity()) {
+        $('.btn-close-model').click();
+        updateMessage.text('Fill all fields.');
+        updateMessage.css('display', 'block');
+        return;
+    } else {
+        updateMessage.css('display', 'none');
+    }
 
     let name = $(article).find('.add-trick-name').val();
     let description = $(article).find('.add-trick-description').val();
@@ -128,9 +138,10 @@ $('.update-trick').on('click', (event) => {
             ChefId: chefId
         }
     }).then((res) => {
-        $(article).find('.tricks-articles-content h4').text(name);
-        $(article).find('.tricks-articles-content p').text(description);
+        $(article).find('.tricks-articles-content h4').text(res.name);
+        $(article).find('.tricks-articles-content p').text(res.description);
         $(article).find('.tricks-articles-content .chef-name-trick').text(`chef ${chefName}`);
+        $(article).find('.tricks-articles-content .chef-id').text(res.chefId);
 
         undoButtons(article);
         $('.btn-close-model').click();
@@ -151,8 +162,8 @@ function clearCreateForm() {
 }
 
 function addTrickId(event) {
-    let trickId = $(event.target).parent().parent().parent().attr('data-trick-id');
-    $('.delete-trick').attr('data-trick-id', trickId);
+    let trickId = $(event.target).closest('article').data('trickId');
+    $('.delete-trick').data('trickId', trickId);
 }
 
 async function loadCategories(htmlTag, chefId) {
@@ -189,7 +200,8 @@ function buildArticleContent(res, target) {
     return $('<div>').addClass('tricks-articles-content')
         .append($('<h4>').text(res.name))
         .append($('<p>').text(res.description))
-        .append($('<span>').text(`chef ${target.find('.chefs-tricks :selected').text()}`));
+        .append($('<span>').addClass('chef-name-trick').text(`chef ${target.find('.chefs-tricks :selected').text()}`))
+        .append($('<span>').addClass('chef-id').text(target.find('.chefs-tricks :selected').val()));
 }
 
 function buildArticleUpdateForm() {

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using CulinaryBlogCore.Data.Models.Entities;
 using CulinaryBlogCore.Services.Contracts;
 using CulinaryBlogCore.Services.Repository.Contracts;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace CulinaryBlogCore.Services
@@ -17,34 +19,38 @@ namespace CulinaryBlogCore.Services
             this._repository = repository;
         }
 
-        public void Add(Trick trick) {
+        public void Add(Trick trick)
+        {
             trick.CreationTime = DateTime.Now;
-            this._repository.Add<Trick>(trick);
+            this._repository.Add(trick);
         }
 
-        public Trick GetById(long id) {
+        public Trick GetById(long id)
+        {
             return this._repository.GetById<Trick>(id);
         }
 
-        public void Delete(Trick trick) {
-            this._repository.Delete<Trick>(trick);
+        public void Delete(Trick trick)
+        {
+            this._repository.Delete(trick);
         }
 
-        public List<Trick> GetAll() {
+        public List<Trick> GetAll()
+        {
             return this._repository.Set<Trick>()
                 .Include(t => t.Chef)
+                .AsNoTracking()
                 .OrderByDescending(t => t.CreationTime)
                 .ToList();
         }
 
-        public void Update(long id, Trick newTrick) {
-            Trick trick = this.GetById(id);
+        public void Update(Trick oldTrick, Trick newTrick)
+        {
+            oldTrick.Name = newTrick.Name;
+            oldTrick.Description = newTrick.Description;
+            oldTrick.ChefId = newTrick.ChefId;
 
-            trick.Name = newTrick.Name;
-            trick.Description = newTrick.Description;
-            trick.ChefId = newTrick.ChefId;
-
-            this._repository.Update<Trick>(trick);
+            this._repository.Update(oldTrick);
         }
     }
 }

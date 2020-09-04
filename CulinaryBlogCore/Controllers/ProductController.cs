@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using CulinaryBlogCore.Data.Models.Entities;
 using CulinaryBlogCore.Data.Models.Identity;
-using CulinaryBlogCore.Enums;
 using CulinaryBlogCore.Models.ProductViewModels;
 using CulinaryBlogCore.Services.Contracts;
 
@@ -13,62 +9,56 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using CulinaryBlogCore.Models.ResponseViewModel;
 
 namespace CulinaryBlogCore.Controllers
 {
-    public class ProductController : Controller
+    [Authorize]
+    public class ProductController : BaseController
     {
         private readonly IProductService _productService;
         private readonly IRecipeService _recipeService;
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
 
         public ProductController(
             IProductService productService,
             IRecipeService recipeService,
             IMapper mapper,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager) : base(userManager)
         {
             this._productService = productService;
             this._recipeService = recipeService;
             this._mapper = mapper;
-            this._userManager = userManager;
         }
 
         [HttpPost]
-        [Authorize]
-        public async Task<long> Create(CreateProductViewModel cpvm)
+        public async Task<JsonResult> Create(CreateProductViewModel productModel)
         {
-            Product product = this._mapper.Map<Product>(cpvm);
-            if (this._productService.CheckIfExist(cpvm.RecipeId, cpvm.Name)) {
-                return -1;
+            Product product = this._mapper.Map<Product>(productModel);
+
+            if (this._productService.CheckIfExist(productModel.RecipeId, productModel.Name)) {
+                return Json(new JsonViewModel(false, "Product already exists!"));
             }
 
             Recipe recipe = this._recipeService.GetById(product.RecipeId);
-            if (!(await this.IsAdminOrOwner(() => recipe.UserId))) {
-                return -1;
+            if (!(await base.IsAdminOrOwner(recipe.UserId))) {
+                return Json(new JsonViewModel(false, "You don't have permission!"));
             }
 
             this._productService.Add(product);
-            return product.Id;
+            return Json(new CreateProductJsonViewModel(true, "Successful product creation!", product.Id));
         }
 
         [HttpPost]
-        [Authorize]
-        public async Task Delete(long id)
+        public async Task<JsonResult> Delete(long id)
         {
             Product product = this._productService.GetById(id);
-            if (await this.IsAdminOrOwner(() => product.Recipe.UserId)) {
+            if (await base.IsAdminOrOwner(product.Recipe.UserId)) {
                 this._productService.RemoveById(id);
+                return Json(new JsonViewModel(true, "Product successfully removed!"));
             }
-        }
 
-        private async Task<bool> IsAdminOrOwner(Func<string> getUserId)
-        {
-            ApplicationUser user = await this._userManager.GetUserAsync(HttpContext.User);
-            IList<string> roles = await _userManager.GetRolesAsync(user);
-
-            return roles.Any(r => r == Role.Admin.ToString()) || user.Id == getUserId.Invoke();
+            return Json(new JsonViewModel(false, "You don't have permission!"));
         }
     }
 }

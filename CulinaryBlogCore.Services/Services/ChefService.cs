@@ -6,7 +6,9 @@ using CulinaryBlogCore.Data.Models.Entities;
 using CulinaryBlogCore.Services.Contracts;
 using CulinaryBlogCore.Services.Repository.Contracts;
 
-namespace CulinaryBlogCore.Services.Services
+using Microsoft.EntityFrameworkCore;
+
+namespace CulinaryBlogCore.Services
 {
     public class ChefService : IChefService
     {
@@ -20,16 +22,19 @@ namespace CulinaryBlogCore.Services.Services
         public void Add(Chef chef)
         {
             chef.CreationTime = DateTime.Now;
-            this._repository.Add<Chef>(chef);
+            this._repository.Add(chef);
         }
 
-        public List<Chef> GetAll() {
+        public List<Chef> GetAll()
+        {
             return this._repository.Set<Chef>()
+                .AsNoTracking()
                 .OrderByDescending(c => c.CreationTime)
                 .ToList();
         }
 
-        public Chef GetById(long id) {
+        public Chef GetById(long id)
+        {
             return this._repository.GetById<Chef>(id);
         }
 
@@ -42,12 +47,13 @@ namespace CulinaryBlogCore.Services.Services
             chef.ImagePath = newChef.ImagePath;
             chef.ImageId = newChef.ImageId;
 
-            this._repository.Update<Chef>(chef);
+            this._repository.Update(chef);
         }
 
-        public void DeleteById(long id) {
+        public void DeleteById(long id)
+        {
             Chef chef = this.GetById(id);
-            this._repository.Delete<Chef>(chef);
+            this._repository.Delete(chef);
         }
     }
 }

@@ -19,9 +19,10 @@ namespace CulinaryBlogCore.Services
             this._repository = repository;
         }
 
-        public void Add(Recipe recipe) {
+        public void Add(Recipe recipe)
+        {
             recipe.CreationTime = DateTime.Now;
-            this._repository.Add<Recipe>(recipe);
+            this._repository.Add(recipe);
         }
 
         public void UpdateById(long id, Recipe recipe)
@@ -37,86 +38,124 @@ namespace CulinaryBlogCore.Services
             oldRecipe.ImageId = recipe.ImageId;
             oldRecipe.CategoryId = recipe.CategoryId;
 
-            this._repository.Update<Recipe>(oldRecipe);
+            this._repository.Update(oldRecipe);
         }
 
-        public void DeleteById(long id) {
+        public void DeleteById(long id)
+        {
             Recipe recipe = this.GetById(id);
-            this._repository.Delete<Recipe>(recipe);
+            this._repository.Delete(recipe);
         }
 
-        public List<Recipe> GetByRatingWeek() {
-        Func<Recipe, double> sumRecipeRating = (r) => r.UserRecipeRatings.Sum(ur => ur.Rating) / (double)Math.Max(r.UserRecipeRatings.Count, 1);
+        public List<Recipe> GetByRatingWeek()
+        {
             return this._repository.Set<Recipe>()
                 .Include(x => x.UserRecipeRatings)
                 .Where(r => r.CreationTime >= DateTime.Now.AddDays(-7) && r.CreationTime <= DateTime.Now)
-                .OrderByDescending(sumRecipeRating)
-                .Take(6)
-                .AsQueryable()
                 .AsNoTracking()
+                .OrderByDescending(CalculateRating)
+                .Take(6)
                 .ToList();
         }
 
-        public Recipe GetById(long id) {
+        public double CalculateRating(Recipe recipe) {
+            return recipe.UserRecipeRatings.Sum(ur => ur.Rating) / (double)Math.Max(recipe.UserRecipeRatings.Count, 1);
+        }
+
+        public Recipe GetById(long id)
+        {
             return this._repository.Set<Recipe>()
-                .Include("Category")
-                .Include("Products")
-                .Include("UserRecipeRatings")
-                .Include("User")
+                .Include(r => r.Category)
+                .Include(r => r.Products)
+                .Include(r => r.UserRecipeRatings)
+                .Include(r => r.User)
                 .Where(r => r.Id == id)
-                .First();
+                .FirstOrDefault();
         }
 
         public List<Recipe> GetLastAdded()
         {
             return this._repository.Set<Recipe>()
-                .Include("UserRecipeRatings")
+                .Include(r => r.UserRecipeRatings)
+                .AsNoTracking()
                 .OrderByDescending(r => r.CreationTime)
                 .Take(3)
                 .ToList();
         }
 
-        public List<Recipe> GetByCategoryId(long categoryId) {
+        public List<Recipe> GetByCategoryId(long categoryId)
+        {
             return this._repository.Set<Recipe>()
-                .Include("Products")
-                .Include("UserRecipeRatings")
+                .Include(c => c.Products)
+                .Include(c => c.UserRecipeRatings)
                 .Where(r => r.CategoryId == categoryId)
+                .AsNoTracking()
                 .ToList();
         }
 
-        public Recipe UpdateByRating(UserRecipeRating recipeRating) {
-            this._repository.Add<UserRecipeRating>(recipeRating);
+        public Recipe UpdateByRating(UserRecipeRating recipeRating)
+        {
+            this._repository.Add(recipeRating);
             return this.GetById(recipeRating.RecipeId);
         }
 
-        public List<UserRecipeRating> GetRecipeRatingByUser(string userId) {
+        public List<UserRecipeRating> GetRecipeRatingByUser(string userId)
+        {
             return this._repository.Set<UserRecipeRating>()
                 .Where(r => r.UserId == userId)
                 .ToList();
         }
 
-        public Recipe UpdateViewCount(long recipeId) {
+        public Recipe UpdateViewCount(long recipeId)
+        {
             Recipe recipe = this.GetById(recipeId);
             recipe.ViewCount += 1;
             this._repository.Update(recipe);
+
             return recipe;
         }
 
         public List<Recipe> GetByUserId(string userId)
         {
             return this._repository.Set<Recipe>()
-                .Include("UserRecipeRatings")
-                .Include("User")
-                .Include("Products")
+                .Include(r => r.UserRecipeRatings)
+                .Include(r => r.User)
+                .Include(r => r.Products)
                 .Where(r => r.User.Id == userId)
+                .AsNoTracking()
                 .OrderByDescending(r => r.CreationTime)
                 .ToList();
         }
 
-        public List<Recipe> GetAll() {
-            return this._repository.Set<Recipe>()
-                .Include(r => r.Category)
-                .ToList();
+        public void CalculateRecipesRating(List<Recipe> recipes)
+        {
+            for (int i = 0; i < recipes.Count; i++)
+            {
+                Recipe currRecipe = recipes[i];
+                this.CalculateRecipeRating(currRecipe);
+            }
+        }
+
+        public void CalculateRecipeRating(Recipe recipe)
+        {
+            double rating = this.CalculateRating(recipe);
+            recipe.Rating = $"{rating:F2}";
+            recipe.VoteCount = recipe.UserRecipeRatings.Count;
+        }
+
+        public void CalculateUserVotes(List<Recipe> recipes, string userId)
+        {
+            for (int i = 0; i < recipes.Count; i++)
+            {
+                Recipe currRecipe = recipes[i];
+                this.CalculateUserVote(currRecipe, userId);
+            }
+        }
+
+        public void CalculateUserVote(Recipe recipe, string userId)
+        {
+            UserRecipeRating userRecipeRating = recipe.UserRecipeRatings.FirstOrDefault(ur => ur.UserId == userId);
+            recipe.UserRating = userRecipeRating != null ? userRecipeRating.Rating : 0;
         }
     }
 }

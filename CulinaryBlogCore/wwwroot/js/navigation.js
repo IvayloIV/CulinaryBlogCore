@@ -1,9 +1,9 @@
-﻿document.getElementById('receipt-menu').addEventListener('click', function () {
-    let element = document.getElementsByClassName('header-inner-nav')[0];
+﻿$('#receipt-menu').on('click', () => {
+    let ul = $('.header-inner-nav');
 
-    if (!element.classList.contains("clicked")) {
-        element.classList.add("clicked");
+    if (!ul.hasClass('clicked')) {
+        ul.addClass('clicked');
     } else {
-        element.classList.remove("clicked");
+        ul.removeClass('clicked');
     }
 });

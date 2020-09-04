@@ -35,6 +35,15 @@ namespace CulinaryBlogCore.Data.Models.Entities
 
         public long CategoryId { get; set; }
 
+        [NotMapped]
+        public string Rating { get; set; }
+
+        [NotMapped]
+        public long VoteCount { get; set; }
+
+        [NotMapped]
+        public long UserRating { get; set; }
+
         [Required]
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }

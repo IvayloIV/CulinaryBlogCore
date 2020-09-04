@@ -12,6 +12,6 @@ namespace CulinaryBlogCore.Models.RecipeViewModels
 
         public List<ChefViewModel> Chefs { get; set; }
 
-        public string CurrUserId { get; set; }
+        public string CurrentUserId { get; set; }
     }
 }

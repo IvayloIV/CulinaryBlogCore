@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-using Microsoft.AspNetCore.Http;
+using CulinaryBlogCore.Services.Models;
 
 namespace CulinaryBlogCore.Models.ChefViewModels
 {
-    public class CreateChefViewModel
+    public class CreateChefViewModel : ImageViewModel
     {
         [Required]
         [StringLength(60, MinimumLength = 4)]
@@ -14,13 +14,5 @@ namespace CulinaryBlogCore.Models.ChefViewModels
         [Required]
         [StringLength(800, MinimumLength = 20)]
         public string Description { get; set; }
-
-        [Display(Name = "Image")]
-        public string ImagePath { get; set; }
-
-        public string ImageId { get; set; }
-
-        [Required]
-        public IFormFile Image { get; set; }
     }
 }

@@ -2,9 +2,9 @@
 {
     public class RecipeRatingViewModel
     {
-        public virtual string UserId { get; set; }
+        public string UserId { get; set; }
 
-        public virtual long RecipeId { get; set; }
+        public long RecipeId { get; set; }
 
         public int Rating { get; set; }
     }

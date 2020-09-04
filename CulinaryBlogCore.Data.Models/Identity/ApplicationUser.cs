@@ -11,5 +11,7 @@ namespace CulinaryBlogCore.Data.Models.Identity
         public virtual List<Recipe> Recipes { get; set; }
 
         public virtual List<UserRecipeRating> UserRecipeRatings { get; set; }
+
+        public virtual List<Trick> Tricks { get; set; }
     }
 }

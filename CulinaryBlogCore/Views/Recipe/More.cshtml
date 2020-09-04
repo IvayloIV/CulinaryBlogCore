@@ -2,11 +2,12 @@
 
 @{
     ViewBag.Title = "More recipe";
-    ViewData["CurrUserId"] = Model.CurrUserId;
+    ViewData["CurrentUserId"] = Model.CurrentUserId;
 }
 
 <section class="receipt @Model.Category.Name" style="background: url( @Model.Category.BackgroundImgPath ) no-repeat center fixed; background-size: cover;">
-    @Html.Partial("RecipePartial", Model)
+    @Html.Partial("_RecipePartial", Model)
+
     @Html.Partial("ModalBox", new ModalBoxViewModel
     {
         TargetId = "deleteProductModal",
@@ -14,5 +15,5 @@
         Message = "Are you sure you want to permanently remove this product?",
         ButtonClass = "btn-danger remove-product",
         ButtonText = "Delete"
-    });
+    })
 </section>

@@ -214,6 +214,11 @@ h4 {
     width: 50%;
 }
 
+.header .admin-logo {
+    grid-template-columns: 15% 46% auto;
+    width: 38%;
+}
+
 @media all and (max-width:750px) {
     .header .header-logo {
         -webkit-box-flex: 1;
@@ -2872,16 +2877,21 @@ nav .header-inner-nav li:first-of-type a {
     margin: 0;
     color: #FFC11C;
     font-weight: 500;
+    padding: 0 1.8px;
 }
 
-.rating-already .recipe-vote {
-    margin: 0;
-    color: #7f7f7f;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-left: 10px;
+.rating-already .rating-blocked:first-of-type {
+    padding: 0 1.8px 0 0;
 }
+
+    .rating-already .recipe-vote {
+        margin: 0;
+        color: #7f7f7f;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-left: 10px;
+    }
 
 .rating-text {
     color: #FFC11C;
@@ -3291,4 +3301,9 @@ body > main > section.best-receipts > div.best-receipts-posts > article > div > 
     position: relative;
     bottom: 2px;
     outline: none;
+}
+
+.trick-update-message {
+    display: none;
+    color: red;
 }

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using CulinaryBlogCore.Models.CategoryViewModels;
-using Microsoft.AspNetCore.Http;
+using CulinaryBlogCore.Services.Models;
 
 namespace CulinaryBlogCore.Models.RecipeViewModels
 {
-    public class CreateRecipeViewModel
+    public class CreateRecipeViewModel : ImageViewModel
     {
         [StringLength(60, MinimumLength = 4)]
         [Required]
@@ -26,13 +26,6 @@ namespace CulinaryBlogCore.Models.RecipeViewModels
         [DataType(DataType.Time)]
         [Required]
         public DateTime? CookingTime { get; set; }
-
-        public string ImageId { get; set; }
-
-        public string ImagePath { get; set; }
-
-        [Required]
-        public IFormFile Image { get; set; }
 
         [Range(1, 100)]
         [Required]

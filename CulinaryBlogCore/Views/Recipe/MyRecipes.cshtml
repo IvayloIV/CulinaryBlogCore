@@ -1,16 +1,16 @@
 ﻿@model CulinaryBlogCore.Models.RecipeViewModels.RecipeDetailsViewModel;
 
-@using CulinaryBlogCore.Models.RecipeViewModels;
-
 @{
     ViewData["Title"] = "My Recipes";
-    ViewData["CurrUserId"] = Model.CurrUserId;
+    ViewData["CurrentUserId"] = Model.CurrentUserId;
 }
+
 <section class="receipt salads">
-    @foreach (RecipeDetailsViewModel recipe in Model.Recipes)
+    @foreach (var recipe in Model.Recipes)
     {
-        @Html.Partial("RecipePartial", recipe)
+        @Html.Partial("_RecipePartial", recipe)
     }
+
     @Html.Partial("ModalBox", new ModalBoxViewModel
     {
         TargetId = "deleteProductModal",
@@ -18,5 +18,5 @@
         Message = "Are you sure you want to permanently remove this product?",
         ButtonClass = "btn-danger remove-product",
         ButtonText = "Delete"
-    });
+    })
 </section>

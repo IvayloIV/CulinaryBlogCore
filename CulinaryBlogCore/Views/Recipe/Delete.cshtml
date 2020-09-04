@@ -7,28 +7,37 @@
 <section class="delete-recipe register">
     <div class="register-form">
         <div class="register-header">
-            <div><img src="/images/register-logo.png" alt="logo"></div>
+            <div>
+                <img src="/images/register-logo.png" alt="logo">
+            </div>
             <h2>Delete Recipe</h2>
         </div>
         @using (Html.BeginForm("Delete", "Recipe", new { id = Model.Id }, FormMethod.Post, null, new { enctype = "multipart/form-data" }))
         {
             <div>
-                <span><img src="@Model.ImagePath" alt="@Model.Name" height="120" /></span>
+                <span>
+                    <img src="@Model.ImagePath" alt="@Model.Name" height="120" />
+                </span>
             </div>
             <div>
-                <span>Name:</span> <span>@Model.Name</span>
+                <span>Name: </span>
+                <span>@Model.Name</span>
             </div>
             <div>
-                <span>Preparation time:</span> <span>@Model.PreparationTime.Value.ToString("hh:mm")</span>
+                <span>Preparation time: </span>
+                <span>@Model.PreparationTime.Value.ToString("hh:mm")</span>
             </div>
             <div>
-                <span>Cooking time:</span> <span>@Model.CookingTime.Value.ToString("hh:mm")</span>
+                <span>Cooking time: </span>
+                <span>@Model.CookingTime.Value.ToString("hh:mm")</span>
             </div>
             <div>
-                <span>Portions:</span> <span>@Model.Portions</span>
+                <span>Portions: </span>
+                <span>@Model.Portions</span>
             </div>
             <div>
-                <span>Category:</span> <span>@Model.Category.Name</span>
+                <span>Category: </span>
+                <span>@Model.Category.Name</span>
             </div>
             <input type="hidden" name="imageId" value="@Model.ImageId" />
             <button type="button" class="btn-recipe-delete" data-toggle="modal" data-target="#deleteRecipeModal">
@@ -41,7 +50,7 @@
                 Message = "Are you sure you want to permanently remove this recipe?",
                 ButtonClass = "btn-danger",
                 ButtonText = "Delete"
-            });
+            })
         }
     </div>
 </section>

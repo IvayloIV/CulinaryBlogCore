@@ -7,7 +7,9 @@
 <section class="create-recipe register">
     <div class="register-form">
         <div class="register-header">
-            <div><img src="/images/register-logo.png" alt="logo"></div>
+            <div>
+                <img src="/images/register-logo.png" alt="logo">
+            </div>
             <h2>Create Chef</h2>
         </div>
         @using (Html.BeginForm("Create", "Chef", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -32,6 +34,7 @@
                 <input asp-for="Image" type="file" name="@Html.NameFor(r => r.Image)">
                 <span asp-validation-for="Image" class="text-danger"></span>
             </label>
+
             <input type="submit" value="Create">
         }
     </div>

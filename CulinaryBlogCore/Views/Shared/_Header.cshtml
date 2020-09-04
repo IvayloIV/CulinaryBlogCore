@@ -1,5 +1,8 @@
 ﻿<header class="header">
-    <div class="header-logo">
+    @{
+        string isAdmin = User.IsInRole("Admin") ? "admin-logo" : "";
+    }
+    <div class="header-logo @isAdmin">
         <a asp-area="" asp-controller="Home" asp-action="Index"><img src="/images/Chef-Logo.png" alt="chef-logo"></a>
         <h1><a asp-area="" asp-controller="Home" asp-action="Index"><span>Cook</span>ing</a></h1>
         @if (User.Identity.IsAuthenticated)
@@ -14,5 +17,7 @@
         <span>Menu</span>
     </label>
 
-    @{ Html.RenderPartial("_Navigation"); }
+    @{ 
+        Html.RenderPartial("_Navigation"); 
+    }
 </header>

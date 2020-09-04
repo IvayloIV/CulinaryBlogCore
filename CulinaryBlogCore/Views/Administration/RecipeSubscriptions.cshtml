@@ -1,7 +1,5 @@
 ﻿@model CulinaryBlogCore.Models.RecipeViewModels.RecipeSubscriptionViewModel;
 
-@using CulinaryBlogCore.Models.RecipeViewModels;
-
 @{
     ViewData["Title"] = "Recipe Subscriptions";
 }
@@ -17,7 +15,7 @@
                 <p>User</p>
                 <p>Subscription Date</p>
             </article>
-            @foreach (RecipeSubscriptionViewModel subscription in Model.Subscriptions)
+            @foreach (var subscription in Model.Subscriptions)
             {
                 <article>
                     <p>@subscription.Email</p>

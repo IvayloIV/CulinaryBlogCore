@@ -13,7 +13,7 @@ namespace CulinaryBlogCore.Models.RecipeViewModels
 
         public DateTime CreationTime { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
+        public ApplicationUser User { get; set; }
 
         public List<RecipeSubscriptionViewModel> Subscriptions { get; set; }
     }

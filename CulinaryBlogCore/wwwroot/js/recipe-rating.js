@@ -1,10 +1,12 @@
 ﻿$('.rating-star').on('click', (event) => {
-    let rating = $(event.target).attr('data-rating');
-    let recipeId = $(event.target).parent().attr('data-recipe-id');
-    let recipeRatingField = $(event.target).parent().parent().parent().find('.recipe-vote');
+    let target = $(event.target);
+
+    let rating = target.data('rating');
+    let recipeId = target.closest('.ratring-stars').data('recipeId');
+    let recipeRatingField = target.closest('div').find('.recipe-vote');
     let recipeRating = recipeRatingField.text().split(/[()]/)[1];
 
-    let ratingBlock = $(event.target).parent().parent();
+    let ratingBlock = target.closest('p');
     ratingBlock.removeClass('rating');
     ratingBlock.find('span').each((i, e) => {
         if ($(e).attr('class') === 'rating-star') {
@@ -13,8 +15,9 @@
     });
 
     ratingBlock.addClass('rating-already');
+
     for (let i = 5; i >= 1; i--) {
-        ratingBlock.prepend($('<span>').addClass('rating-blocked').html(i <= rating ? '★' : '☆'));
+        ratingBlock.prepend($('<span>').addClass('rating-blocked').html(i <= rating ? ' ★ ' : ' ☆ '));
     }
 
     $.ajax({

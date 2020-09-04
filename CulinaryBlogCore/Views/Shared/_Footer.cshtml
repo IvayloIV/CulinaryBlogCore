@@ -15,10 +15,6 @@
                 <input type="email" name="email" placeholder="Enter Email Address">
                 <input type="submit" value="Submit">
                 <p class="subscription-message"></p>
-                @if (User.IsInRole("Admin"))
-                {
-                    <p class="subscriptions-admin"><a href="/Administration/Recipe/Subscriptions">View subscriptions</a></p>
-                }
             </form>
         </article>
         <article class="follow-us">

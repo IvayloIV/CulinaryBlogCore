@@ -6,7 +6,7 @@
 
     emailInput.val('');
     message.fadeIn(600);
-    message.text('Subscribing...');
+    message.text('Waiting...');
 
     $.ajax({
         url: '/Mail/Recipe/Subscribe',
@@ -15,7 +15,7 @@
             email: emailVal
         }
     }).then((res) => {
-        message.text(res);
+        message.text(res.message);
     });
 });
 
@@ -31,6 +31,6 @@ $('.subscriptions-send-form').on('submit', (event) => {
         url: '/Administration/Mail/Recipe/Send',
         method: 'POST'
     }).then((res) => {
-        message.text("You have successfully sent recipes.");
+        message.text(res.message);
     });
 });

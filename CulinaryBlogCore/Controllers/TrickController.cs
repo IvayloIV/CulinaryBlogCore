@@ -1,79 +1,94 @@
-﻿using CulinaryBlogCore.Services.Contracts;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using CulinaryBlogCore.Services.Contracts;
+using CulinaryBlogCore.Models.TrickViewModels;
+using CulinaryBlogCore.Data.Models.Entities;
+using CulinaryBlogCore.Data.Models.Identity;
 
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using CulinaryBlogCore.Models.TrickViewModels;
-using Microsoft.CodeAnalysis;
-using Imgur.API.Endpoints;
-using System.Threading.Tasks;
-using Imgur.API.Models;
-using CulinaryBlogCore.Data.Models.Entities;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
 namespace CulinaryBlogCore.Controllers
 {
     [Authorize]
-    public class TrickController : Controller
+    public class TrickController : BaseController
     {
-        private readonly IChefService _chefService;
         private readonly ITrickService _trickService;
         private readonly IMapper _mapper;
-        private readonly IImgurTokenService _imgurTokenService;
+        private readonly IImgurService _imgurService;
 
         public TrickController(
-                IChefService chefService,
-                ITrickService trickService,
-                IMapper mapper,
-                IImgurTokenService imgurTokenService)
+            ITrickService trickService,
+            IMapper mapper,
+            IImgurService imgurService,
+            UserManager<ApplicationUser> userManager)
+            : base(userManager)
         {
-            this._chefService = chefService;
             this._trickService = trickService;
             this._mapper = mapper;
-            this._imgurTokenService = imgurTokenService;
+            this._imgurService = imgurService;
         }
 
-        public IActionResult Index()
+        [AllowAnonymous]
+        public async Task<IActionResult> Index()
         {
+            ApplicationUser user = await base._userManager.GetUserAsync(HttpContext.User);
             List<Trick> tricks = this._trickService.GetAll();
-            List<TrickViewModel> trickViewModel = this._mapper.Map<List<TrickViewModel>>(tricks);
-            TrickViewModel trickView = new TrickViewModel
+
+            TrickViewModel model = new TrickViewModel
             {
-                Tricks = trickViewModel
+                Tricks = this._mapper.Map<List<TrickViewModel>>(tricks),
+                CurrentUserId = user?.Id
             };
-            return View(trickView);
+
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<Trick> Create(CreateTrickViewModel createTrickViewModel) {
-            if (createTrickViewModel.Image != null) {
-                ImageEndpoint imageEndpoint = await this._imgurTokenService.GetImageEndpoint();
-                IImage uploadedImage = await imageEndpoint.UploadImageAsync(createTrickViewModel.Image.OpenReadStream());
-                createTrickViewModel.ImageId = uploadedImage.Id;
-                createTrickViewModel.ImagePath = uploadedImage.Link;
+        public async Task<Trick> Create(CreateTrickViewModel createTrickViewModel)
+        {
+            if (createTrickViewModel.Image != null)
+            {
+                await this._imgurService.UploadImage(createTrickViewModel);
             }
+
+            ApplicationUser user = await base._userManager.GetUserAsync(HttpContext.User);
             Trick trick = this._mapper.Map<Trick>(createTrickViewModel);
+            trick.UserId = user.Id;
             this._trickService.Add(trick);
+
             return trick;
         }
 
         [HttpPost]
-        public void Update(long id, UpdateTrickViewModel updateTrickViewModel)
+        public async Task<Trick> Update(long id, UpdateTrickViewModel updateTrickViewModel)
         {
-            Trick trick = this._mapper.Map<Trick>(updateTrickViewModel);
-            this._trickService.Update(id, trick);
+            Trick oldTrick = this._trickService.GetById(id);
+
+            if (oldTrick != null && await base.IsAdminOrOwner(oldTrick.UserId)) 
+            {
+                Trick newTrick = this._mapper.Map<Trick>(updateTrickViewModel);
+                this._trickService.Update(oldTrick, newTrick);
+            }
+            
+            return oldTrick;
         }
 
         [HttpPost]
         public async Task Delete(long id)
         {
             Trick trick = this._trickService.GetById(id);
-            if (trick != null)
+
+            if (trick != null && await base.IsAdminOrOwner(trick.UserId))
             {
-                if (trick.ImageId != null) {
-                    ImageEndpoint imageEndpoint = await this._imgurTokenService.GetImageEndpoint();
-                    await imageEndpoint.DeleteImageAsync(trick.ImageId);
+                if (trick.ImageId != null)
+                {
+                    await this._imgurService.DeleteImage(trick.ImageId);
                 }
+
                 this._trickService.Delete(trick);
             }
         }

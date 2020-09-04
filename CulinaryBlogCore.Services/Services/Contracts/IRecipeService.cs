@@ -14,6 +14,8 @@ namespace CulinaryBlogCore.Services.Contracts
 
         List<Recipe> GetByRatingWeek();
 
+        double CalculateRating(Recipe recipe);
+
         Recipe GetById(long id);
 
         List<Recipe> GetLastAdded();
@@ -28,6 +30,12 @@ namespace CulinaryBlogCore.Services.Contracts
 
         List<Recipe> GetByUserId(string userId);
 
-        List<Recipe> GetAll();
+        void CalculateRecipesRating(List<Recipe> recipes);
+
+        void CalculateRecipeRating(Recipe recipe);
+
+        void CalculateUserVotes(List<Recipe> recipes, string userId);
+
+        void CalculateUserVote(Recipe recipe, string userId);
     }
 }

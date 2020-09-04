@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using CulinaryBlogCore.Data.Models.Entities;
 using CulinaryBlogCore.Services.Contracts;
+using CulinaryBlogCore.Services.Models;
 using CulinaryBlogCore.Services.Repository.Contracts;
 using CulinaryBlogCore.Services.Utils;
 
@@ -13,14 +14,14 @@ using Imgur.API.Endpoints;
 using Imgur.API.Models;
 using Microsoft.Extensions.Options;
 
-namespace CulinaryBlogCore.Services.Services
+namespace CulinaryBlogCore.Services
 {
-    public class ImgurTokenService : IImgurTokenService
+    public class ImgurService : IImgurService
     {
         private readonly IRepository _repository;
         private readonly ImgurConfigData _imgurConfigData;
 
-        public ImgurTokenService(
+        public ImgurService(
             IRepository repository,
             IOptions<ImgurConfigData> imgurConfigData)
         {
@@ -28,7 +29,40 @@ namespace CulinaryBlogCore.Services.Services
             this._imgurConfigData = imgurConfigData.Value;
         }
 
-        public async Task<ImageEndpoint> GetImageEndpoint()
+        public async Task UploadImage(ImageViewModel imageViewModel)
+        {
+            ImageEndpoint imageEndpoint = await this.GetImageEndpoint();
+            await this.UploadImage(imageViewModel, imageEndpoint);
+        }
+
+        private async Task UploadImage(ImageViewModel imageViewModel, ImageEndpoint imageEndpoint)
+        {
+            IImage imageData = await imageEndpoint.UploadImageAsync(imageViewModel.Image.OpenReadStream());
+            imageViewModel.ImagePath = imageData.Link;
+            imageViewModel.ImageId = imageData.Id;
+        }
+
+        public async Task DeleteImage(string imageId)
+        {
+            ImageEndpoint imageEndpoint = await this.GetImageEndpoint();
+            await imageEndpoint.DeleteImageAsync(imageId);
+        }
+
+        private async Task DeleteImage(ImageViewModel imageViewModel, ImageEndpoint imageEndpoint)
+        {
+            await imageEndpoint.DeleteImageAsync(imageViewModel.ImageId);
+        }
+
+        public async Task EditImage(ImageViewModel imageViewModel)
+        {
+            ImageEndpoint imageEndpoint = await this.GetImageEndpoint();
+            Task.WaitAll(new Task[] {
+                this.DeleteImage(imageViewModel, imageEndpoint),
+                this.UploadImage(imageViewModel, imageEndpoint)
+            });
+        }
+
+        private async Task<ImageEndpoint> GetImageEndpoint()
         {
             string clientId = this._imgurConfigData.ClientId;
             string clientSecret = this._imgurConfigData.ClientSecret;
@@ -63,12 +97,12 @@ namespace CulinaryBlogCore.Services.Services
 
             token.AccessToken = imgurToken.Token;
             token.ExpiresIn = imgurToken.ExpiresIn;
+
             return token;
         }
 
         private async Task<ImgurToken> CreateNewToken(ApiClient apiClient, HttpClient httpClient)
         {
-
             OAuth2Endpoint oAuth2Endpoint = new OAuth2Endpoint(apiClient, httpClient);
             // Generate url token: oAuth2Endpoint.GetAuthorizationUrl();
             var token = await oAuth2Endpoint.GetTokenAsync(this._imgurConfigData.RefreshToken);
@@ -79,7 +113,8 @@ namespace CulinaryBlogCore.Services.Services
                 ExpiresIn = token.ExpiresIn,
                 CreationTime = DateTime.Now,
             };
-            this._repository.Add<ImgurToken>(imgurToken);
+            this._repository.Add(imgurToken);
+
             return imgurToken;
         }
     }

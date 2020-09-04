@@ -36,7 +36,7 @@ namespace CulinaryBlogCore.Models.RecipeViewModels
 
         public string UserId { get; set; }
 
-        public string CurrUserId { get; set; }
+        public string CurrentUserId { get; set; }
 
         public long? UserRating { get; set; }
 

@@ -6,7 +6,7 @@ using CulinaryBlogCore.Services.Repository.Contracts;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace CulinaryBlogCore.Services.Services
+namespace CulinaryBlogCore.Services
 {
     public class ProductService : IProductService
     {
@@ -19,33 +19,26 @@ namespace CulinaryBlogCore.Services.Services
 
         public void Add(Product product)
         {
-            this._repository.Add<Product>(product);
+            this._repository.Add(product);
         }
 
         public void RemoveById(long id)
         {
             Product product = this.GetById(id);
-            this._repository.Delete<Product>(product);
+            this._repository.Delete(product);
         }
 
         public Product GetById(long id)
         { 
             return this._repository.Set<Product>()
-                .Include("Recipe")
+                .Include(r => r.Recipe)
                 .Where(p => p.Id == id)
-                .First();
+                .FirstOrDefault();
         }
 
         public bool CheckIfExist(long recipeId, string productName) {
-            int productCount = this._repository.Set<Product>()
-                .Where(p => p.RecipeId == recipeId && p.Name == productName)
-                //.Where(prod => test(prod, recipeId, productName))
-                .Count();
-            return productCount != 0;
-        }
-
-        public bool test(Product c, long recipeId, string productName) {
-            return c.RecipeId == recipeId && c.Name == productName;
+            return this._repository.Set<Product>()
+                .Any(c => c.RecipeId == recipeId && c.Name == productName);
         }
     }
 }

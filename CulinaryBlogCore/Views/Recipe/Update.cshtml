@@ -1,7 +1,5 @@
 ﻿@model CulinaryBlogCore.Models.RecipeViewModels.UpdateRecipeViewModel;
 
-@using CulinaryBlogCore.Models.CategoryViewModels;
-
 @{
     ViewBag.Title = "Update recipe";
 }
@@ -43,19 +41,11 @@
             </label>
             <label>
                 <span>Category</span>
-                <select name="CategoryId">
-                    @foreach (CategoryViewModel category in Model.Categories)
-                    {
-                        @if (category.Id == Model.CategoryId)
-                        {
-                            <option value="@category.Id" selected="selected">@category.Name</option>
-                        }
-                        else
-                        {
-                            <option value="@category.Id">@category.Name</option>
-                        }
-                    }
-                </select>
+                @Html.DropDownListFor(
+                    x => x.CategoryId,
+                    new SelectList(Model.Categories, "Id", "Name"),
+                    "Select category"
+                )
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </label>
             <label>
@@ -78,7 +68,7 @@
                Message = "Are you sure you want to update this recipe?",
                ButtonClass = "btn-warning",
                ButtonText = "Update"
-            });
+            })
         }
     </div>
 </section>

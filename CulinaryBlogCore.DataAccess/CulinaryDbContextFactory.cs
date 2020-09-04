@@ -14,6 +14,7 @@ namespace CulinaryBlogCore.DataAccess
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json")
             .Build();
+
             var builder = new DbContextOptionsBuilder<CulinaryBlogDbContext>();
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             builder.UseSqlServer(connectionString);

@@ -1,11 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+
 using CulinaryBlogCore.Data.Models.Entities;
 using CulinaryBlogCore.Models.RecipeViewModels;
 using CulinaryBlogCore.Services.Contracts;
 
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace CulinaryBlogCore.Controllers
 {
@@ -24,14 +25,17 @@ namespace CulinaryBlogCore.Controllers
         }
 
         [Route("[controller]/Recipe/Subscriptions")]
-        public IActionResult RecipeSubscriptions() {
+        public IActionResult RecipeSubscriptions()
+        {
             List<RecipeSubscription> subscriptions = this._mailService.GetAll();
             List<RecipeSubscriptionViewModel> subscriptionsModel = this._mapper.Map<List<RecipeSubscriptionViewModel>>(subscriptions);
-            RecipeSubscriptionViewModel rsvm = new RecipeSubscriptionViewModel
+
+            RecipeSubscriptionViewModel model = new RecipeSubscriptionViewModel
             {
                 Subscriptions = subscriptionsModel
             };
-            return View(rsvm);
+
+            return View(model);
         }
     }
 }

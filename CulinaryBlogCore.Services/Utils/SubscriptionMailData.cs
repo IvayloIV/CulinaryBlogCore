@@ -1,4 +1,4 @@
-﻿namespace CulinaryBlogCore.Utils
+﻿namespace CulinaryBlogCore.Services.Utils
 {
     public class SubscriptionMailData
     {
